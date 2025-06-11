@@ -9,16 +9,21 @@ import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Textarea } from '@/components/ui/textarea';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
-import { LogOut, Calendar, Users, Scissors, Settings, Trash2, Edit, Plus } from 'lucide-react';
+import { Switch } from '@/components/ui/switch';
+import { LogOut, Calendar, Users, Scissors, Settings, Trash2, Edit, Plus, DollarSign, BarChart3, UserCheck } from 'lucide-react';
 import { useAuth } from '@/contexts/AuthContext';
 import { useMockData } from '@/contexts/MockDataContext';
 import { format } from 'date-fns';
 import { ptBR } from 'date-fns/locale';
 import { toast } from '@/hooks/use-toast';
+import DashboardMetrics from '@/components/DashboardMetrics';
+import FinanceModule from '@/components/FinanceModule';
+import ClientManagement from '@/components/ClientManagement';
+import InlineEdit from '@/components/InlineEdit';
 
 const AdminDashboard: React.FC = () => {
   const { logout } = useAuth();
-  const { bookings, setBookings, services, barbers, homeContent, setHomeContent } = useMockData();
+  const { bookings, setBookings, services, setServices, barbers, setBarbers, homeContent, setHomeContent } = useMockData();
   const [editingContent, setEditingContent] = useState(homeContent);
 
   const updateBookingStatus = (bookingId: string, newStatus: string) => {
@@ -48,6 +53,46 @@ const AdminDashboard: React.FC = () => {
     toast({
       title: "Configurações salvas",
       description: "As alterações da página inicial foram salvas com sucesso.",
+    });
+  };
+
+  const toggleServiceStatus = (serviceId: string, isActive: boolean) => {
+    setServices(prev => prev.map(service =>
+      service.id === serviceId ? { ...service, isActive } : service
+    ));
+    toast({
+      title: isActive ? "Serviço ativado" : "Serviço desativado",
+      description: `O serviço foi ${isActive ? 'ativado' : 'desativado'} com sucesso.`
+    });
+  };
+
+  const toggleBarberStatus = (barberId: string, isActive: boolean) => {
+    setBarbers(prev => prev.map(barber =>
+      barber.id === barberId ? { ...barber, isActive } : barber
+    ));
+    toast({
+      title: isActive ? "Barbeiro ativado" : "Barbeiro desativado",
+      description: `O barbeiro foi ${isActive ? 'ativado' : 'desativado'} com sucesso.`
+    });
+  };
+
+  const updateServiceField = (serviceId: string, field: string, value: any) => {
+    setServices(prev => prev.map(service =>
+      service.id === serviceId ? { ...service, [field]: value } : service
+    ));
+    toast({
+      title: "Serviço atualizado",
+      description: "As informações do serviço foram atualizadas."
+    });
+  };
+
+  const updateBarberField = (barberId: string, field: string, value: any) => {
+    setBarbers(prev => prev.map(barber =>
+      barber.id === barberId ? { ...barber, [field]: value } : barber
+    ));
+    toast({
+      title: "Barbeiro atualizado",
+      description: "As informações do barbeiro foram atualizadas."
     });
   };
 
@@ -81,10 +126,12 @@ const AdminDashboard: React.FC = () => {
   return (
     <div className="min-h-screen bg-background">
       {/* Header */}
-      <header className="bg-primary text-primary-foreground p-4">
-        <div className="container mx-auto flex justify-between items-center">
-          <h1 className="text-2xl font-bold">Painel Administrativo</h1>
-          <Button variant="secondary" onClick={logout}>
+      <header className="bg-card border-b border-border">
+        <div className="container mx-auto flex justify-between items-center p-4">
+          <h1 className="text-3xl font-bold gold-gradient bg-clip-text text-transparent">
+            IA Barber Admin
+          </h1>
+          <Button variant="outline" onClick={logout}>
             <LogOut className="w-4 h-4 mr-2" />
             Sair
           </Button>
@@ -92,55 +139,24 @@ const AdminDashboard: React.FC = () => {
       </header>
 
       <div className="container mx-auto p-6">
-        {/* Stats Cards */}
-        <div className="grid grid-cols-1 md:grid-cols-4 gap-6 mb-8">
-          <Card>
-            <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-              <CardTitle className="text-sm font-medium">Total de Agendamentos</CardTitle>
-              <Calendar className="h-4 w-4 text-muted-foreground" />
-            </CardHeader>
-            <CardContent>
-              <div className="text-2xl font-bold">{stats.totalBookings}</div>
-            </CardContent>
-          </Card>
-          
-          <Card>
-            <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-              <CardTitle className="text-sm font-medium">Pendentes</CardTitle>
-              <Calendar className="h-4 w-4 text-muted-foreground" />
-            </CardHeader>
-            <CardContent>
-              <div className="text-2xl font-bold">{stats.pendingBookings}</div>
-            </CardContent>
-          </Card>
-          
-          <Card>
-            <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-              <CardTitle className="text-sm font-medium">Confirmados</CardTitle>
-              <Calendar className="h-4 w-4 text-muted-foreground" />
-            </CardHeader>
-            <CardContent>
-              <div className="text-2xl font-bold">{stats.confirmedBookings}</div>
-            </CardContent>
-          </Card>
-          
-          <Card>
-            <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-              <CardTitle className="text-sm font-medium">Hoje</CardTitle>
-              <Calendar className="h-4 w-4 text-muted-foreground" />
-            </CardHeader>
-            <CardContent>
-              <div className="text-2xl font-bold">{stats.todayBookings}</div>
-            </CardContent>
-          </Card>
-        </div>
-
         {/* Main Content */}
-        <Tabs defaultValue="bookings" className="space-y-6">
-          <TabsList className="grid w-full grid-cols-4">
+        <Tabs defaultValue="dashboard" className="space-y-6">
+          <TabsList className="grid w-full grid-cols-6 glass-effect">
+            <TabsTrigger value="dashboard">
+              <BarChart3 className="w-4 h-4 mr-2" />
+              Dashboard
+            </TabsTrigger>
             <TabsTrigger value="bookings">
               <Calendar className="w-4 h-4 mr-2" />
               Agendamentos
+            </TabsTrigger>
+            <TabsTrigger value="finances">
+              <DollarSign className="w-4 h-4 mr-2" />
+              Finanças
+            </TabsTrigger>
+            <TabsTrigger value="clients">
+              <UserCheck className="w-4 h-4 mr-2" />
+              Clientes
             </TabsTrigger>
             <TabsTrigger value="services">
               <Scissors className="w-4 h-4 mr-2" />
@@ -150,15 +166,16 @@ const AdminDashboard: React.FC = () => {
               <Users className="w-4 h-4 mr-2" />
               Barbeiros
             </TabsTrigger>
-            <TabsTrigger value="settings">
-              <Settings className="w-4 h-4 mr-2" />
-              Configurações
-            </TabsTrigger>
           </TabsList>
+
+          {/* Dashboard Tab */}
+          <TabsContent value="dashboard">
+            <DashboardMetrics />
+          </TabsContent>
 
           {/* Bookings Tab */}
           <TabsContent value="bookings">
-            <Card>
+            <Card className="glass-effect">
               <CardHeader>
                 <CardTitle>Gerenciar Agendamentos</CardTitle>
               </CardHeader>
@@ -224,28 +241,79 @@ const AdminDashboard: React.FC = () => {
             </Card>
           </TabsContent>
 
+          {/* Finances Tab */}
+          <TabsContent value="finances">
+            <FinanceModule />
+          </TabsContent>
+
+          {/* Clients Tab */}
+          <TabsContent value="clients">
+            <ClientManagement />
+          </TabsContent>
+
           {/* Services Tab */}
           <TabsContent value="services">
-            <Card>
+            <Card className="glass-effect">
               <CardHeader>
                 <CardTitle>Gerenciar Serviços</CardTitle>
               </CardHeader>
               <CardContent>
-                <div className="grid gap-4">
+                <div className="space-y-4">
                   {services.map((service) => (
-                    <div key={service.id} className="flex items-center justify-between p-4 border rounded-lg">
-                      <div>
-                        <h4 className="font-medium">{service.title}</h4>
-                        <p className="text-sm text-muted-foreground">{service.description}</p>
-                        <p className="text-sm">Duração: {service.duration} min | Preço: R$ {service.price}</p>
-                      </div>
-                      <div className="flex space-x-2">
-                        <Button variant="outline" size="sm">
-                          <Edit className="w-4 h-4" />
-                        </Button>
-                        <Button variant="destructive" size="sm">
-                          <Trash2 className="w-4 h-4" />
-                        </Button>
+                    <div key={service.id} className="p-4 border border-border rounded-lg glass-effect">
+                      <div className="flex items-center justify-between mb-4">
+                        <div className="flex items-center space-x-4">
+                          <img 
+                            src={service.imageUrl} 
+                            alt={service.title}
+                            className="w-16 h-16 rounded-lg object-cover"
+                          />
+                          <div className="flex-1">
+                            <InlineEdit
+                              value={service.title}
+                              onSave={(value) => updateServiceField(service.id, 'title', value)}
+                              className="text-lg font-semibold"
+                            />
+                            <InlineEdit
+                              value={service.description}
+                              onSave={(value) => updateServiceField(service.id, 'description', value)}
+                              type="textarea"
+                              className="text-sm text-muted-foreground mt-1"
+                            />
+                          </div>
+                        </div>
+                        <div className="flex items-center space-x-4">
+                          <div className="text-right">
+                            <div className="flex items-center space-x-2">
+                              <span className="text-sm">Duração:</span>
+                              <InlineEdit
+                                value={service.duration}
+                                onSave={(value) => updateServiceField(service.id, 'duration', Number(value))}
+                                type="number"
+                                className="font-medium"
+                              />
+                              <span className="text-sm">min</span>
+                            </div>
+                            <div className="flex items-center space-x-2 mt-1">
+                              <span className="text-sm">Preço: R$</span>
+                              <InlineEdit
+                                value={service.price}
+                                onSave={(value) => updateServiceField(service.id, 'price', Number(value))}
+                                type="number"
+                                className="font-medium text-primary"
+                              />
+                            </div>
+                          </div>
+                          <div className="flex items-center space-x-2">
+                            <Switch
+                              checked={service.isActive}
+                              onCheckedChange={(checked) => toggleServiceStatus(service.id, checked)}
+                            />
+                            <span className="text-sm">
+                              {service.isActive ? 'Ativo' : 'Inativo'}
+                            </span>
+                          </div>
+                        </div>
                       </div>
                     </div>
                   ))}
@@ -256,97 +324,76 @@ const AdminDashboard: React.FC = () => {
 
           {/* Barbers Tab */}
           <TabsContent value="barbers">
-            <Card>
+            <Card className="glass-effect">
               <CardHeader>
                 <CardTitle>Gerenciar Barbeiros</CardTitle>
               </CardHeader>
               <CardContent>
-                <div className="grid gap-4">
+                <div className="space-y-4">
                   {barbers.map((barber) => (
-                    <div key={barber.id} className="flex items-center justify-between p-4 border rounded-lg">
-                      <div className="flex items-center space-x-4">
-                        <img 
-                          src={barber.avatarUrl} 
-                          alt={barber.name}
-                          className="w-12 h-12 rounded-full object-cover"
-                        />
-                        <div>
-                          <h4 className="font-medium">{barber.name}</h4>
-                          <p className="text-sm text-muted-foreground">{barber.specialization}</p>
-                          <p className="text-sm">{barber.experience} | ⭐ {barber.rating}</p>
+                    <div key={barber.id} className="p-4 border border-border rounded-lg glass-effect">
+                      <div className="flex items-center justify-between">
+                        <div className="flex items-center space-x-4">
+                          <img 
+                            src={barber.avatarUrl} 
+                            alt={barber.name}
+                            className="w-16 h-16 rounded-full object-cover"
+                          />
+                          <div className="flex-1">
+                            <InlineEdit
+                              value={barber.name}
+                              onSave={(value) => updateBarberField(barber.id, 'name', value)}
+                              className="text-lg font-semibold"
+                            />
+                            <InlineEdit
+                              value={barber.specialization}
+                              onSave={(value) => updateBarberField(barber.id, 'specialization', value)}
+                              className="text-sm text-muted-foreground"
+                            />
+                            <div className="flex items-center space-x-4 mt-2">
+                              <InlineEdit
+                                value={barber.phone}
+                                onSave={(value) => updateBarberField(barber.id, 'phone', value)}
+                                className="text-sm"
+                              />
+                              <InlineEdit
+                                value={barber.email}
+                                onSave={(value) => updateBarberField(barber.id, 'email', value)}
+                                className="text-sm"
+                              />
+                            </div>
+                          </div>
                         </div>
-                      </div>
-                      <div className="flex space-x-2">
-                        <Button variant="outline" size="sm">
-                          <Edit className="w-4 h-4" />
-                        </Button>
-                        <Button variant="destructive" size="sm">
-                          <Trash2 className="w-4 h-4" />
-                        </Button>
+                        <div className="flex items-center space-x-6">
+                          <div className="text-right">
+                            <div className="flex items-center space-x-2">
+                              <span className="text-sm">Comissão:</span>
+                              <InlineEdit
+                                value={barber.commission}
+                                onSave={(value) => updateBarberField(barber.id, 'commission', Number(value))}
+                                type="number"
+                                className="font-medium"
+                              />
+                              <span className="text-sm">%</span>
+                            </div>
+                            <div className="text-sm text-muted-foreground mt-1">
+                              ⭐ {barber.rating} | {barber.experience}
+                            </div>
+                          </div>
+                          <div className="flex items-center space-x-2">
+                            <Switch
+                              checked={barber.isActive}
+                              onCheckedChange={(checked) => toggleBarberStatus(barber.id, checked)}
+                            />
+                            <span className="text-sm">
+                              {barber.isActive ? 'Ativo' : 'Inativo'}
+                            </span>
+                          </div>
+                        </div>
                       </div>
                     </div>
                   ))}
                 </div>
-              </CardContent>
-            </Card>
-          </TabsContent>
-
-          {/* Settings Tab */}
-          <TabsContent value="settings">
-            <Card>
-              <CardHeader>
-                <CardTitle>Configurações da Página Inicial</CardTitle>
-              </CardHeader>
-              <CardContent className="space-y-6">
-                <div>
-                  <Label htmlFor="title">Título Principal</Label>
-                  <Input
-                    id="title"
-                    value={editingContent.title}
-                    onChange={(e) => setEditingContent({ ...editingContent, title: e.target.value })}
-                  />
-                </div>
-                
-                <div>
-                  <Label htmlFor="subtitle">Subtítulo</Label>
-                  <Input
-                    id="subtitle"
-                    value={editingContent.subtitle}
-                    onChange={(e) => setEditingContent({ ...editingContent, subtitle: e.target.value })}
-                  />
-                </div>
-                
-                <div>
-                  <Label htmlFor="ctaText">Texto do Botão CTA</Label>
-                  <Input
-                    id="ctaText"
-                    value={editingContent.ctaText}
-                    onChange={(e) => setEditingContent({ ...editingContent, ctaText: e.target.value })}
-                  />
-                </div>
-                
-                <div>
-                  <Label htmlFor="aboutTitle">Título da Seção Sobre</Label>
-                  <Input
-                    id="aboutTitle"
-                    value={editingContent.aboutTitle}
-                    onChange={(e) => setEditingContent({ ...editingContent, aboutTitle: e.target.value })}
-                  />
-                </div>
-                
-                <div>
-                  <Label htmlFor="aboutDescription">Descrição da Seção Sobre</Label>
-                  <Textarea
-                    id="aboutDescription"
-                    value={editingContent.aboutDescription}
-                    onChange={(e) => setEditingContent({ ...editingContent, aboutDescription: e.target.value })}
-                    rows={4}
-                  />
-                </div>
-                
-                <Button onClick={saveHomeContent} className="w-full">
-                  Salvar Alterações
-                </Button>
               </CardContent>
             </Card>
           </TabsContent>

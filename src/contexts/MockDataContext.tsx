@@ -1,17 +1,26 @@
 
 import React, { createContext, useContext, useState, ReactNode } from 'react';
-import { users, services, barbers, bookings, homeContent, User, Service, Barber, Booking, HomeContent } from '@/data/mock';
+import { 
+  users, services, barbers, bookings, clients, transactions, dashboardMetrics, homeContent,
+  User, Service, Barber, Booking, Client, Transaction, DashboardMetrics, HomeContent 
+} from '@/data/mock';
 
 interface MockDataContextType {
   users: User[];
   services: Service[];
   barbers: Barber[];
   bookings: Booking[];
+  clients: Client[];
+  transactions: Transaction[];
+  dashboardMetrics: DashboardMetrics;
   homeContent: HomeContent;
   setUsers: React.Dispatch<React.SetStateAction<User[]>>;
   setServices: React.Dispatch<React.SetStateAction<Service[]>>;
   setBarbers: React.Dispatch<React.SetStateAction<Barber[]>>;
   setBookings: React.Dispatch<React.SetStateAction<Booking[]>>;
+  setClients: React.Dispatch<React.SetStateAction<Client[]>>;
+  setTransactions: React.Dispatch<React.SetStateAction<Transaction[]>>;
+  setDashboardMetrics: React.Dispatch<React.SetStateAction<DashboardMetrics>>;
   setHomeContent: React.Dispatch<React.SetStateAction<HomeContent>>;
 }
 
@@ -22,6 +31,9 @@ export const MockDataProvider: React.FC<{ children: ReactNode }> = ({ children }
   const [mockServices, setServices] = useState<Service[]>(services);
   const [mockBarbers, setBarbers] = useState<Barber[]>(barbers);
   const [mockBookings, setBookings] = useState<Booking[]>(bookings);
+  const [mockClients, setClients] = useState<Client[]>(clients);
+  const [mockTransactions, setTransactions] = useState<Transaction[]>(transactions);
+  const [mockDashboardMetrics, setDashboardMetrics] = useState<DashboardMetrics>(dashboardMetrics);
   const [mockHomeContent, setHomeContent] = useState<HomeContent>(homeContent);
 
   return (
@@ -30,11 +42,17 @@ export const MockDataProvider: React.FC<{ children: ReactNode }> = ({ children }
       services: mockServices,
       barbers: mockBarbers,
       bookings: mockBookings,
+      clients: mockClients,
+      transactions: mockTransactions,
+      dashboardMetrics: mockDashboardMetrics,
       homeContent: mockHomeContent,
       setUsers,
       setServices,
       setBarbers,
       setBookings,
+      setClients,
+      setTransactions,
+      setDashboardMetrics,
       setHomeContent,
     }}>
       {children}
