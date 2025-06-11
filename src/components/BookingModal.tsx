@@ -1,4 +1,3 @@
-
 import React, { useState } from 'react';
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from '@/components/ui/dialog';
 import { Button } from '@/components/ui/button';
@@ -81,6 +80,9 @@ const BookingModal: React.FC<BookingModalProps> = ({ isOpen, onClose }) => {
   const handleFinish = () => {
     if (!form.date) return;
 
+    const selectedService = services.find(s => s.id === form.serviceId);
+    const totalAmount = selectedService ? selectedService.price : 0;
+
     const newBooking = {
       id: Date.now().toString(),
       userId: '2',
@@ -92,7 +94,8 @@ const BookingModal: React.FC<BookingModalProps> = ({ isOpen, onClose }) => {
       clientName: form.clientName,
       clientEmail: form.clientEmail,
       clientPhone: form.clientPhone,
-      notes: form.notes
+      notes: form.notes,
+      totalAmount: totalAmount
     };
 
     setBookings(prev => [...prev, newBooking]);
