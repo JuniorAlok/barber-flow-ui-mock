@@ -59,8 +59,8 @@ const DashboardCharts: React.FC = () => {
               <YAxis yAxisId="right" orientation="right" />
               <Tooltip 
                 formatter={(value, name) => [
-                  name === 'revenue' ? formatCurrency(Number(value)) : value,
-                  name === 'revenue' ? 'Receita' : 'Agendamentos'
+                  typeof name === 'string' && name === 'revenue' ? formatCurrency(Number(value)) : value,
+                  typeof name === 'string' && name === 'revenue' ? 'Receita' : 'Agendamentos'
                 ]}
               />
               <Bar yAxisId="left" dataKey="revenue" fill="#8884d8" name="revenue" />
@@ -111,9 +111,11 @@ const DashboardCharts: React.FC = () => {
               <YAxis />
               <Tooltip 
                 formatter={(value, name) => [
-                  name.includes('revenue') || name.includes('commission') ? formatCurrency(Number(value)) : value,
-                  name === 'revenue' ? 'Receita Total' : 
-                  name === 'commission' ? 'Comissão' : 'Agendamentos'
+                  typeof name === 'string' && (name === 'revenue' || name === 'commission') ? formatCurrency(Number(value)) : value,
+                  typeof name === 'string' ? (
+                    name === 'revenue' ? 'Receita Total' : 
+                    name === 'commission' ? 'Comissão' : 'Agendamentos'
+                  ) : 'Valor'
                 ]}
               />
               <Bar dataKey="revenue" fill="#8884d8" name="revenue" />
