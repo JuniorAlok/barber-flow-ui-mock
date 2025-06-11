@@ -10,8 +10,16 @@ import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from '
 import { Switch } from '@/components/ui/switch';
 import { useMockData } from '@/contexts/MockDataContext';
 import { useToast } from '@/hooks/use-toast';
-import { serviceSchema } from '@/utils/validation';
 import { Service } from '@/data/types';
+import * as z from 'zod';
+
+const serviceSchema = z.object({
+  title: z.string().min(1, 'Título é obrigatório'),
+  description: z.string().min(1, 'Descrição é obrigatória'),
+  duration: z.number().min(1, 'Duração deve ser maior que 0'),
+  price: z.number().min(0, 'Preço deve ser maior ou igual a 0'),
+  isActive: z.boolean()
+});
 
 interface ServiceModalProps {
   isOpen: boolean;
@@ -27,19 +35,21 @@ const ServiceModal: React.FC<ServiceModalProps> = ({ isOpen, onClose, service })
   const form = useForm({
     resolver: zodResolver(serviceSchema),
     defaultValues: service || {
-      id: '',
       title: '',
       description: '',
       duration: 30,
       price: 0,
-      imageUrl: '',
       isActive: true
     }
   });
 
   const onSubmit = (data: any) => {
     if (isEdit) {
-      setServices(prev => prev.map(s => s.id === service.id ? { ...data, id: service.id } : s));
+      setServices(prev => prev.map(s => s.id === service.id ? { 
+        ...data, 
+        id: service.id,
+        imageUrl: service.imageUrl // Manter imageUrl existente
+      } : s));
       toast({
         title: "Serviço atualizado",
         description: "O serviço foi atualizado com sucesso."
@@ -47,7 +57,8 @@ const ServiceModal: React.FC<ServiceModalProps> = ({ isOpen, onClose, service })
     } else {
       const newService = {
         ...data,
-        id: Date.now().toString()
+        id: Date.now().toString(),
+        imageUrl: 'https://images.unsplash.com/photo-1503951914875-452162b0f3f1?w=400' // Imagem padrão
       };
       setServices(prev => [...prev, newService]);
       toast({
@@ -124,20 +135,6 @@ const ServiceModal: React.FC<ServiceModalProps> = ({ isOpen, onClose, service })
                 )}
               />
             </div>
-
-            <FormField
-              control={form.control}
-              name="imageUrl"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>URL da Imagem</FormLabel>
-                  <FormControl>
-                    <Input {...field} />
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
 
             <FormField
               control={form.control}

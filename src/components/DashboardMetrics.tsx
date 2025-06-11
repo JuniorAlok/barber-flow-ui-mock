@@ -4,6 +4,7 @@ import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { TrendingUp, TrendingDown, DollarSign, Calendar, Users, BarChart3 } from 'lucide-react';
 import { useMockData } from '@/contexts/MockDataContext';
+import DashboardCharts from './admin/DashboardCharts';
 
 const DashboardMetrics: React.FC = () => {
   const { dashboardMetrics } = useMockData();
@@ -68,6 +69,7 @@ const DashboardMetrics: React.FC = () => {
 
   return (
     <div className="space-y-6 animate-fade-in">
+      {/* Métricas principais */}
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
         {metricCards.map((metric, index) => (
           <Card key={metric.title} className="glass-effect hover:shadow-lg transition-all duration-300">
@@ -93,6 +95,7 @@ const DashboardMetrics: React.FC = () => {
         ))}
       </div>
 
+      {/* Destaques */}
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
         {highlights.map((highlight, index) => (
           <Card key={highlight.label} className="glass-effect">
@@ -108,6 +111,9 @@ const DashboardMetrics: React.FC = () => {
           </Card>
         ))}
       </div>
+
+      {/* Gráficos */}
+      <DashboardCharts />
     </div>
   );
 };

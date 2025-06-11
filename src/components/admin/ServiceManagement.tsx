@@ -7,12 +7,11 @@ import { Plus, Edit } from 'lucide-react';
 import { useMockData } from '@/contexts/MockDataContext';
 import { useUpdateEntity } from '@/hooks/useUpdateEntity';
 import { formatCurrency } from '@/utils/formatting';
-import InlineEdit from '@/components/InlineEdit';
 import ServiceModal from './modals/ServiceModal';
 
 const ServiceManagement: React.FC = () => {
   const { services, setServices } = useMockData();
-  const { updateField, toggleStatus, isUpdating } = useUpdateEntity({
+  const { toggleStatus, isUpdating } = useUpdateEntity({
     data: services,
     setData: setServices,
     entityName: 'Serviço'
@@ -52,28 +51,12 @@ const ServiceManagement: React.FC = () => {
           <div className="space-y-4">
             {services.map((service) => (
               <div key={service.id} className="p-4 border border-border rounded-lg glass-effect">
-                <div className="flex items-center justify-between mb-4">
-                  <div className="flex items-center space-x-4">
-                    <img 
-                      src={service.imageUrl} 
-                      alt={service.title}
-                      className="w-16 h-16 rounded-lg object-cover"
-                    />
-                    <div className="flex-1">
-                      <InlineEdit
-                        value={service.title}
-                        onSave={(value) => updateField(service.id, 'title', value)}
-                        className="text-lg font-semibold"
-                      />
-                      <InlineEdit
-                        value={service.description}
-                        onSave={(value) => updateField(service.id, 'description', value)}
-                        type="textarea"
-                        className="text-sm text-muted-foreground mt-1"
-                      />
-                    </div>
+                <div className="flex items-center justify-between">
+                  <div className="flex-1">
+                    <h3 className="text-lg font-semibold">{service.title}</h3>
+                    <p className="text-sm text-muted-foreground mt-1">{service.description}</p>
                   </div>
-                  <div className="flex items-center space-x-4">
+                  <div className="flex items-center space-x-6">
                     <Button
                       variant="outline"
                       size="sm"
@@ -84,22 +67,11 @@ const ServiceManagement: React.FC = () => {
                     <div className="text-right">
                       <div className="flex items-center space-x-2">
                         <span className="text-sm">Duração:</span>
-                        <InlineEdit
-                          value={service.duration}
-                          onSave={(value) => updateField(service.id, 'duration', Number(value))}
-                          type="number"
-                          className="font-medium"
-                        />
-                        <span className="text-sm">min</span>
+                        <span className="font-medium">{service.duration} min</span>
                       </div>
                       <div className="flex items-center space-x-2 mt-1">
                         <span className="text-sm">Preço:</span>
-                        <InlineEdit
-                          value={service.price}
-                          onSave={(value) => updateField(service.id, 'price', Number(value))}
-                          type="number"
-                          className="font-medium text-primary"
-                        />
+                        <span className="font-medium text-primary">{formatCurrency(service.price)}</span>
                       </div>
                     </div>
                     <div className="flex items-center space-x-2">

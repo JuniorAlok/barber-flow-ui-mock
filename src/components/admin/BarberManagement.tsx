@@ -7,12 +7,11 @@ import { Plus, Edit } from 'lucide-react';
 import { useMockData } from '@/contexts/MockDataContext';
 import { useUpdateEntity } from '@/hooks/useUpdateEntity';
 import { formatPercentage } from '@/utils/formatting';
-import InlineEdit from '@/components/InlineEdit';
 import BarberModal from './modals/BarberModal';
 
 const BarberManagement: React.FC = () => {
   const { barbers, setBarbers } = useMockData();
-  const { updateField, toggleStatus, isUpdating } = useUpdateEntity({
+  const { toggleStatus, isUpdating } = useUpdateEntity({
     data: barbers,
     setData: setBarbers,
     entityName: 'Barbeiro'
@@ -60,27 +59,11 @@ const BarberManagement: React.FC = () => {
                       className="w-16 h-16 rounded-full object-cover"
                     />
                     <div className="flex-1">
-                      <InlineEdit
-                        value={barber.name}
-                        onSave={(value) => updateField(barber.id, 'name', value)}
-                        className="text-lg font-semibold"
-                      />
-                      <InlineEdit
-                        value={barber.specialization}
-                        onSave={(value) => updateField(barber.id, 'specialization', value)}
-                        className="text-sm text-muted-foreground"
-                      />
+                      <h3 className="text-lg font-semibold">{barber.name}</h3>
+                      <p className="text-sm text-muted-foreground">{barber.specialization}</p>
                       <div className="flex items-center space-x-4 mt-2">
-                        <InlineEdit
-                          value={barber.phone}
-                          onSave={(value) => updateField(barber.id, 'phone', value)}
-                          className="text-sm"
-                        />
-                        <InlineEdit
-                          value={barber.email}
-                          onSave={(value) => updateField(barber.id, 'email', value)}
-                          className="text-sm"
-                        />
+                        <span className="text-sm">{barber.phone}</span>
+                        <span className="text-sm">{barber.email}</span>
                       </div>
                     </div>
                   </div>
@@ -95,13 +78,7 @@ const BarberManagement: React.FC = () => {
                     <div className="text-right">
                       <div className="flex items-center space-x-2">
                         <span className="text-sm">Comissão:</span>
-                        <InlineEdit
-                          value={barber.commission}
-                          onSave={(value) => updateField(barber.id, 'commission', Number(value))}
-                          type="number"
-                          className="font-medium"
-                        />
-                        <span className="text-sm">%</span>
+                        <span className="font-medium">{barber.commission}%</span>
                       </div>
                       <div className="text-sm text-muted-foreground mt-1">
                         ⭐ {barber.rating} | {barber.experience}
