@@ -100,36 +100,101 @@
 
 @layer utilities {
   .glass-effect {
-    backdrop-filter: blur(8px);
+    backdrop-filter: blur(16px);
+    background: rgba(255, 215, 0, 0.05);
+    border: 1px solid rgba(255, 215, 0, 0.15);
+    box-shadow: 
+      0 8px 32px rgba(0, 0, 0, 0.37),
+      inset 0 1px 0 rgba(255, 255, 255, 0.1);
+  }
+  
+  .glass-effect-strong {
+    backdrop-filter: blur(20px);
     background: rgba(255, 215, 0, 0.1);
     border: 1px solid rgba(255, 215, 0, 0.2);
+    box-shadow: 
+      0 12px 40px rgba(0, 0, 0, 0.5),
+      inset 0 1px 0 rgba(255, 255, 255, 0.15);
   }
   
   .gold-gradient {
     background: linear-gradient(135deg, hsl(45 100% 51%) 0%, hsl(38 100% 45%) 100%);
   }
+
+  .gradient-glow {
+    background: linear-gradient(135deg, hsl(45 100% 51%) 0%, hsl(38 100% 45%) 100%);
+    box-shadow: 0 0 30px rgba(255, 215, 0, 0.3);
+  }
   
   .animate-fade-in {
-    animation: fadeIn 0.3s ease-out;
+    animation: fade-in 0.5s ease-out;
   }
   
   .animate-slide-up {
-    animation: slideUp 0.3s ease-out;
+    animation: slide-up 0.5s ease-out;
+  }
+
+  .animate-scale-in {
+    animation: scale-in 0.3s ease-out;
+  }
+
+  .hover-lift {
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+
+  .hover-lift:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
+  }
+
+  .gradient-border {
+    position: relative;
+    background: linear-gradient(135deg, rgba(255, 215, 0, 0.1), rgba(255, 215, 0, 0.05));
+    border: 1px solid transparent;
+  }
+
+  .gradient-border::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    padding: 1px;
+    background: linear-gradient(135deg, rgba(255, 215, 0, 0.3), rgba(255, 215, 0, 0.1));
+    border-radius: inherit;
+    mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+    mask-composite: exclude;
+  }
+
+  .metric-card {
+    @apply glass-effect hover-lift rounded-xl p-6 transition-all duration-300;
+  }
+
+  .metric-card:hover {
+    @apply glass-effect-strong;
+  }
+
+  .chart-container {
+    @apply glass-effect rounded-xl p-6 backdrop-blur-xl;
+    background: linear-gradient(135deg, rgba(255, 215, 0, 0.08), rgba(255, 215, 0, 0.03));
+  }
+
+  .management-card {
+    @apply glass-effect rounded-xl border border-border/50 hover:border-primary/30 transition-all duration-300;
+  }
+
+  .management-item {
+    @apply glass-effect rounded-lg border border-border/30 hover:border-primary/20 transition-all duration-300 hover-lift;
+  }
+
+  .floating-element {
+    animation: float 3s ease-in-out infinite;
+  }
+
+  .glow-effect {
+    animation: glow 2s ease-in-out infinite alternate;
   }
 }
 
-@keyframes fadeIn {
-  from {
-    opacity: 0;
-    transform: translateY(10px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-
-@keyframes slideUp {
+@keyframes fade-in {
   from {
     opacity: 0;
     transform: translateY(20px);
@@ -137,5 +202,45 @@
   to {
     opacity: 1;
     transform: translateY(0);
+  }
+}
+
+@keyframes slide-up {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes scale-in {
+  from {
+    opacity: 0;
+    transform: scale(0.95);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+@keyframes float {
+  0%, 100% {
+    transform: translateY(0px);
+  }
+  50% {
+    transform: translateY(-10px);
+  }
+}
+
+@keyframes glow {
+  0%, 100% {
+    box-shadow: 0 0 20px rgba(255, 215, 0, 0.4);
+  }
+  50% {
+    box-shadow: 0 0 30px rgba(255, 215, 0, 0.6);
   }
 }

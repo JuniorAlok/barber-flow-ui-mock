@@ -3,8 +3,8 @@ import React, { useState } from 'react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
-import { ChevronLeft, ChevronRight, Plus } from 'lucide-react';
-import { format, startOfMonth, endOfMonth, eachDayOfInterval, isSameMonth, isSameDay, addMonths, subMonths } from 'date-fns';
+import { ChevronLeft, ChevronRight, Plus, Calendar as CalendarIcon, Clock } from 'lucide-react';
+import { format, startOfMonth, endOfMonth, eachDayOfInterval, isSameMonth, isSameDay, addMonths, subMonths, isToday } from 'date-fns';
 import { ptBR } from 'date-fns/locale';
 import { useMockData } from '@/contexts/MockDataContext';
 import { Booking } from '@/data/types';
@@ -30,10 +30,10 @@ const BookingCalendar: React.FC<BookingCalendarProps> = ({ onNewBooking, onEditB
 
   const getStatusColor = (status: string) => {
     const colors = {
-      pending: 'bg-yellow-100 text-yellow-800',
-      confirmed: 'bg-blue-100 text-blue-800',
-      done: 'bg-green-100 text-green-800',
-      cancelled: 'bg-red-100 text-red-800'
+      pending: 'bg-yellow-500/20 text-yellow-400 border-yellow-500/30',
+      confirmed: 'bg-blue-500/20 text-blue-400 border-blue-500/30',
+      done: 'bg-green-500/20 text-green-400 border-green-500/30',
+      cancelled: 'bg-red-500/20 text-red-400 border-red-500/30'
     };
     return colors[status as keyof typeof colors] || colors.pending;
   };
@@ -49,77 +49,142 @@ const BookingCalendar: React.FC<BookingCalendarProps> = ({ onNewBooking, onEditB
   const prevMonth = () => setCurrentDate(subMonths(currentDate, 1));
   const nextMonth = () => setCurrentDate(addMonths(currentDate, 1));
 
+  const statusLabels = {
+    pending: 'Pendente',
+    confirmed: 'Confirmado', 
+    done: 'Concluído',
+    cancelled: 'Cancelado'
+  };
+
   return (
-    <Card className="glass-effect">
-      <CardHeader>
+    <Card className="management-card border-0 animate-fade-in">
+      <CardHeader className="pb-6">
         <div className="flex justify-between items-center">
           <div className="flex items-center space-x-4">
-            <Button variant="outline" size="sm" onClick={prevMonth}>
-              <ChevronLeft className="w-4 h-4" />
-            </Button>
-            <CardTitle>
-              {format(currentDate, 'MMMM yyyy', { locale: ptBR })}
-            </CardTitle>
-            <Button variant="outline" size="sm" onClick={nextMonth}>
-              <ChevronRight className="w-4 h-4" />
-            </Button>
+            <div className="flex items-center space-x-2">
+              <Button 
+                variant="outline" 
+                size="sm" 
+                onClick={prevMonth}
+                className="hover:bg-primary/10 hover:border-primary/30 transition-all duration-300"
+              >
+                <ChevronLeft className="w-4 h-4" />
+              </Button>
+              <div className="flex items-center space-x-3">
+                <div className="p-2 rounded-lg bg-gradient-to-br from-purple-500/20 to-purple-500/5">
+                  <CalendarIcon className="h-5 w-5 text-purple-400" />
+                </div>
+                <div>
+                  <CardTitle className="text-xl">
+                    {format(currentDate, 'MMMM yyyy', { locale: ptBR })}
+                  </CardTitle>
+                  <p className="text-sm text-muted-foreground">Calendário de agendamentos</p>
+                </div>
+              </div>
+              <Button 
+                variant="outline" 
+                size="sm" 
+                onClick={nextMonth}
+                className="hover:bg-primary/10 hover:border-primary/30 transition-all duration-300"
+              >
+                <ChevronRight className="w-4 h-4" />
+              </Button>
+            </div>
           </div>
-          <Button onClick={onNewBooking}>
+          <Button 
+            onClick={onNewBooking}
+            className="gradient-glow hover:scale-105 transition-all duration-300"
+          >
             <Plus className="w-4 h-4 mr-2" />
             Novo Agendamento
           </Button>
         </div>
       </CardHeader>
       <CardContent>
-        <div className="grid grid-cols-7 gap-1 mb-4">
+        {/* Cabeçalho dos dias da semana */}
+        <div className="grid grid-cols-7 gap-2 mb-4">
           {['Dom', 'Seg', 'Ter', 'Qua', 'Qui', 'Sex', 'Sáb'].map(day => (
-            <div key={day} className="p-2 text-center text-sm font-medium text-muted-foreground">
+            <div key={day} className="p-3 text-center text-sm font-medium text-muted-foreground bg-muted/30 rounded-lg">
               {day}
             </div>
           ))}
         </div>
         
-        <div className="grid grid-cols-7 gap-1">
-          {daysInMonth.map(day => {
+        {/* Calendário */}
+        <div className="grid grid-cols-7 gap-2">
+          {daysInMonth.map((day, index) => {
             const dayBookings = getBookingsForDay(day);
-            const isToday = isSameDay(day, new Date());
+            const isCurrentDay = isToday(day);
+            const isCurrentMonth = isSameMonth(day, currentDate);
             
             return (
               <div
                 key={day.toString()}
-                className={`min-h-[100px] p-1 border border-border rounded-lg ${
-                  !isSameMonth(day, currentDate) ? 'opacity-50' : ''
-                } ${isToday ? 'bg-primary/5 border-primary' : ''}`}
+                className={`min-h-[120px] p-3 rounded-lg border transition-all duration-300 hover:shadow-md ${
+                  !isCurrentMonth ? 'opacity-50 bg-muted/10' : 'glass-effect'
+                } ${isCurrentDay ? 'ring-2 ring-primary/50 bg-primary/5' : ''}`}
               >
-                <div className={`text-sm font-medium mb-1 ${isToday ? 'text-primary' : ''}`}>
-                  {format(day, 'd')}
+                <div className={`text-sm font-medium mb-2 flex items-center justify-between ${
+                  isCurrentDay ? 'text-primary' : 'text-foreground'
+                }`}>
+                  <span>{format(day, 'd')}</span>
+                  {isCurrentDay && (
+                    <div className="w-2 h-2 bg-primary rounded-full floating-element"></div>
+                  )}
                 </div>
                 
                 <div className="space-y-1">
-                  {dayBookings.slice(0, 3).map(booking => (
+                  {dayBookings.slice(0, 2).map(booking => (
                     <div
                       key={booking.id}
-                      className="text-xs p-1 rounded cursor-pointer hover:shadow-sm transition-shadow"
+                      className="text-xs p-2 rounded-md cursor-pointer hover:shadow-sm transition-all duration-300 glass-effect hover:scale-105"
                       onClick={() => onEditBooking(booking)}
                     >
-                      <Badge variant="outline" className={`text-xs ${getStatusColor(booking.status)}`}>
-                        {booking.time}
-                      </Badge>
-                      <div className="truncate mt-1 text-xs">
+                      <div className="flex items-center space-x-1 mb-1">
+                        <Clock className="w-3 h-3 text-muted-foreground" />
+                        <Badge 
+                          variant="outline" 
+                          className={`text-xs px-1 py-0 ${getStatusColor(booking.status)}`}
+                        >
+                          {booking.time}
+                        </Badge>
+                      </div>
+                      <div className="font-medium text-foreground truncate">
                         {booking.clientName}
+                      </div>
+                      <div className="text-muted-foreground truncate">
+                        {getServiceName(booking.serviceId)}
                       </div>
                     </div>
                   ))}
                   
-                  {dayBookings.length > 3 && (
-                    <div className="text-xs text-muted-foreground">
-                      +{dayBookings.length - 3} mais
+                  {dayBookings.length > 2 && (
+                    <div className="text-xs text-muted-foreground text-center p-1 rounded-md bg-muted/20">
+                      +{dayBookings.length - 2} mais
+                    </div>
+                  )}
+
+                  {dayBookings.length === 0 && isCurrentMonth && (
+                    <div className="text-xs text-muted-foreground/50 text-center p-2">
+                      Sem agendamentos
                     </div>
                   )}
                 </div>
               </div>
             );
           })}
+        </div>
+
+        {/* Legenda */}
+        <div className="mt-6 flex flex-wrap gap-4">
+          <div className="text-sm text-muted-foreground font-medium mb-2">Status dos agendamentos:</div>
+          {Object.entries(statusLabels).map(([status, label]) => (
+            <div key={status} className="flex items-center space-x-2">
+              <Badge variant="outline" className={`${getStatusColor(status)} text-xs`}>
+                {label}
+              </Badge>
+            </div>
+          ))}
         </div>
       </CardContent>
     </Card>
