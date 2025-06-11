@@ -1,7 +1,7 @@
 
-import React, { createContext, useContext, useState, ReactNode, useEffect } from 'react';
+import React, { createContext, useContext, useState, ReactNode } from 'react';
 import { User } from '@/data/mock';
-import { useMockData } from './MockDataContext';
+import { barbers } from '@/data/barbers';
 
 interface AuthContextType {
   user: User | null;
@@ -17,20 +17,6 @@ const AuthContext = createContext<AuthContextType | undefined>(undefined);
 
 export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
   const [user, setUser] = useState<User | null>(null);
-  const [isInitialized, setIsInitialized] = useState(false);
-  
-  // Use useEffect to safely access the context after mounting
-  const [barbers, setBarbers] = useState<any[]>([]);
-  
-  useEffect(() => {
-    try {
-      const mockData = useMockData();
-      setBarbers(mockData.barbers);
-      setIsInitialized(true);
-    } catch (error) {
-      console.error('Error accessing mock data:', error);
-    }
-  }, []);
 
   const login = (email: string, password: string): boolean => {
     // Admin login
@@ -45,7 +31,7 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
       return true;
     }
 
-    // Barber login
+    // Barber login - check against static barbers data
     const barber = barbers.find(b => b.email === email && b.password === password);
     if (barber) {
       setUser({
@@ -63,7 +49,8 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
 
   const registerBarber = (barberData: any): boolean => {
     try {
-      const mockData = useMockData();
+      // For now, we'll handle barber registration through events
+      // This will be improved when we add proper state management
       const newBarber = {
         id: (barbers.length + 1).toString(),
         name: barberData.name,
@@ -78,8 +65,8 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
         commission: 50
       };
 
-      mockData.setBarbers(prev => [...prev, newBarber]);
-      setBarbers(prev => [...prev, newBarber]);
+      // Emit custom event for barber registration
+      window.dispatchEvent(new CustomEvent('barberRegistered', { detail: newBarber }));
       
       // Auto login after registration
       setUser({
@@ -104,11 +91,6 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
   const isAuthenticated = !!user;
   const isAdmin = user?.role === 'admin';
   const isBarber = user?.role === 'barber';
-
-  // Don't render children until context is properly initialized
-  if (!isInitialized) {
-    return <div>Loading...</div>;
-  }
 
   return (
     <AuthContext.Provider value={{

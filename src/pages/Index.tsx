@@ -1,10 +1,12 @@
 
-import { MockDataProvider } from "@/contexts/MockDataContext";
-import { AuthProvider, useAuth } from "@/contexts/AuthContext";
+import { AppProviders } from "@/contexts/AppProviders";
+import { useAuth } from "@/contexts/AuthContext";
 import AdminDashboard from "@/components/AdminDashboard";
 import BarberDashboard from "@/components/BarberDashboard";
 import BarberLogin from "@/components/BarberLogin";
 import HomePage from "@/components/HomePage";
+import { PageLoading } from "@/components/ui/loading";
+import { Suspense } from "react";
 
 function AppContent() {
   const { isAuthenticated, isAdmin, isBarber } = useAuth();
@@ -26,11 +28,11 @@ function AppContent() {
 
 const Index = () => {
   return (
-    <MockDataProvider>
-      <AuthProvider>
+    <AppProviders>
+      <Suspense fallback={<PageLoading />}>
         <AppContent />
-      </AuthProvider>
-    </MockDataProvider>
+      </Suspense>
+    </AppProviders>
   );
 };
 

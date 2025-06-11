@@ -1,5 +1,5 @@
 
-import React, { createContext, useContext, useState, ReactNode } from 'react';
+import React, { createContext, useContext, useState, ReactNode, useEffect } from 'react';
 import { 
   users, services, barbers, bookings, clients, transactions, dashboardMetrics, homeContent,
   User, Service, Barber, Booking, Client, Transaction, DashboardMetrics, HomeContent, ServiceOrder 
@@ -39,6 +39,20 @@ export const MockDataProvider: React.FC<{ children: ReactNode }> = ({ children }
   const [mockServiceOrders, setServiceOrders] = useState<ServiceOrder[]>(serviceOrders);
   const [mockDashboardMetrics, setDashboardMetrics] = useState<DashboardMetrics>(dashboardMetrics);
   const [mockHomeContent, setHomeContent] = useState<HomeContent>(homeContent);
+
+  // Listen for barber registration events from AuthContext
+  useEffect(() => {
+    const handleBarberRegistration = (event: CustomEvent) => {
+      const newBarber = event.detail;
+      setBarbers(prev => [...prev, newBarber]);
+    };
+
+    window.addEventListener('barberRegistered', handleBarberRegistration as EventListener);
+    
+    return () => {
+      window.removeEventListener('barberRegistered', handleBarberRegistration as EventListener);
+    };
+  }, []);
 
   return (
     <MockDataContext.Provider value={{
