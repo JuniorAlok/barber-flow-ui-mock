@@ -1,18 +1,19 @@
 
 import React from 'react';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
-import { Calendar, Users, Scissors, DollarSign, BarChart3, UserCheck } from 'lucide-react';
+import { Calendar, Users, Scissors, DollarSign, BarChart3, UserCheck, Settings } from 'lucide-react';
 import DashboardMetrics from '@/components/DashboardMetrics';
 import FinanceModule from '@/components/FinanceModule';
 import ClientManagement from '@/components/ClientManagement';
 import BookingManagement from '@/components/admin/BookingManagement';
 import ServiceManagement from '@/components/admin/ServiceManagement';
 import BarberManagement from '@/components/admin/BarberManagement';
+import ConfigurationManagement from '@/components/admin/ConfigurationManagement';
 
 const AdminTabs: React.FC = () => {
   return (
     <Tabs defaultValue="dashboard" className="space-y-6">
-      <TabsList className="grid w-full grid-cols-6 glass-effect">
+      <TabsList className="grid w-full grid-cols-7 glass-effect">
         <TabsTrigger value="dashboard">
           <BarChart3 className="w-4 h-4 mr-2" />
           Dashboard
@@ -36,6 +37,10 @@ const AdminTabs: React.FC = () => {
         <TabsTrigger value="barbers">
           <Users className="w-4 h-4 mr-2" />
           Barbeiros
+        </TabsTrigger>
+        <TabsTrigger value="configurations">
+          <Settings className="w-4 h-4 mr-2" />
+          Configurações
         </TabsTrigger>
       </TabsList>
 
@@ -61,6 +66,10 @@ const AdminTabs: React.FC = () => {
 
       <TabsContent value="barbers">
         <BarberManagement />
+      </TabsContent>
+
+      <TabsContent value="configurations">
+        <ConfigurationManagement />
       </TabsContent>
     </Tabs>
   );
