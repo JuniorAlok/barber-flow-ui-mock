@@ -12,3 +12,7 @@ export { transactions } from './transactions';
 export { dashboardMetrics } from './dashboard';
 export { homeContent } from './content';
 export { timeSlots } from './constants';
+
+// Re-export utilities
+export * from '../utils/validation';
+export * from '../utils/formatting';
