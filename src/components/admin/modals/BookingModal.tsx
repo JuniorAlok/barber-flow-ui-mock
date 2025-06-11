@@ -38,7 +38,7 @@ const BookingModal: React.FC<BookingModalProps> = ({ isOpen, onClose, booking })
     serviceId: booking?.serviceId || '',
     barberId: booking?.barberId || '',
     time: booking?.time || '',
-    status: booking?.status || 'pending',
+    status: booking?.status || 'pending' as const,
     clientName: booking?.clientName || '',
     clientEmail: booking?.clientEmail || '',
     clientPhone: booking?.clientPhone || '',
@@ -79,7 +79,7 @@ const BookingModal: React.FC<BookingModalProps> = ({ isOpen, onClose, booking })
               barberId: formData.barberId,
               date: format(selectedDate, 'yyyy-MM-dd'),
               time: formData.time,
-              status: formData.status as any,
+              status: formData.status,
               clientName: formData.clientName,
               clientEmail: formData.clientEmail,
               clientPhone: formData.clientPhone,
@@ -100,7 +100,7 @@ const BookingModal: React.FC<BookingModalProps> = ({ isOpen, onClose, booking })
         barberId: formData.barberId,
         date: format(selectedDate, 'yyyy-MM-dd'),
         time: formData.time,
-        status: formData.status as any,
+        status: formData.status,
         clientName: formData.clientName,
         clientEmail: formData.clientEmail,
         clientPhone: formData.clientPhone,
@@ -236,7 +236,7 @@ const BookingModal: React.FC<BookingModalProps> = ({ isOpen, onClose, booking })
           {isEdit && (
             <div>
               <label className="text-sm font-medium">Status</label>
-              <Select value={formData.status} onValueChange={(value) => setFormData(prev => ({ ...prev, status: value }))}>
+              <Select value={formData.status} onValueChange={(value: 'pending' | 'confirmed' | 'done' | 'cancelled') => setFormData(prev => ({ ...prev, status: value }))}>
                 <SelectTrigger>
                   <SelectValue />
                 </SelectTrigger>
