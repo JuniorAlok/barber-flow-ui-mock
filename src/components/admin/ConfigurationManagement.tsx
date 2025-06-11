@@ -24,10 +24,22 @@ const ConfigurationManagement: React.FC = () => {
 
   const onSubmit = (data: HomeContentForm) => {
     console.log('Salvando configurações:', data);
-    setHomeContent({
-      ...data,
+    
+    // Ensure all required fields are present by merging with current homeContent
+    const updatedContent = {
+      title: data.title || homeContent.title,
+      subtitle: data.subtitle || homeContent.subtitle,
+      ctaText: data.ctaText || homeContent.ctaText,
+      aboutTitle: data.aboutTitle || homeContent.aboutTitle,
+      aboutDescription: data.aboutDescription || homeContent.aboutDescription,
       heroImageUrl: data.heroImageUrl || homeContent.heroImageUrl,
-    });
+      contactPhone: data.contactPhone || homeContent.contactPhone,
+      contactAddress: data.contactAddress || homeContent.contactAddress,
+      contactEmail: data.contactEmail || homeContent.contactEmail,
+      workingHours: data.workingHours || homeContent.workingHours,
+    };
+    
+    setHomeContent(updatedContent);
     
     toast({
       title: "Configurações salvas!",
