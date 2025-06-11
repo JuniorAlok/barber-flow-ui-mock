@@ -7,6 +7,7 @@ import { Label } from '@/components/ui/label';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { useAuth } from '@/contexts/AuthContext';
 import { toast } from '@/hooks/use-toast';
+import { useNavigate } from 'react-router-dom';
 import { Scissors, LogIn, UserPlus } from 'lucide-react';
 
 const BarberLogin: React.FC = () => {
@@ -21,6 +22,7 @@ const BarberLogin: React.FC = () => {
   });
   
   const { login, registerBarber } = useAuth();
+  const navigate = useNavigate();
 
   const handleLogin = (e: React.FormEvent) => {
     e.preventDefault();
@@ -30,6 +32,7 @@ const BarberLogin: React.FC = () => {
         title: "Login realizado com sucesso!",
         description: "Bem-vindo ao seu painel, barbeiro.",
       });
+      navigate('/barber/dashboard');
     } else {
       toast({
         title: "Erro no login",
@@ -47,6 +50,7 @@ const BarberLogin: React.FC = () => {
         title: "Cadastro realizado com sucesso!",
         description: "Seu perfil foi criado e você já está logado.",
       });
+      navigate('/barber/dashboard');
     } else {
       toast({
         title: "Erro no cadastro",

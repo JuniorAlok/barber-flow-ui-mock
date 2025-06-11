@@ -1,37 +1,33 @@
 
 import { AppProviders } from "@/contexts/AppProviders";
 import { useAuth } from "@/contexts/AuthContext";
-import AdminDashboard from "@/components/AdminDashboard";
-import BarberDashboard from "@/components/BarberDashboard";
-import BarberLogin from "@/components/BarberLogin";
-import HomePage from "@/components/HomePage";
+import { useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 import { PageLoading } from "@/components/ui/loading";
-import { Suspense } from "react";
 
-function AppContent() {
+function IndexContent() {
   const { isAuthenticated, isAdmin, isBarber } = useAuth();
+  const navigate = useNavigate();
 
-  if (!isAuthenticated) {
-    return <BarberLogin />;
-  }
+  useEffect(() => {
+    if (isAuthenticated) {
+      if (isAdmin) {
+        navigate('/admin/dashboard', { replace: true });
+      } else if (isBarber) {
+        navigate('/barber/dashboard', { replace: true });
+      }
+    } else {
+      navigate('/landing', { replace: true });
+    }
+  }, [isAuthenticated, isAdmin, isBarber, navigate]);
 
-  if (isAdmin) {
-    return <AdminDashboard />;
-  }
-
-  if (isBarber) {
-    return <BarberDashboard />;
-  }
-
-  return <HomePage />;
+  return <PageLoading />;
 }
 
 const Index = () => {
   return (
     <AppProviders>
-      <Suspense fallback={<PageLoading />}>
-        <AppContent />
-      </Suspense>
+      <IndexContent />
     </AppProviders>
   );
 };

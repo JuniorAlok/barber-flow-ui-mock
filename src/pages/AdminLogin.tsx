@@ -24,7 +24,7 @@ function AdminLoginContent() {
         title: "Login realizado com sucesso!",
         description: "Bem-vindo ao painel administrativo.",
       });
-      navigate('/');
+      navigate('/admin/dashboard');
     } else {
       toast({
         title: "Erro no login",
