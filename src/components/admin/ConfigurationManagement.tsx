@@ -42,7 +42,11 @@ const ConfigurationManagement: React.FC = () => {
   const onSubmit = (data: HomeContentForm) => {
     console.log('Salvando configurações:', data);
     setHomeContent({
-      ...data,
+      title: data.title,
+      subtitle: data.subtitle,
+      ctaText: data.ctaText,
+      aboutTitle: data.aboutTitle,
+      aboutDescription: data.aboutDescription,
       heroImageUrl: data.heroImageUrl || homeContent.heroImageUrl,
     });
     
