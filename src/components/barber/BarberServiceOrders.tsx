@@ -1,10 +1,9 @@
-
 import React, { useState, useEffect } from 'react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
-import { Play, Square, Clock, DollarSign, User } from 'lucide-react';
+import { Play, Square, Clock, DollarSign, User, Clipboard } from 'lucide-react';
 import { useAuth } from '@/contexts/AuthContext';
 import { useMockData } from '@/contexts/MockDataContext';
 import { ServiceOrder } from '@/data/types';
@@ -168,7 +167,7 @@ const BarberServiceOrders: React.FC = () => {
         <CardHeader className="pb-6">
           <div className="flex items-center space-x-3">
             <div className="p-2 rounded-lg bg-gradient-to-br from-blue-500/20 to-blue-500/5">
-              <ClipboardList className="h-5 w-5 text-blue-400" />
+              <Clipboard className="h-5 w-5 text-blue-400" />
             </div>
             <div>
               <CardTitle className="text-xl">Comandas do Dia</CardTitle>
@@ -180,7 +179,7 @@ const BarberServiceOrders: React.FC = () => {
           <div className="grid gap-4">
             {barberOrders.length === 0 ? (
               <div className="text-center py-12">
-                <ClipboardList className="h-12 w-12 text-muted-foreground mx-auto mb-4" />
+                <Clipboard className="h-12 w-12 text-muted-foreground mx-auto mb-4" />
                 <p className="text-muted-foreground">Nenhuma comanda para hoje</p>
               </div>
             ) : (
