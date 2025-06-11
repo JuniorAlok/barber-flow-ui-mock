@@ -19,6 +19,10 @@ const homeContentSchema = z.object({
   aboutTitle: z.string().min(1, 'Título da seção sobre é obrigatório'),
   aboutDescription: z.string().min(10, 'Descrição deve ter pelo menos 10 caracteres'),
   heroImageUrl: z.string().url('URL da imagem deve ser válida').optional().or(z.literal('')),
+  contactPhone: z.string().min(1, 'Telefone é obrigatório'),
+  contactAddress: z.string().min(1, 'Endereço é obrigatório'),
+  contactEmail: z.string().email('Email deve ser válido'),
+  workingHours: z.string().min(1, 'Horário de funcionamento é obrigatório'),
 });
 
 type HomeContentForm = z.infer<typeof homeContentSchema>;
@@ -36,6 +40,10 @@ const ConfigurationManagement: React.FC = () => {
       aboutTitle: homeContent.aboutTitle,
       aboutDescription: homeContent.aboutDescription,
       heroImageUrl: homeContent.heroImageUrl,
+      contactPhone: homeContent.contactPhone,
+      contactAddress: homeContent.contactAddress,
+      contactEmail: homeContent.contactEmail,
+      workingHours: homeContent.workingHours,
     },
   });
 
@@ -48,6 +56,10 @@ const ConfigurationManagement: React.FC = () => {
       aboutTitle: data.aboutTitle,
       aboutDescription: data.aboutDescription,
       heroImageUrl: data.heroImageUrl || homeContent.heroImageUrl,
+      contactPhone: data.contactPhone,
+      contactAddress: data.contactAddress,
+      contactEmail: data.contactEmail,
+      workingHours: data.workingHours,
     });
     
     toast({
@@ -176,6 +188,68 @@ const ConfigurationManagement: React.FC = () => {
                 />
               </div>
 
+              <div className="space-y-4">
+                <h3 className="text-lg font-semibold">Informações de Contato</h3>
+                
+                <div className="grid md:grid-cols-2 gap-6">
+                  <FormField
+                    control={form.control}
+                    name="contactPhone"
+                    render={({ field }) => (
+                      <FormItem>
+                        <FormLabel>Telefone</FormLabel>
+                        <FormControl>
+                          <Input placeholder="(11) 99999-9999" {...field} />
+                        </FormControl>
+                        <FormMessage />
+                      </FormItem>
+                    )}
+                  />
+
+                  <FormField
+                    control={form.control}
+                    name="contactEmail"
+                    render={({ field }) => (
+                      <FormItem>
+                        <FormLabel>Email</FormLabel>
+                        <FormControl>
+                          <Input placeholder="contato@barbearia.com" {...field} />
+                        </FormControl>
+                        <FormMessage />
+                      </FormItem>
+                    )}
+                  />
+                </div>
+
+                <FormField
+                  control={form.control}
+                  name="contactAddress"
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel>Endereço</FormLabel>
+                      <FormControl>
+                        <Input placeholder="Rua da Barbearia, 123 - Cidade, Estado" {...field} />
+                      </FormControl>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+
+                <FormField
+                  control={form.control}
+                  name="workingHours"
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel>Horário de Funcionamento</FormLabel>
+                      <FormControl>
+                        <Input placeholder="Seg-Sáb: 9h às 18h | Dom: Fechado" {...field} />
+                      </FormControl>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+              </div>
+
               <div className="flex justify-end">
                 <Button type="submit" className="flex items-center gap-2">
                   <Save className="w-4 h-4" />
@@ -191,3 +265,4 @@ const ConfigurationManagement: React.FC = () => {
 };
 
 export default ConfigurationManagement;
+

@@ -1,4 +1,3 @@
-
 export interface User {
   id: string;
   email: string;
@@ -91,6 +90,10 @@ export interface HomeContent {
   aboutTitle: string;
   aboutDescription: string;
   heroImageUrl: string;
+  contactPhone: string;
+  contactAddress: string;
+  contactEmail: string;
+  workingHours: string;
 }
 
 export const users: User[] = [
@@ -351,7 +354,11 @@ export const homeContent: HomeContent = {
   ctaText: 'Agende Agora',
   aboutTitle: 'Sobre Nós',
   aboutDescription: 'Com mais de 10 anos de experiência, nossa barbearia combina técnicas tradicionais com as tendências mais modernas. Nossa equipe de profissionais qualificados está pronta para oferecer o melhor atendimento.',
-  heroImageUrl: 'https://images.unsplash.com/photo-1585747860715-2ba37e788b70?w=800'
+  heroImageUrl: 'https://images.unsplash.com/photo-1585747860715-2ba37e788b70?w=800',
+  contactPhone: '(11) 99999-9999',
+  contactAddress: 'Rua da Barbearia, 123 - São Paulo, SP',
+  contactEmail: 'contato@iabarber.com',
+  workingHours: 'Seg-Sáb: 9h às 18h | Dom: Fechado'
 };
 
 export const timeSlots = [
