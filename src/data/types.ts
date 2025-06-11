@@ -3,7 +3,7 @@ export interface User {
   id: string;
   email: string;
   password: string;
-  role: 'admin' | 'user';
+  role: 'admin' | 'user' | 'barber';
   name: string;
 }
 
@@ -28,6 +28,7 @@ export interface Barber {
   phone: string;
   email: string;
   commission: number;
+  password?: string; // Para login do barbeiro
 }
 
 export interface Booking {
@@ -43,6 +44,24 @@ export interface Booking {
   clientPhone: string;
   notes?: string;
   totalAmount: number;
+}
+
+export interface ServiceOrder {
+  id: string;
+  bookingId: string;
+  barberId: string;
+  serviceId: string;
+  clientName: string;
+  serviceName: string;
+  estimatedDuration: number;
+  status: 'waiting' | 'in_progress' | 'completed' | 'cancelled';
+  startTime?: string;
+  endTime?: string;
+  actualDuration?: number;
+  paymentMethod?: 'pix' | 'credit' | 'cash';
+  amount: number;
+  date: string;
+  scheduledTime: string;
 }
 
 export interface Client {
@@ -68,6 +87,8 @@ export interface Transaction {
   date: string;
   bookingId?: string;
   barberId?: string;
+  serviceOrderId?: string;
+  paymentMethod?: 'pix' | 'credit' | 'cash';
 }
 
 export interface DashboardMetrics {

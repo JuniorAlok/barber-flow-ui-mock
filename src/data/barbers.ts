@@ -12,6 +12,7 @@ export const barbers: Barber[] = [
     isActive: true,
     phone: '(11) 99999-1111',
     email: 'carlos@iabarber.com',
+    password: 'barber123',
     commission: 60
   },
   {
@@ -24,6 +25,7 @@ export const barbers: Barber[] = [
     isActive: true,
     phone: '(11) 99999-2222',
     email: 'roberto@iabarber.com',
+    password: 'barber123',
     commission: 65
   },
   {
@@ -36,6 +38,7 @@ export const barbers: Barber[] = [
     isActive: true,
     phone: '(11) 99999-3333',
     email: 'andre@iabarber.com',
+    password: 'barber123',
     commission: 55
   }
 ];

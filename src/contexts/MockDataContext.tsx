@@ -2,8 +2,9 @@
 import React, { createContext, useContext, useState, ReactNode } from 'react';
 import { 
   users, services, barbers, bookings, clients, transactions, dashboardMetrics, homeContent,
-  User, Service, Barber, Booking, Client, Transaction, DashboardMetrics, HomeContent 
+  User, Service, Barber, Booking, Client, Transaction, DashboardMetrics, HomeContent, ServiceOrder 
 } from '@/data/mock';
+import { serviceOrders } from '@/data/serviceOrders';
 
 interface MockDataContextType {
   users: User[];
@@ -12,6 +13,7 @@ interface MockDataContextType {
   bookings: Booking[];
   clients: Client[];
   transactions: Transaction[];
+  serviceOrders: ServiceOrder[];
   dashboardMetrics: DashboardMetrics;
   homeContent: HomeContent;
   setUsers: React.Dispatch<React.SetStateAction<User[]>>;
@@ -20,6 +22,7 @@ interface MockDataContextType {
   setBookings: React.Dispatch<React.SetStateAction<Booking[]>>;
   setClients: React.Dispatch<React.SetStateAction<Client[]>>;
   setTransactions: React.Dispatch<React.SetStateAction<Transaction[]>>;
+  setServiceOrders: React.Dispatch<React.SetStateAction<ServiceOrder[]>>;
   setDashboardMetrics: React.Dispatch<React.SetStateAction<DashboardMetrics>>;
   setHomeContent: React.Dispatch<React.SetStateAction<HomeContent>>;
 }
@@ -33,6 +36,7 @@ export const MockDataProvider: React.FC<{ children: ReactNode }> = ({ children }
   const [mockBookings, setBookings] = useState<Booking[]>(bookings);
   const [mockClients, setClients] = useState<Client[]>(clients);
   const [mockTransactions, setTransactions] = useState<Transaction[]>(transactions);
+  const [mockServiceOrders, setServiceOrders] = useState<ServiceOrder[]>(serviceOrders);
   const [mockDashboardMetrics, setDashboardMetrics] = useState<DashboardMetrics>(dashboardMetrics);
   const [mockHomeContent, setHomeContent] = useState<HomeContent>(homeContent);
 
@@ -44,6 +48,7 @@ export const MockDataProvider: React.FC<{ children: ReactNode }> = ({ children }
       bookings: mockBookings,
       clients: mockClients,
       transactions: mockTransactions,
+      serviceOrders: mockServiceOrders,
       dashboardMetrics: mockDashboardMetrics,
       homeContent: mockHomeContent,
       setUsers,
@@ -52,6 +57,7 @@ export const MockDataProvider: React.FC<{ children: ReactNode }> = ({ children }
       setBookings,
       setClients,
       setTransactions,
+      setServiceOrders,
       setDashboardMetrics,
       setHomeContent,
     }}>

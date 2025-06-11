@@ -1,50 +1,36 @@
 
-import React, { useState } from 'react';
-import { Button } from '@/components/ui/button';
-import HomePage from '@/components/HomePage';
-import AdminDashboard from '@/components/AdminDashboard';
-import LoginModal from '@/components/LoginModal';
-import { MockDataProvider } from '@/contexts/MockDataContext';
-import { AuthProvider, useAuth } from '@/contexts/AuthContext';
-import { Shield } from 'lucide-react';
+import { MockDataProvider } from "@/contexts/MockDataContext";
+import { AuthProvider, useAuth } from "@/contexts/AuthContext";
+import AdminDashboard from "@/components/AdminDashboard";
+import BarberDashboard from "@/components/BarberDashboard";
+import BarberLogin from "@/components/BarberLogin";
+import HomePage from "@/components/HomePage";
 
-const AppContent: React.FC = () => {
-  const { isAuthenticated, isAdmin } = useAuth();
-  const [isLoginModalOpen, setIsLoginModalOpen] = useState(false);
+function AppContent() {
+  const { isAuthenticated, isAdmin, isBarber } = useAuth();
 
-  if (isAuthenticated && isAdmin) {
+  if (!isAuthenticated) {
+    return <BarberLogin />;
+  }
+
+  if (isAdmin) {
     return <AdminDashboard />;
   }
 
-  return (
-    <div className="relative">
-      <HomePage />
-      
-      {/* Admin Access Button - Fixed Position */}
-      <Button
-        className="fixed bottom-4 left-4 z-50 bg-primary hover:bg-primary/90"
-        onClick={() => setIsLoginModalOpen(true)}
-        size="sm"
-      >
-        <Shield className="w-4 h-4 mr-2" />
-        Admin
-      </Button>
+  if (isBarber) {
+    return <BarberDashboard />;
+  }
 
-      <LoginModal 
-        isOpen={isLoginModalOpen} 
-        onClose={() => setIsLoginModalOpen(false)} 
-      />
-    </div>
-  );
-};
+  return <HomePage />;
+}
 
-const Index: React.FC = () => {
+const Index = () => {
   return (
-    <AuthProvider>
-      <MockDataProvider>
+    <MockDataProvider>
+      <AuthProvider>
         <AppContent />
-      </MockDataProvider>
-    </AuthProvider>
+      </AuthProvider>
+    </MockDataProvider>
   );
 };
 

@@ -9,6 +9,7 @@ export { barbers } from './barbers';
 export { clients } from './clients';
 export { bookings } from './bookings';
 export { transactions } from './transactions';
+export { serviceOrders } from './serviceOrders';
 export { dashboardMetrics } from './dashboard';
 export { homeContent } from './content';
 export { timeSlots } from './constants';
