@@ -9,17 +9,30 @@ export const useServiceTimers = () => {
   useEffect(() => {
     const savedTimers = localStorage.getItem('barber-timers');
     if (savedTimers) {
-      const parsedTimers = JSON.parse(savedTimers);
-      setTimers(parsedTimers);
-      return parsedTimers;
+      try {
+        const parsedTimers = JSON.parse(savedTimers);
+        setTimers(parsedTimers);
+      } catch (error) {
+        console.error('Error parsing saved timers:', error);
+      }
     }
-    return {};
   }, []);
 
   // Save timers to localStorage whenever they change
   useEffect(() => {
     localStorage.setItem('barber-timers', JSON.stringify(timers));
   }, [timers]);
+
+  // Cleanup active timers on unmount
+  useEffect(() => {
+    return () => {
+      Object.values(activeTimers).forEach(timer => {
+        if (timer) {
+          clearInterval(timer);
+        }
+      });
+    };
+  }, [activeTimers]);
 
   const startTimer = (orderId: string, initialSeconds = 0) => {
     if (activeTimers[orderId]) return;
@@ -54,11 +67,11 @@ export const useServiceTimers = () => {
     return `${mins.toString().padStart(2, '0')}:${secs.toString().padStart(2, '0')}`;
   };
 
-  const restartActiveTimers = (serviceOrders: any[], callback: (orderId: string, seconds: number) => void) => {
+  const restartActiveTimers = (serviceOrders: any[]) => {
     Object.entries(timers).forEach(([orderId, seconds]) => {
       const order = serviceOrders.find(o => o.id === orderId);
-      if (order && order.status === 'in_progress') {
-        callback(orderId, seconds as number);
+      if (order && order.status === 'in_progress' && !activeTimers[orderId]) {
+        startTimer(orderId, seconds as number);
       }
     });
   };

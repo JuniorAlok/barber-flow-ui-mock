@@ -13,8 +13,10 @@ const BarberServiceOrders: React.FC = () => {
 
   // Restart active timers on component mount
   useEffect(() => {
-    restartActiveTimers(serviceOrders, startTimer);
-  }, []);
+    if (serviceOrders.length > 0) {
+      restartActiveTimers(serviceOrders);
+    }
+  }, [serviceOrders, restartActiveTimers]);
 
   const onStartService = (orderId: string) => {
     handleStartService(orderId);
