@@ -19,36 +19,45 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
   const [user, setUser] = useState<User | null>(null);
 
   const login = (email: string, password: string): boolean => {
+    console.log('AuthContext: Login attempt for:', email);
+    
     // Admin login
     if (email === 'admin@iabarber.com' && password === 'Admin123!') {
-      setUser({
+      const adminUser = {
         id: '1',
         email: 'admin@iabarber.com',
         password: 'Admin123!',
-        role: 'admin',
+        role: 'admin' as const,
         name: 'Administrador'
-      });
+      };
+      setUser(adminUser);
+      console.log('AuthContext: Admin login successful:', adminUser);
       return true;
     }
 
     // Barber login - check against static barbers data
     const barber = barbers.find(b => b.email === email && b.password === password);
     if (barber) {
-      setUser({
+      const barberUser = {
         id: barber.id,
         email: barber.email,
         password: barber.password!,
-        role: 'barber',
+        role: 'barber' as const,
         name: barber.name
-      });
+      };
+      setUser(barberUser);
+      console.log('AuthContext: Barber login successful:', barberUser);
       return true;
     }
 
+    console.log('AuthContext: Login failed for:', email);
     return false;
   };
 
   const registerBarber = (barberData: any): boolean => {
     try {
+      console.log('AuthContext: Registering barber:', barberData);
+      
       // For now, we'll handle barber registration through events
       // This will be improved when we add proper state management
       const newBarber = {
@@ -69,13 +78,15 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
       window.dispatchEvent(new CustomEvent('barberRegistered', { detail: newBarber }));
       
       // Auto login after registration
-      setUser({
+      const barberUser = {
         id: newBarber.id,
         email: newBarber.email,
         password: newBarber.password,
-        role: 'barber',
+        role: 'barber' as const,
         name: newBarber.name
-      });
+      };
+      setUser(barberUser);
+      console.log('AuthContext: Barber registration and login successful:', barberUser);
 
       return true;
     } catch (error) {
@@ -85,12 +96,15 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
   };
 
   const logout = () => {
+    console.log('AuthContext: Logging out user:', user);
     setUser(null);
   };
 
   const isAuthenticated = !!user;
   const isAdmin = user?.role === 'admin';
   const isBarber = user?.role === 'barber';
+
+  console.log('AuthContext: Current auth state:', { user, isAuthenticated, isAdmin, isBarber });
 
   return (
     <AuthContext.Provider value={{

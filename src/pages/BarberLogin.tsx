@@ -1,11 +1,10 @@
 
-import { AppProviders } from "@/contexts/AppProviders";
-import BarberLoginComponent from "@/components/BarberLogin";
 import { Link } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
 import { ArrowLeft } from 'lucide-react';
+import BarberLoginComponent from "@/components/BarberLogin";
 
-function BarberLoginWithNavigation() {
+const BarberLogin = () => {
   return (
     <div className="relative">
       <div className="absolute top-4 left-4 z-10">
@@ -27,14 +26,6 @@ function BarberLoginWithNavigation() {
       
       <BarberLoginComponent />
     </div>
-  );
-}
-
-const BarberLogin = () => {
-  return (
-    <AppProviders>
-      <BarberLoginWithNavigation />
-    </AppProviders>
   );
 };
 

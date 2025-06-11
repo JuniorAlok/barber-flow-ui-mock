@@ -8,9 +8,8 @@ import { useAuth } from '@/contexts/AuthContext';
 import { toast } from '@/hooks/use-toast';
 import { Shield, ArrowLeft } from 'lucide-react';
 import { Link, useNavigate } from 'react-router-dom';
-import { AppProviders } from "@/contexts/AppProviders";
 
-function AdminLoginContent() {
+const AdminLogin = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const { login } = useAuth();
@@ -19,13 +18,17 @@ function AdminLoginContent() {
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     
+    console.log('AdminLogin: Attempting login with:', email);
+    
     if (login(email, password)) {
+      console.log('AdminLogin: Login successful');
       toast({
         title: "Login realizado com sucesso!",
         description: "Bem-vindo ao painel administrativo.",
       });
-      navigate('/admin/dashboard');
+      navigate('/admin/dashboard', { replace: true });
     } else {
+      console.log('AdminLogin: Login failed');
       toast({
         title: "Erro no login",
         description: "Email ou senha incorretos.",
@@ -105,14 +108,6 @@ function AdminLoginContent() {
         </Card>
       </div>
     </div>
-  );
-}
-
-const AdminLogin = () => {
-  return (
-    <AppProviders>
-      <AdminLoginContent />
-    </AppProviders>
   );
 };
 

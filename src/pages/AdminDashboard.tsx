@@ -1,35 +1,31 @@
 
-import { AppProviders } from "@/contexts/AppProviders";
 import { useAuth } from "@/contexts/AuthContext";
 import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import AdminDashboard from "@/components/AdminDashboard";
+import { PageLoading } from "@/components/ui/loading";
 
-function ProtectedAdminDashboard() {
+const AdminDashboardPage = () => {
   const { isAuthenticated, isAdmin } = useAuth();
   const navigate = useNavigate();
 
   useEffect(() => {
+    console.log('AdminDashboard: Auth state:', { isAuthenticated, isAdmin });
+    
     if (!isAuthenticated) {
-      navigate('/admin/login');
+      console.log('AdminDashboard: Not authenticated, redirecting to admin login');
+      navigate('/admin/login', { replace: true });
     } else if (!isAdmin) {
-      navigate('/barber/dashboard');
+      console.log('AdminDashboard: Not admin, redirecting to barber dashboard');
+      navigate('/barber/dashboard', { replace: true });
     }
   }, [isAuthenticated, isAdmin, navigate]);
 
   if (!isAuthenticated || !isAdmin) {
-    return null;
+    return <PageLoading />;
   }
 
   return <AdminDashboard />;
-}
-
-const AdminDashboardPage = () => {
-  return (
-    <AppProviders>
-      <ProtectedAdminDashboard />
-    </AppProviders>
-  );
 };
 
 export default AdminDashboardPage;
