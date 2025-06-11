@@ -1,5 +1,5 @@
 
-import React, { createContext, useContext, useState, ReactNode } from 'react';
+import React, { createContext, useContext, useState, ReactNode, useEffect } from 'react';
 import { User } from '@/data/mock';
 import { useMockData } from './MockDataContext';
 
@@ -17,7 +17,20 @@ const AuthContext = createContext<AuthContextType | undefined>(undefined);
 
 export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
   const [user, setUser] = useState<User | null>(null);
-  const { barbers, setBarbers } = useMockData();
+  const [isInitialized, setIsInitialized] = useState(false);
+  
+  // Use useEffect to safely access the context after mounting
+  const [barbers, setBarbers] = useState<any[]>([]);
+  
+  useEffect(() => {
+    try {
+      const mockData = useMockData();
+      setBarbers(mockData.barbers);
+      setIsInitialized(true);
+    } catch (error) {
+      console.error('Error accessing mock data:', error);
+    }
+  }, []);
 
   const login = (email: string, password: string): boolean => {
     // Admin login
@@ -50,6 +63,7 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
 
   const registerBarber = (barberData: any): boolean => {
     try {
+      const mockData = useMockData();
       const newBarber = {
         id: (barbers.length + 1).toString(),
         name: barberData.name,
@@ -64,6 +78,7 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
         commission: 50
       };
 
+      mockData.setBarbers(prev => [...prev, newBarber]);
       setBarbers(prev => [...prev, newBarber]);
       
       // Auto login after registration
@@ -89,6 +104,11 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
   const isAuthenticated = !!user;
   const isAdmin = user?.role === 'admin';
   const isBarber = user?.role === 'barber';
+
+  // Don't render children until context is properly initialized
+  if (!isInitialized) {
+    return <div>Loading...</div>;
+  }
 
   return (
     <AuthContext.Provider value={{
