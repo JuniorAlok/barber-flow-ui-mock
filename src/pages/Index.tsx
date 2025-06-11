@@ -9,18 +9,21 @@ const Index = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
-    console.log('Index: Auth state:', { isAuthenticated, isAdmin, isBarber });
+    console.log('Index: Auth state check:', { isAuthenticated, isAdmin, isBarber });
     
     if (isAuthenticated) {
       if (isAdmin) {
-        console.log('Index: Redirecting to admin dashboard');
+        console.log('Index: Authenticated admin - redirecting to admin dashboard');
         navigate('/admin/dashboard', { replace: true });
       } else if (isBarber) {
-        console.log('Index: Redirecting to barber dashboard');
+        console.log('Index: Authenticated barber - redirecting to barber dashboard');
         navigate('/barber/dashboard', { replace: true });
+      } else {
+        console.log('Index: Authenticated but unknown role - redirecting to landing');
+        navigate('/landing', { replace: true });
       }
     } else {
-      console.log('Index: Redirecting to landing page');
+      console.log('Index: Not authenticated - redirecting to landing page');
       navigate('/landing', { replace: true });
     }
   }, [isAuthenticated, isAdmin, isBarber, navigate]);

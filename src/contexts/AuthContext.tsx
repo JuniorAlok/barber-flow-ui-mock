@@ -19,7 +19,7 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
   const [user, setUser] = useState<User | null>(null);
 
   const login = (email: string, password: string): boolean => {
-    console.log('AuthContext: Login attempt for:', email);
+    console.log('AuthContext: Login attempt for email:', email);
     
     // Admin login
     if (email === 'admin@iabarber.com' && password === 'Admin123!') {
@@ -36,6 +36,7 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
     }
 
     // Barber login - check against static barbers data
+    console.log('AuthContext: Checking barbers data for login:', barbers.length, 'barbers available');
     const barber = barbers.find(b => b.email === email && b.password === password);
     if (barber) {
       const barberUser = {
@@ -50,7 +51,8 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
       return true;
     }
 
-    console.log('AuthContext: Login failed for:', email);
+    console.log('AuthContext: Login failed for email:', email);
+    console.log('AuthContext: Available barber emails:', barbers.map(b => b.email));
     return false;
   };
 
@@ -90,7 +92,7 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
 
       return true;
     } catch (error) {
-      console.error('Erro ao registrar barbeiro:', error);
+      console.error('AuthContext: Error registering barber:', error);
       return false;
     }
   };
@@ -104,7 +106,13 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
   const isAdmin = user?.role === 'admin';
   const isBarber = user?.role === 'barber';
 
-  console.log('AuthContext: Current auth state:', { user, isAuthenticated, isAdmin, isBarber });
+  console.log('AuthContext: Current auth state:', { 
+    user: user?.email, 
+    role: user?.role,
+    isAuthenticated, 
+    isAdmin, 
+    isBarber 
+  });
 
   return (
     <AuthContext.Provider value={{

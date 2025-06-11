@@ -6,20 +6,22 @@ import BarberDashboard from "@/components/BarberDashboard";
 import { PageLoading } from "@/components/ui/loading";
 
 const BarberDashboardPage = () => {
-  const { isAuthenticated, isBarber } = useAuth();
+  const { isAuthenticated, isBarber, user } = useAuth();
   const navigate = useNavigate();
 
   useEffect(() => {
-    console.log('BarberDashboard: Auth state:', { isAuthenticated, isBarber });
+    console.log('BarberDashboardPage: Auth state check:', { isAuthenticated, isBarber, user });
     
     if (!isAuthenticated) {
-      console.log('BarberDashboard: Not authenticated, redirecting to barber login');
+      console.log('BarberDashboardPage: Not authenticated - redirecting to barber login');
       navigate('/barber/login', { replace: true });
     } else if (!isBarber) {
-      console.log('BarberDashboard: Not barber, redirecting to admin dashboard');
-      navigate('/admin/dashboard', { replace: true });
+      console.log('BarberDashboardPage: Not a barber - redirecting to landing');
+      navigate('/landing', { replace: true });
+    } else {
+      console.log('BarberDashboardPage: Valid barber access');
     }
-  }, [isAuthenticated, isBarber, navigate]);
+  }, [isAuthenticated, isBarber, user, navigate]);
 
   if (!isAuthenticated || !isBarber) {
     return <PageLoading />;

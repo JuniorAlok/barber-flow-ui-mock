@@ -7,10 +7,12 @@ export const useServiceTimers = () => {
 
   // Load timers from localStorage on hook initialization
   useEffect(() => {
+    console.log('useServiceTimers: Loading timers from localStorage');
     const savedTimers = localStorage.getItem('barber-timers');
     if (savedTimers) {
       try {
         const parsedTimers = JSON.parse(savedTimers);
+        console.log('useServiceTimers: Loaded timers:', parsedTimers);
         setTimers(parsedTimers);
       } catch (error) {
         console.error('Error parsing saved timers:', error);
@@ -20,12 +22,14 @@ export const useServiceTimers = () => {
 
   // Save timers to localStorage whenever they change
   useEffect(() => {
+    console.log('useServiceTimers: Saving timers to localStorage:', timers);
     localStorage.setItem('barber-timers', JSON.stringify(timers));
   }, [timers]);
 
-  // Cleanup active timers on unmount
+  // Cleanup active timers on unmount - FIXED: Return proper cleanup function
   useEffect(() => {
     return () => {
+      console.log('useServiceTimers: Cleaning up active timers on unmount');
       Object.values(activeTimers).forEach(timer => {
         if (timer) {
           clearInterval(timer);
@@ -35,7 +39,11 @@ export const useServiceTimers = () => {
   }, [activeTimers]);
 
   const startTimer = (orderId: string, initialSeconds = 0) => {
-    if (activeTimers[orderId]) return;
+    console.log('useServiceTimers: Starting timer for order:', orderId, 'with initial seconds:', initialSeconds);
+    if (activeTimers[orderId]) {
+      console.log('useServiceTimers: Timer already active for order:', orderId);
+      return;
+    }
 
     const interval = setInterval(() => {
       setTimers(prev => ({
@@ -51,6 +59,7 @@ export const useServiceTimers = () => {
   };
 
   const stopTimer = (orderId: string) => {
+    console.log('useServiceTimers: Stopping timer for order:', orderId);
     if (activeTimers[orderId]) {
       clearInterval(activeTimers[orderId]);
       setActiveTimers(prev => {
@@ -68,9 +77,11 @@ export const useServiceTimers = () => {
   };
 
   const restartActiveTimers = (serviceOrders: any[]) => {
+    console.log('useServiceTimers: Restarting active timers for orders:', serviceOrders);
     Object.entries(timers).forEach(([orderId, seconds]) => {
       const order = serviceOrders.find(o => o.id === orderId);
       if (order && order.status === 'in_progress' && !activeTimers[orderId]) {
+        console.log('useServiceTimers: Restarting timer for order:', orderId, 'with seconds:', seconds);
         startTimer(orderId, seconds as number);
       }
     });

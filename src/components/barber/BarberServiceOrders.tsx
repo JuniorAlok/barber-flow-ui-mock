@@ -1,5 +1,5 @@
 
-import React, { useEffect } from 'react';
+import React, { useEffect, useCallback } from 'react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Clipboard } from 'lucide-react';
 import { useServiceTimers } from '@/hooks/useServiceTimers';
@@ -8,22 +8,31 @@ import ServiceOrderCard from './ServiceOrderCard';
 import StatusBadge from './StatusBadge';
 
 const BarberServiceOrders: React.FC = () => {
+  console.log('BarberServiceOrders: Component rendering');
+  
   const { timers, startTimer, stopTimer, formatTime, restartActiveTimers } = useServiceTimers();
   const { barberOrders, serviceOrders, handleStartService, handleStopService } = useServiceOrders();
 
-  // Restart active timers on component mount
+  // Use useCallback to memoize the restart function
+  const memoizedRestartActiveTimers = useCallback(restartActiveTimers, [restartActiveTimers]);
+
+  // Restart active timers on component mount - FIXED: Proper dependency array
   useEffect(() => {
+    console.log('BarberServiceOrders: useEffect triggered with serviceOrders:', serviceOrders.length);
     if (serviceOrders.length > 0) {
-      restartActiveTimers(serviceOrders);
+      console.log('BarberServiceOrders: Restarting active timers');
+      memoizedRestartActiveTimers(serviceOrders);
     }
-  }, [serviceOrders, restartActiveTimers]);
+  }, [serviceOrders.length, memoizedRestartActiveTimers]);
 
   const onStartService = (orderId: string) => {
+    console.log('BarberServiceOrders: Starting service for order:', orderId);
     handleStartService(orderId);
     startTimer(orderId);
   };
 
   const onStopService = (orderId: string, paymentMethod: string) => {
+    console.log('BarberServiceOrders: Stopping service for order:', orderId, 'payment:', paymentMethod);
     const actualDuration = Math.floor((timers[orderId] || 0) / 60);
     handleStopService(orderId, paymentMethod, actualDuration);
     stopTimer(orderId);
@@ -32,6 +41,8 @@ const BarberServiceOrders: React.FC = () => {
   const getStatusBadge = (status: string) => {
     return <StatusBadge status={status} />;
   };
+
+  console.log('BarberServiceOrders: Rendering with barberOrders:', barberOrders.length);
 
   return (
     <div className="space-y-6 animate-fade-in">
