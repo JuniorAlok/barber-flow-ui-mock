@@ -2,34 +2,18 @@
 import React, { useState } from 'react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
-import { Input } from '@/components/ui/input';
-import { Label } from '@/components/ui/label';
-import { Textarea } from '@/components/ui/textarea';
-import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
 import { Badge } from '@/components/ui/badge';
-import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from '@/components/ui/dialog';
-import { Switch } from '@/components/ui/switch';
-import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
-import { Plus, Edit, Star, Phone, Mail, Calendar } from 'lucide-react';
+import { Input } from '@/components/ui/input';
+import { Plus, Search, Edit, Phone, Mail, Calendar } from 'lucide-react';
 import { useMockData } from '@/contexts/MockDataContext';
-import { format } from 'date-fns';
-import { ptBR } from 'date-fns/locale';
-import { toast } from '@/hooks/use-toast';
+import { formatCurrency } from '@/utils/formatting';
+import ClientModal from '@/components/admin/modals/ClientModal';
 
 const ClientManagement: React.FC = () => {
-  const { clients, setClients } = useMockData();
-  const [isDialogOpen, setIsDialogOpen] = useState(false);
-  const [editingClient, setEditingClient] = useState<any>(null);
+  const { clients } = useMockData();
   const [searchTerm, setSearchTerm] = useState('');
-
-  const [formData, setFormData] = useState({
-    name: '',
-    email: '',
-    phone: '',
-    birthday: '',
-    notes: '',
-    isVip: false
-  });
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [editingClient, setEditingClient] = useState(null);
 
   const filteredClients = clients.filter(client =>
     client.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
@@ -37,254 +21,118 @@ const ClientManagement: React.FC = () => {
     client.phone.includes(searchTerm)
   );
 
-  const handleOpenDialog = (client?: any) => {
-    if (client) {
-      setEditingClient(client);
-      setFormData({
-        name: client.name,
-        email: client.email,
-        phone: client.phone,
-        birthday: client.birthday || '',
-        notes: client.notes || '',
-        isVip: client.isVip
-      });
-    } else {
-      setEditingClient(null);
-      setFormData({
-        name: '',
-        email: '',
-        phone: '',
-        birthday: '',
-        notes: '',
-        isVip: false
-      });
-    }
-    setIsDialogOpen(true);
+  const handleNewClient = () => {
+    setEditingClient(null);
+    setIsModalOpen(true);
   };
 
-  const handleSaveClient = () => {
-    if (!formData.name || !formData.email || !formData.phone) {
-      toast({
-        title: "Erro",
-        description: "Preencha todos os campos obrigatórios.",
-        variant: "destructive"
-      });
-      return;
-    }
-
-    if (editingClient) {
-      setClients(prev => prev.map(client =>
-        client.id === editingClient.id
-          ? { ...client, ...formData }
-          : client
-      ));
-      toast({
-        title: "Cliente atualizado",
-        description: "As informações do cliente foram atualizadas com sucesso."
-      });
-    } else {
-      const newClient = {
-        id: Date.now().toString(),
-        ...formData,
-        totalVisits: 0,
-        totalSpent: 0,
-        lastVisit: format(new Date(), 'yyyy-MM-dd')
-      };
-      setClients(prev => [...prev, newClient]);
-      toast({
-        title: "Cliente adicionado",
-        description: "O novo cliente foi adicionado com sucesso."
-      });
-    }
-
-    setIsDialogOpen(false);
+  const handleEditClient = (client: any) => {
+    setEditingClient(client);
+    setIsModalOpen(true);
   };
 
-  const toggleVipStatus = (clientId: string, isVip: boolean) => {
-    setClients(prev => prev.map(client =>
-      client.id === clientId ? { ...client, isVip } : client
-    ));
-    toast({
-      title: isVip ? "Cliente VIP" : "Status VIP removido",
-      description: `O cliente foi ${isVip ? 'promovido a' : 'removido do status'} VIP.`
-    });
+  const handleCloseModal = () => {
+    setIsModalOpen(false);
+    setEditingClient(null);
   };
 
   return (
-    <div className="space-y-6 animate-fade-in">
-      {/* Header com busca e novo cliente */}
-      <div className="flex flex-col sm:flex-row gap-4 justify-between items-start sm:items-center">
-        <div className="flex-1 max-w-sm">
-          <Input
-            placeholder="Buscar clientes..."
-            value={searchTerm}
-            onChange={(e) => setSearchTerm(e.target.value)}
-            className="w-full"
-          />
-        </div>
-        <Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
-          <DialogTrigger asChild>
-            <Button onClick={() => handleOpenDialog()} className="gold-gradient">
+    <>
+      <Card className="management-card border-0 animate-fade-in">
+        <CardHeader className="pb-6">
+          <div className="flex justify-between items-center">
+            <div className="flex items-center space-x-3">
+              <div className="p-2 rounded-lg bg-gradient-to-br from-blue-500/20 to-blue-500/5">
+                <Phone className="h-5 w-5 text-blue-400" />
+              </div>
+              <div>
+                <CardTitle className="text-xl">Gerenciar Clientes</CardTitle>
+                <p className="text-sm text-muted-foreground">Cadastro e histórico de clientes</p>
+              </div>
+            </div>
+            <Button 
+              onClick={handleNewClient}
+              className="gradient-glow hover:scale-105 transition-all duration-300"
+            >
               <Plus className="w-4 h-4 mr-2" />
               Novo Cliente
             </Button>
-          </DialogTrigger>
-          <DialogContent className="bg-card max-w-md">
-            <DialogHeader>
-              <DialogTitle>
-                {editingClient ? 'Editar Cliente' : 'Novo Cliente'}
-              </DialogTitle>
-            </DialogHeader>
-            <div className="space-y-4">
-              <div>
-                <Label htmlFor="name">Nome *</Label>
-                <Input
-                  value={formData.name}
-                  onChange={(e) => setFormData({ ...formData, name: e.target.value })}
-                  placeholder="Nome completo"
-                />
-              </div>
-              <div>
-                <Label htmlFor="email">E-mail *</Label>
-                <Input
-                  type="email"
-                  value={formData.email}
-                  onChange={(e) => setFormData({ ...formData, email: e.target.value })}
-                  placeholder="email@exemplo.com"
-                />
-              </div>
-              <div>
-                <Label htmlFor="phone">Telefone *</Label>
-                <Input
-                  value={formData.phone}
-                  onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
-                  placeholder="(11) 99999-9999"
-                />
-              </div>
-              <div>
-                <Label htmlFor="birthday">Data de Nascimento</Label>
-                <Input
-                  type="date"
-                  value={formData.birthday}
-                  onChange={(e) => setFormData({ ...formData, birthday: e.target.value })}
-                />
-              </div>
-              <div>
-                <Label htmlFor="notes">Observações</Label>
-                <Textarea
-                  value={formData.notes}
-                  onChange={(e) => setFormData({ ...formData, notes: e.target.value })}
-                  placeholder="Observações sobre o cliente..."
-                />
-              </div>
-              <div className="flex items-center space-x-2">
-                <Switch
-                  checked={formData.isVip}
-                  onCheckedChange={(checked) => setFormData({ ...formData, isVip: checked })}
-                />
-                <Label>Cliente VIP</Label>
-              </div>
-              <Button onClick={handleSaveClient} className="w-full gold-gradient">
-                {editingClient ? 'Atualizar' : 'Adicionar'} Cliente
-              </Button>
-            </div>
-          </DialogContent>
-        </Dialog>
-      </div>
-
-      {/* Lista de clientes */}
-      <Card className="glass-effect">
-        <CardHeader>
-          <CardTitle>Clientes Cadastrados ({filteredClients.length})</CardTitle>
+          </div>
         </CardHeader>
         <CardContent>
-          <Table>
-            <TableHeader>
-              <TableRow>
-                <TableHead>Cliente</TableHead>
-                <TableHead>Contato</TableHead>
-                <TableHead>Visitas</TableHead>
-                <TableHead>Total Gasto</TableHead>
-                <TableHead>Última Visita</TableHead>
-                <TableHead>Status</TableHead>
-                <TableHead>Ações</TableHead>
-              </TableRow>
-            </TableHeader>
-            <TableBody>
-              {filteredClients.map((client) => (
-                <TableRow key={client.id}>
-                  <TableCell>
-                    <div className="flex items-center space-x-3">
-                      <Avatar>
-                        <AvatarImage src={client.avatar} />
-                        <AvatarFallback>
-                          {client.name.split(' ').map(n => n[0]).join('')}
-                        </AvatarFallback>
-                      </Avatar>
-                      <div>
-                        <div className="font-medium">{client.name}</div>
-                        {client.birthday && (
-                          <div className="text-sm text-muted-foreground flex items-center">
-                            <Calendar className="w-3 h-3 mr-1" />
-                            {format(new Date(client.birthday), 'dd/MM', { locale: ptBR })}
-                          </div>
-                        )}
-                      </div>
-                    </div>
-                  </TableCell>
-                  <TableCell>
-                    <div className="space-y-1">
-                      <div className="flex items-center text-sm">
-                        <Phone className="w-3 h-3 mr-1" />
-                        {client.phone}
-                      </div>
-                      <div className="flex items-center text-sm">
-                        <Mail className="w-3 h-3 mr-1" />
-                        {client.email}
-                      </div>
-                    </div>
-                  </TableCell>
-                  <TableCell>
-                    <div className="font-medium">{client.totalVisits}</div>
-                  </TableCell>
-                  <TableCell>
-                    <div className="font-medium text-primary">
-                      R$ {client.totalSpent.toLocaleString()}
-                    </div>
-                  </TableCell>
-                  <TableCell>
-                    {format(new Date(client.lastVisit), 'dd/MM/yyyy', { locale: ptBR })}
-                  </TableCell>
-                  <TableCell>
-                    <div className="flex items-center space-x-2">
+          <div className="mb-6">
+            <div className="relative">
+              <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-muted-foreground w-4 h-4" />
+              <Input
+                placeholder="Buscar por nome, email ou telefone..."
+                value={searchTerm}
+                onChange={(e) => setSearchTerm(e.target.value)}
+                className="pl-10"
+              />
+            </div>
+          </div>
+          
+          <div className="space-y-4">
+            {filteredClients.map((client, index) => (
+              <div 
+                key={client.id} 
+                className="management-item p-6 animate-slide-up"
+                style={{ animationDelay: `${index * 100}ms` }}
+              >
+                <div className="flex items-center justify-between">
+                  <div className="flex-1">
+                    <div className="flex items-center space-x-3 mb-2">
+                      <h3 className="text-lg font-semibold text-foreground">{client.name}</h3>
                       {client.isVip && (
-                        <Badge className="bg-primary text-primary-foreground">
-                          <Star className="w-3 h-3 mr-1" />
+                        <Badge className="bg-yellow-500/20 text-yellow-400 border-yellow-500/30">
                           VIP
                         </Badge>
                       )}
-                      <Switch
-                        checked={client.isVip}
-                        onCheckedChange={(checked) => toggleVipStatus(client.id, checked)}
-                      />
                     </div>
-                  </TableCell>
-                  <TableCell>
+                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 text-sm">
+                      <div className="flex items-center space-x-2">
+                        <Phone className="w-4 h-4 text-muted-foreground" />
+                        <span className="text-muted-foreground">{client.phone}</span>
+                      </div>
+                      <div className="flex items-center space-x-2">
+                        <Mail className="w-4 h-4 text-muted-foreground" />
+                        <span className="text-muted-foreground">{client.email}</span>
+                      </div>
+                      <div className="flex items-center space-x-2">
+                        <Calendar className="w-4 h-4 text-muted-foreground" />
+                        <span className="text-muted-foreground">Última visita: {new Date(client.lastVisit).toLocaleDateString()}</span>
+                      </div>
+                      <div className="text-primary font-medium">
+                        Total gasto: {formatCurrency(client.totalSpent)}
+                      </div>
+                    </div>
+                  </div>
+                  <div className="flex items-center space-x-4">
+                    <div className="text-right text-sm">
+                      <div className="font-medium text-foreground">{client.totalVisits} visitas</div>
+                    </div>
                     <Button
                       variant="outline"
                       size="sm"
-                      onClick={() => handleOpenDialog(client)}
+                      onClick={() => handleEditClient(client)}
+                      className="hover:border-primary/50 hover:bg-primary/10 transition-all duration-300"
                     >
                       <Edit className="w-4 h-4" />
                     </Button>
-                  </TableCell>
-                </TableRow>
-              ))}
-            </TableBody>
-          </Table>
+                  </div>
+                </div>
+              </div>
+            ))}
+          </div>
         </CardContent>
       </Card>
-    </div>
+
+      <ClientModal
+        isOpen={isModalOpen}
+        onClose={handleCloseModal}
+        client={editingClient}
+      />
+    </>
   );
 };
 

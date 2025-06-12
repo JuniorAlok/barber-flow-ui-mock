@@ -1,6 +1,7 @@
 
 import React from 'react';
 import { Input } from '@/components/ui/input';
+import { PhoneInput } from '@/components/ui/phone-input';
 import ClientAutocomplete from '@/components/ClientAutocomplete';
 
 interface ClientDataSectionProps {
@@ -36,12 +37,12 @@ const ClientDataSection: React.FC<ClientDataSectionProps> = ({
 
       <div className="space-y-2">
         <label className="text-sm font-medium text-white">Telefone</label>
-        <Input
-          type="tel"
+        <PhoneInput
           value={clientPhone}
-          onChange={(e) => onClientPhoneChange(e.target.value)}
-          placeholder="(11) 99999-9999"
+          onChange={onClientPhoneChange}
           className="rounded-xl bg-zinc-900 text-white border-zinc-700 placeholder:text-zinc-400 focus:ring-2 focus:ring-yellow-500 focus:border-yellow-500"
+          showActions={false}
+          autoFormat={true}
         />
       </div>
 
