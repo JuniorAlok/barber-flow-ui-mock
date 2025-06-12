@@ -4,6 +4,7 @@ import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Card } from '@/components/ui/card';
 import { useClientSearch } from '@/hooks/useClientSearch';
+import { cn } from '@/lib/utils';
 
 interface ClientAutocompleteProps {
   value: string;
@@ -11,6 +12,7 @@ interface ClientAutocompleteProps {
   onValueChange: (value: string) => void;
   placeholder?: string;
   label?: string;
+  className?: string;
 }
 
 const ClientAutocomplete: React.FC<ClientAutocompleteProps> = ({
@@ -18,7 +20,8 @@ const ClientAutocomplete: React.FC<ClientAutocompleteProps> = ({
   onClientSelect,
   onValueChange,
   placeholder = "Digite o nome do cliente...",
-  label = "Nome do Cliente"
+  label = "Nome do Cliente",
+  className
 }) => {
   const [isOpen, setIsOpen] = useState(false);
   const searchResults = useClientSearch(value);
@@ -43,6 +46,7 @@ const ClientAutocomplete: React.FC<ClientAutocompleteProps> = ({
         value={value}
         onChange={(e) => onValueChange(e.target.value)}
         placeholder={placeholder}
+        className={cn(className)}
         onFocus={() => value.length >= 4 && searchResults.length > 0 && setIsOpen(true)}
         onBlur={() => setTimeout(() => setIsOpen(false), 200)}
       />
