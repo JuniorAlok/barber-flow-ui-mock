@@ -1,7 +1,7 @@
 
 import React from 'react';
 import { Card, CardContent } from '@/components/ui/card';
-import { Star } from 'lucide-react';
+import { Star, Award, Scissors, Users } from 'lucide-react';
 import { Barber } from '@/data/types';
 
 interface TeamSectionProps {
@@ -10,27 +10,110 @@ interface TeamSectionProps {
 
 const TeamSection: React.FC<TeamSectionProps> = ({ barbers }) => {
   return (
-    <section id="team" className="py-20 bg-muted/30">
+    <section id="team" className="py-20 section-premium">
       <div className="container mx-auto px-4">
-        <h3 className="text-3xl font-bold text-center mb-12">Nossa Equipe</h3>
-        <div className="grid md:grid-cols-3 gap-8 max-w-4xl mx-auto">
-          {barbers.map((barber) => (
-            <Card key={barber.id} className="text-center hover:shadow-lg transition-shadow duration-300">
-              <CardContent className="p-6">
-                <img 
-                  src={barber.avatarUrl} 
-                  alt={barber.name}
-                  className="w-24 h-24 rounded-full mx-auto mb-4 object-cover"
-                />
-                <h4 className="text-xl font-semibold mb-2">{barber.name}</h4>
-                <p className="text-primary font-medium mb-2">{barber.specialization}</p>
-                <p className="text-muted-foreground text-sm mb-3">{barber.experience}</p>
-                <div className="flex items-center justify-center">
-                  <Star className="w-4 h-4 text-yellow-500 fill-current" />
-                  <span className="ml-1 text-sm font-medium">{barber.rating}</span>
+        {/* Section Header */}
+        <div className="text-center mb-16 animate-fade-in">
+          <div className="inline-flex items-center gap-2 glass-effect px-6 py-3 rounded-full mb-6">
+            <Users className="w-5 h-5 text-primary" />
+            <span className="text-sm font-medium text-primary uppercase tracking-wide">Nossa Equipe</span>
+          </div>
+          <h3 className="text-4xl md:text-5xl font-bold text-luxury mb-6">
+            Mestres da Arte
+          </h3>
+          <p className="text-xl text-gray-300 max-w-3xl mx-auto leading-relaxed">
+            Conheça os profissionais que elevaram a barbearia a um novo patamar de excelência
+          </p>
+        </div>
+
+        {/* Team Grid */}
+        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8 max-w-6xl mx-auto">
+          {barbers.map((barber, index) => (
+            <Card 
+              key={barber.id} 
+              className="luxury-card group text-center overflow-hidden"
+              style={{ animationDelay: `${index * 0.1}s` }}
+            >
+              <CardContent className="p-8">
+                {/* Barber Photo */}
+                <div className="relative mx-auto mb-6">
+                  <div className="w-32 h-32 mx-auto relative">
+                    <img 
+                      src={barber.avatarUrl} 
+                      alt={barber.name}
+                      className="w-full h-full rounded-full object-cover border-4 border-primary/20 group-hover:border-primary/40 transition-all duration-300"
+                    />
+                    {/* Glow effect */}
+                    <div className="absolute inset-0 rounded-full bg-primary/20 opacity-0 group-hover:opacity-100 transition-opacity duration-300 animate-pulse"></div>
+                  </div>
+                  
+                  {/* Award Badge */}
+                  <div className="absolute -top-2 -right-2 glass-effect p-2 rounded-full">
+                    <Award className="w-4 h-4 text-primary" />
+                  </div>
+                </div>
+
+                {/* Barber Info */}
+                <div className="space-y-4">
+                  <h4 className="text-2xl font-bold text-white group-hover:text-primary transition-colors duration-300">
+                    {barber.name}
+                  </h4>
+                  
+                  <div className="flex items-center justify-center gap-2 text-primary font-medium">
+                    <Scissors className="w-4 h-4" />
+                    <span>{barber.specialization}</span>
+                  </div>
+                  
+                  <p className="text-gray-400 text-sm leading-relaxed">
+                    {barber.experience}
+                  </p>
+                  
+                  {/* Rating */}
+                  <div className="flex items-center justify-center gap-2 pt-4 border-t border-border/30">
+                    <div className="flex items-center gap-1">
+                      {[...Array(5)].map((_, i) => (
+                        <Star 
+                          key={i} 
+                          className="w-4 h-4 text-primary fill-current" 
+                        />
+                      ))}
+                    </div>
+                    <span className="text-sm font-bold text-primary ml-2">{barber.rating}</span>
+                  </div>
+                  
+                  {/* Specialties */}
+                  <div className="flex flex-wrap justify-center gap-2 mt-4">
+                    {['Corte Clássico', 'Barba', 'Bigode'].map((specialty) => (
+                      <span 
+                        key={specialty}
+                        className="text-xs px-3 py-1 bg-primary/10 text-primary rounded-full border border-primary/20"
+                      >
+                        {specialty}
+                      </span>
+                    ))}
+                  </div>
                 </div>
               </CardContent>
             </Card>
+          ))}
+        </div>
+
+        {/* Team Stats */}
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-8 mt-16 max-w-4xl mx-auto">
+          {[
+            { number: '10+', label: 'Anos de Experiência' },
+            { number: '5000+', label: 'Clientes Satisfeitos' },
+            { number: '100%', label: 'Satisfação Garantida' },
+            { number: '24/7', label: 'Atendimento Premium' }
+          ].map((stat, index) => (
+            <div 
+              key={index}
+              className="text-center glass-effect p-6 rounded-xl animate-fade-in"
+              style={{ animationDelay: `${index * 0.1}s` }}
+            >
+              <div className="text-3xl font-bold text-primary mb-2">{stat.number}</div>
+              <div className="text-sm text-gray-300">{stat.label}</div>
+            </div>
           ))}
         </div>
       </div>

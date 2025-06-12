@@ -3,87 +3,79 @@
 @tailwind components;
 @tailwind utilities;
 
-/* Definition of the design system. All colors, gradients, fonts, etc should be defined here. */
+/* Elite Barber Studio Design System - Luxury Theme */
 
 @layer base {
   :root {
+    /* Dark luxury background */
     --background: 20 14% 4%;
     --foreground: 60 9% 98%;
 
-    --card: 20 14% 8%;
+    /* Rich dark cards */
+    --card: 24 12% 8%;
     --card-foreground: 60 9% 98%;
 
-    --popover: 20 14% 8%;
+    --popover: 24 12% 8%;
     --popover-foreground: 60 9% 98%;
 
-    --primary: 45 100% 51%;
+    /* Luxury gold primary */
+    --primary: 45 96% 58%;
     --primary-foreground: 20 14% 4%;
 
-    --secondary: 12 6% 15%;
+    /* Deep charcoal secondary */
+    --secondary: 20 8% 12%;
     --secondary-foreground: 60 9% 98%;
 
-    --muted: 12 6% 15%;
+    /* Muted tones */
+    --muted: 20 8% 12%;
     --muted-foreground: 24 5% 64%;
 
-    --accent: 45 100% 51%;
+    /* Accent gold */
+    --accent: 45 96% 58%;
     --accent-foreground: 20 14% 4%;
 
+    /* Destructive red */
     --destructive: 0 84% 60%;
     --destructive-foreground: 60 9% 98%;
 
-    --border: 12 6% 15%;
-    --input: 12 6% 15%;
-    --ring: 45 100% 51%;
+    /* Borders and inputs */
+    --border: 20 8% 15%;
+    --input: 20 8% 15%;
+    --ring: 45 96% 58%;
 
     --radius: 0.75rem;
 
+    /* Sidebar colors */
     --sidebar-background: 20 14% 4%;
     --sidebar-foreground: 60 9% 98%;
-    --sidebar-primary: 45 100% 51%;
+    --sidebar-primary: 45 96% 58%;
     --sidebar-primary-foreground: 20 14% 4%;
-    --sidebar-accent: 12 6% 15%;
+    --sidebar-accent: 20 8% 12%;
     --sidebar-accent-foreground: 60 9% 98%;
-    --sidebar-border: 12 6% 15%;
-    --sidebar-ring: 45 100% 51%;
+    --sidebar-border: 20 8% 15%;
+    --sidebar-ring: 45 96% 58%;
   }
 
   .dark {
     --background: 20 14% 4%;
     --foreground: 60 9% 98%;
-
-    --card: 20 14% 8%;
+    --card: 24 12% 8%;
     --card-foreground: 60 9% 98%;
-
-    --popover: 20 14% 8%;
+    --popover: 24 12% 8%;
     --popover-foreground: 60 9% 98%;
-
-    --primary: 45 100% 51%;
+    --primary: 45 96% 58%;
     --primary-foreground: 20 14% 4%;
-
-    --secondary: 12 6% 15%;
+    --secondary: 20 8% 12%;
     --secondary-foreground: 60 9% 98%;
-
-    --muted: 12 6% 15%;
+    --muted: 20 8% 12%;
     --muted-foreground: 24 5% 64%;
-
-    --accent: 45 100% 51%;
+    --accent: 45 96% 58%;
     --accent-foreground: 20 14% 4%;
-
     --destructive: 0 84% 60%;
     --destructive-foreground: 60 9% 98%;
-
-    --border: 12 6% 15%;
-    --input: 12 6% 15%;
-    --ring: 45 100% 51%;
-
-    --sidebar-background: 20 14% 4%;
-    --sidebar-foreground: 60 9% 98%;
-    --sidebar-primary: 45 100% 51%;
-    --sidebar-primary-foreground: 20 14% 4%;
-    --sidebar-accent: 12 6% 15%;
-    --sidebar-accent-foreground: 60 9% 98%;
-    --sidebar-border: 12 6% 15%;
-    --sidebar-ring: 45 100% 51%;
+    --border: 20 8% 15%;
+    --input: 20 8% 15%;
+    --ring: 45 96% 58%;
   }
 }
 
@@ -95,117 +87,139 @@
   body {
     @apply bg-background text-foreground;
     font-feature-settings: "rlig" 1, "calt" 1;
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, system-ui, sans-serif;
   }
 }
 
 @layer utilities {
+  /* Luxury Glass Effects */
   .glass-effect {
     backdrop-filter: blur(16px);
-    background: rgba(255, 215, 0, 0.05);
-    border: 1px solid rgba(255, 215, 0, 0.15);
+    background: rgba(255, 193, 7, 0.03);
+    border: 1px solid rgba(255, 193, 7, 0.1);
     box-shadow: 
-      0 8px 32px rgba(0, 0, 0, 0.37),
-      inset 0 1px 0 rgba(255, 255, 255, 0.1);
+      0 8px 32px rgba(0, 0, 0, 0.4),
+      inset 0 1px 0 rgba(255, 255, 255, 0.05);
   }
   
   .glass-effect-strong {
-    backdrop-filter: blur(20px);
-    background: rgba(255, 215, 0, 0.1);
-    border: 1px solid rgba(255, 215, 0, 0.2);
+    backdrop-filter: blur(24px);
+    background: rgba(255, 193, 7, 0.08);
+    border: 1px solid rgba(255, 193, 7, 0.15);
     box-shadow: 
-      0 12px 40px rgba(0, 0, 0, 0.5),
-      inset 0 1px 0 rgba(255, 255, 255, 0.15);
+      0 16px 48px rgba(0, 0, 0, 0.6),
+      inset 0 1px 0 rgba(255, 255, 255, 0.1);
   }
   
+  /* Luxury Gradients */
   .gold-gradient {
-    background: linear-gradient(135deg, hsl(45 100% 51%) 0%, hsl(38 100% 45%) 100%);
+    background: linear-gradient(135deg, hsl(45 96% 58%) 0%, hsl(38 100% 50%) 50%, hsl(30 100% 45%) 100%);
+  }
+
+  .luxury-gradient {
+    background: linear-gradient(135deg, 
+      rgba(255, 193, 7, 0.9) 0%, 
+      rgba(255, 215, 0, 0.8) 25%,
+      rgba(218, 165, 32, 0.9) 50%,
+      rgba(184, 134, 11, 0.8) 75%,
+      rgba(146, 101, 5, 0.9) 100%);
   }
 
   .gradient-glow {
-    background: linear-gradient(135deg, hsl(45 100% 51%) 0%, hsl(38 100% 45%) 100%);
-    box-shadow: 0 0 30px rgba(255, 215, 0, 0.3);
+    background: linear-gradient(135deg, hsl(45 96% 58%) 0%, hsl(38 100% 50%) 100%);
+    box-shadow: 0 0 40px rgba(255, 193, 7, 0.4);
+  }
+
+  .hero-gradient {
+    background: linear-gradient(135deg, 
+      rgba(20, 20, 20, 0.95) 0%,
+      rgba(30, 30, 30, 0.9) 50%,
+      rgba(20, 20, 20, 0.95) 100%);
   }
   
+  /* Luxury Animations */
   .animate-fade-in {
-    animation: fade-in 0.5s ease-out;
+    animation: luxuryFadeIn 0.8s ease-out;
   }
   
   .animate-slide-up {
-    animation: slide-up 0.5s ease-out;
+    animation: luxurySlideUp 0.8s ease-out;
   }
 
   .animate-scale-in {
-    animation: scale-in 0.3s ease-out;
+    animation: luxuryScaleIn 0.6s ease-out;
   }
 
+  .animate-glow {
+    animation: luxuryGlow 3s ease-in-out infinite alternate;
+  }
+
+  /* Luxury Hover Effects */
   .hover-lift {
-    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
   }
 
   .hover-lift:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
+    transform: translateY(-8px);
+    box-shadow: 0 25px 50px rgba(0, 0, 0, 0.6);
   }
 
-  .gradient-border {
-    position: relative;
-    background: linear-gradient(135deg, rgba(255, 215, 0, 0.1), rgba(255, 215, 0, 0.05));
-    border: 1px solid transparent;
+  .hover-gold:hover {
+    color: hsl(45 96% 58%);
+    transition: color 0.3s ease;
   }
 
-  .gradient-border::before {
-    content: '';
-    position: absolute;
-    inset: 0;
-    padding: 1px;
-    background: linear-gradient(135deg, rgba(255, 215, 0, 0.3), rgba(255, 215, 0, 0.1));
-    border-radius: inherit;
-    mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
-    mask-composite: exclude;
+  /* Luxury Cards */
+  .luxury-card {
+    @apply glass-effect hover-lift rounded-xl border border-border/30 hover:border-primary/20 transition-all duration-500;
+    background: linear-gradient(145deg, rgba(255, 193, 7, 0.02), rgba(0, 0, 0, 0.3));
   }
 
-  .metric-card {
-    @apply glass-effect hover-lift rounded-xl p-6 transition-all duration-300;
-  }
-
-  .metric-card:hover {
+  .luxury-card:hover {
     @apply glass-effect-strong;
+    transform: translateY(-8px) scale(1.02);
   }
 
-  .chart-container {
-    @apply glass-effect rounded-xl p-6 backdrop-blur-xl;
-    background: linear-gradient(135deg, rgba(255, 215, 0, 0.08), rgba(255, 215, 0, 0.03));
+  /* Elite Button Styles */
+  .btn-luxury {
+    @apply bg-gradient-to-r from-primary via-yellow-500 to-primary text-primary-foreground font-semibold px-8 py-4 rounded-lg transition-all duration-300;
+    box-shadow: 0 8px 32px rgba(255, 193, 7, 0.3);
   }
 
-  .management-card {
-    @apply glass-effect rounded-xl border border-border/50 hover:border-primary/30 transition-all duration-300;
+  .btn-luxury:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 12px 40px rgba(255, 193, 7, 0.5);
   }
 
-  .management-item {
-    @apply glass-effect rounded-lg border border-border/30 hover:border-primary/20 transition-all duration-300 hover-lift;
+  /* Premium Text Effects */
+  .text-luxury {
+    background: linear-gradient(135deg, hsl(45 96% 58%), hsl(38 100% 50%));
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
   }
 
-  .floating-element {
-    animation: float 3s ease-in-out infinite;
+  .text-shadow-luxury {
+    text-shadow: 0 4px 8px rgba(0, 0, 0, 0.8);
   }
 
-  .glow-effect {
-    animation: glow 2s ease-in-out infinite alternate;
+  /* Section Backgrounds */
+  .section-luxury {
+    background: linear-gradient(180deg, 
+      rgba(20, 20, 20, 0.98) 0%,
+      rgba(25, 25, 25, 0.95) 50%,
+      rgba(20, 20, 20, 0.98) 100%);
+  }
+
+  .section-premium {
+    background: linear-gradient(180deg, 
+      rgba(30, 30, 30, 0.95) 0%,
+      rgba(20, 20, 20, 0.98) 100%);
   }
 }
 
-@keyframes fade-in {
-  from {
-    opacity: 0;
-    transform: translateY(20px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-
-@keyframes slide-up {
+/* Luxury Keyframes */
+@keyframes luxuryFadeIn {
   from {
     opacity: 0;
     transform: translateY(30px);
@@ -216,10 +230,21 @@
   }
 }
 
-@keyframes scale-in {
+@keyframes luxurySlideUp {
   from {
     opacity: 0;
-    transform: scale(0.95);
+    transform: translateY(50px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes luxuryScaleIn {
+  from {
+    opacity: 0;
+    transform: scale(0.9);
   }
   to {
     opacity: 1;
@@ -227,20 +252,29 @@
   }
 }
 
-@keyframes float {
+@keyframes luxuryGlow {
   0%, 100% {
-    transform: translateY(0px);
+    box-shadow: 0 0 30px rgba(255, 193, 7, 0.4);
   }
   50% {
-    transform: translateY(-10px);
+    box-shadow: 0 0 50px rgba(255, 193, 7, 0.6);
   }
 }
 
-@keyframes glow {
-  0%, 100% {
-    box-shadow: 0 0 20px rgba(255, 215, 0, 0.4);
-  }
-  50% {
-    box-shadow: 0 0 30px rgba(255, 215, 0, 0.6);
-  }
+/* Premium Scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: rgba(20, 20, 20, 0.5);
+}
+
+::-webkit-scrollbar-thumb {
+  background: linear-gradient(135deg, hsl(45 96% 58%), hsl(38 100% 50%));
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: linear-gradient(135deg, hsl(45 96% 65%), hsl(38 100% 55%));
 }
