@@ -8,6 +8,7 @@ import { Calendar, Clock, User, Scissors, Search, Filter } from 'lucide-react';
 import { useAuth } from '@/contexts/AuthContext';
 import { useMockData } from '@/contexts/MockDataContext';
 import { formatDate, formatPhoneNumber } from '@/utils/formatting';
+import { Booking } from '@/data/types';
 
 const BarberBookingList: React.FC = () => {
   const { user } = useAuth();
@@ -60,7 +61,7 @@ const BarberBookingList: React.FC = () => {
     console.log('Updating booking status:', bookingId, newStatus);
   };
 
-  const groupBookingsByDate = (bookings: any[]) => {
+  const groupBookingsByDate = (bookings: Booking[]) => {
     return bookings.reduce((groups, booking) => {
       const date = booking.date;
       if (!groups[date]) {
@@ -68,7 +69,7 @@ const BarberBookingList: React.FC = () => {
       }
       groups[date].push(booking);
       return groups;
-    }, {} as Record<string, any[]>);
+    }, {} as Record<string, Booking[]>);
   };
 
   const groupedBookings = groupBookingsByDate(filteredBookings);
@@ -124,7 +125,7 @@ const BarberBookingList: React.FC = () => {
             </div>
           ) : (
             <div className="space-y-6">
-              {Object.entries(groupedBookings)
+              {(Object.entries(groupedBookings) as [string, Booking[]][])
                 .sort(([dateA], [dateB]) => dateA.localeCompare(dateB))
                 .map(([date, dateBookings]) => (
                   <div key={date} className="space-y-3">

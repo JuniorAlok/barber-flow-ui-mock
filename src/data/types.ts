@@ -1,10 +1,10 @@
-
 export interface User {
   id: string;
   email: string;
   password: string;
   role: 'admin' | 'user' | 'barber';
   name: string;
+  avatarUrl?: string; // Add missing avatarUrl property
 }
 
 export interface Service {
