@@ -11,57 +11,44 @@ interface ServicesSectionProps {
 
 const ServicesSection: React.FC<ServicesSectionProps> = ({ services }) => {
   return (
-    <section id="services" className="py-20 section-luxury">
+    <section id="services" className="py-16 md:py-20 section-luxury">
       <div className="container mx-auto px-4">
         {/* Section Header */}
-        <div className="text-center mb-16 animate-fade-in">
-          <div className="inline-flex items-center gap-2 glass-effect px-6 py-3 rounded-full mb-6">
-            <Scissors className="w-5 h-5 text-primary" />
-            <span className="text-sm font-medium text-primary uppercase tracking-wide">Nossos Serviços</span>
+        <div className="text-center mb-12 md:mb-16 animate-fade-in">
+          <div className="inline-flex items-center gap-2 glass-effect px-4 py-2 md:px-6 md:py-3 rounded-full mb-4 md:mb-6">
+            <Scissors className="w-4 h-4 md:w-5 md:h-5 text-primary" />
+            <span className="text-xs md:text-sm font-medium text-primary uppercase tracking-wide">Nossos Serviços</span>
           </div>
-          <h3 className="text-4xl md:text-5xl font-bold text-luxury mb-6">
+          <h3 className="text-3xl md:text-4xl lg:text-5xl font-bold text-luxury mb-4 md:mb-6">
             Experiências Premium
           </h3>
-          <p className="text-xl text-gray-300 max-w-3xl mx-auto leading-relaxed">
+          <p className="text-lg md:text-xl text-gray-300 max-w-3xl mx-auto leading-relaxed">
             Cada serviço é uma obra de arte, executada com precisão e paixão pelos nossos mestres barbeiros
           </p>
         </div>
 
-        {/* Services Grid */}
-        <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
+        {/* Services Grid - 3 columns on mobile, 4 on larger screens */}
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 md:gap-6 lg:gap-8">
           {services.map((service, index) => (
             <Card 
               key={service.id} 
-              className="luxury-card group cursor-pointer overflow-hidden"
+              className="luxury-card group cursor-pointer"
               style={{ animationDelay: `${index * 0.1}s` }}
             >
-              <CardContent className="p-0">
-                {/* Service Image */}
-                <div className="relative h-48 overflow-hidden">
-                  {service.imageUrl ? (
-                    <img 
-                      src={service.imageUrl} 
-                      alt={service.title}
-                      className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
-                    />
-                  ) : (
-                    <div className="w-full h-full bg-gradient-to-br from-primary/20 to-primary/5 flex items-center justify-center">
-                      <Scissors className="w-12 h-12 text-primary" />
-                    </div>
-                  )}
-                  
-                  {/* Overlay */}
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
-                  
-                  {/* Price Badge */}
-                  <div className="absolute top-4 right-4 glass-effect px-3 py-1 rounded-full">
+              <CardContent className="p-4 md:p-6">
+                {/* Service Icon & Price */}
+                <div className="flex items-start justify-between mb-4">
+                  <div className="w-12 h-12 md:w-16 md:h-16 glass-effect rounded-full flex items-center justify-center group-hover:scale-110 transition-transform duration-300">
+                    <Scissors className="w-6 h-6 md:w-8 md:h-8 text-primary" />
+                  </div>
+                  <div className="glass-effect px-3 py-1 rounded-full">
                     <span className="text-sm font-bold text-primary">{formatCurrency(service.price)}</span>
                   </div>
                 </div>
 
                 {/* Service Content */}
-                <div className="p-6 space-y-4">
-                  <h4 className="text-xl font-semibold text-white group-hover:text-primary transition-colors duration-300">
+                <div className="space-y-3 md:space-y-4">
+                  <h4 className="text-lg md:text-xl font-semibold text-white group-hover:text-primary transition-colors duration-300">
                     {service.title}
                   </h4>
                   
@@ -70,7 +57,7 @@ const ServicesSection: React.FC<ServicesSectionProps> = ({ services }) => {
                   </p>
                   
                   {/* Service Details */}
-                  <div className="flex items-center justify-between pt-4 border-t border-border/30">
+                  <div className="flex items-center justify-between pt-3 md:pt-4 border-t border-border/30">
                     <div className="flex items-center gap-2 text-gray-300">
                       <Clock className="w-4 h-4 text-primary" />
                       <span className="text-sm font-medium">{service.duration} min</span>
@@ -92,13 +79,13 @@ const ServicesSection: React.FC<ServicesSectionProps> = ({ services }) => {
         </div>
 
         {/* Bottom CTA */}
-        <div className="text-center mt-16 animate-fade-in">
-          <p className="text-gray-300 mb-6">
+        <div className="text-center mt-12 md:mt-16 animate-fade-in">
+          <p className="text-gray-300 mb-4 md:mb-6 text-sm md:text-base">
             Todos os serviços incluem consultoria personalizada e produtos premium
           </p>
           <div className="inline-flex items-center gap-2 text-primary">
-            <Star className="w-5 h-5 fill-current" />
-            <span className="font-medium">Garantia de satisfação 100%</span>
+            <Star className="w-4 h-4 md:w-5 md:h-5 fill-current" />
+            <span className="font-medium text-sm md:text-base">Garantia de satisfação 100%</span>
           </div>
         </div>
       </div>

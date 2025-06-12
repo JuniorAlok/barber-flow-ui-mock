@@ -1,10 +1,10 @@
 
 import React, { useState } from 'react';
-import { Button } from '@/components/ui/button';
 import { useMockData } from '@/contexts/MockDataContext';
 import { useActiveServices, useActiveBarbers } from '@/hooks/useActiveEntities';
 import BookingModal from './BookingModal';
-import HomepageHeader from './homepage/HomepageHeader';
+import SimpleHeader from './homepage/SimpleHeader';
+import FloatingLoginIcons from './homepage/FloatingLoginIcons';
 import HeroSection from './homepage/HeroSection';
 import ServicesSection from './homepage/ServicesSection';
 import TeamSection from './homepage/TeamSection';
@@ -24,11 +24,8 @@ const HomePage: React.FC = () => {
 
   return (
     <div className="min-h-screen bg-background">
-      <HomepageHeader 
-        title={homeContent.title}
-        ctaText={homeContent.ctaText}
-        onBookingOpen={handleBookingOpen}
-      />
+      <SimpleHeader />
+      <FloatingLoginIcons />
       
       <HeroSection 
         title={homeContent.title}
