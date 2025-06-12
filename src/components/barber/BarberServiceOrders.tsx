@@ -4,8 +4,7 @@ import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Clipboard } from 'lucide-react';
 import { useServiceTimers } from '@/hooks/useServiceTimers';
 import { useServiceOrders } from '@/hooks/useServiceOrders';
-import ServiceOrderCard from './ServiceOrderCard';
-import StatusBadge from './StatusBadge';
+import CommandFlow from '@/components/ui/command-flow';
 
 const BarberServiceOrders: React.FC = () => {
   console.log('BarberServiceOrders: Component rendering');
@@ -38,8 +37,10 @@ const BarberServiceOrders: React.FC = () => {
     stopTimer(orderId);
   };
 
-  const getStatusBadge = (status: string) => {
-    return <StatusBadge status={status} />;
+  const getStatus = (order: any): 'waiting' | 'active' | 'completed' => {
+    if (order.status === 'completed') return 'completed';
+    if (order.status === 'in_progress') return 'active';
+    return 'waiting';
   };
 
   console.log('BarberServiceOrders: Rendering with barberOrders:', barberOrders.length);
@@ -67,15 +68,17 @@ const BarberServiceOrders: React.FC = () => {
               </div>
             ) : (
               barberOrders.map((order, index) => (
-                <ServiceOrderCard
+                <CommandFlow
                   key={order.id}
-                  order={order}
+                  orderId={order.id}
+                  clientName={order.clientName}
+                  serviceName={order.serviceName}
+                  status={getStatus(order)}
                   timer={timers[order.id] || 0}
                   onStart={() => onStartService(order.id)}
-                  onStop={(paymentMethod) => onStopService(order.id, paymentMethod)}
-                  getStatusBadge={getStatusBadge}
-                  formatTime={formatTime}
-                  index={index}
+                  onFinish={(paymentMethod) => onStopService(order.id, paymentMethod)}
+                  className={`animate-slide-up`}
+                  style={{ animationDelay: `${index * 100}ms` } as React.CSSProperties}
                 />
               ))
             )}
