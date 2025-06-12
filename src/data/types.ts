@@ -116,4 +116,21 @@ export interface HomeContent {
   contactAddress: string;
   contactEmail: string;
   workingHours: string;
+  // Novos campos opcionais
+  heroFeature1?: string;
+  heroFeature2?: string;
+  heroFeature3?: string;
+  aboutFeature1Title?: string;
+  aboutFeature1Description?: string;
+  aboutFeature2Title?: string;
+  aboutFeature2Description?: string;
+  aboutFeature3Title?: string;
+  aboutFeature3Description?: string;
+  servicesTitle?: string;
+  servicesSubtitle?: string;
+  teamTitle?: string;
+  teamSubtitle?: string;
+  contactTitle?: string;
+  contactSubtitle?: string;
+  whatsappMessage?: string;
 }

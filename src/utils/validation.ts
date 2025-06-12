@@ -8,10 +8,27 @@ export const homeContentSchema = z.object({
   aboutTitle: z.string().min(1, 'Título da seção sobre é obrigatório'),
   aboutDescription: z.string().min(10, 'Descrição deve ter pelo menos 10 caracteres'),
   heroImageUrl: z.string().url('URL da imagem deve ser válida').optional().or(z.literal('')),
-  contactPhone: z.string().min(1, 'Telefone é obrigatório'),
+  contactPhone: z.string().min(10, 'Telefone deve ter pelo menos 10 dígitos'),
   contactAddress: z.string().min(1, 'Endereço é obrigatório'),
   contactEmail: z.string().email('Email deve ser válido'),
   workingHours: z.string().min(1, 'Horário de funcionamento é obrigatório'),
+  // Novos campos
+  heroFeature1: z.string().min(1, 'Recurso 1 é obrigatório').optional(),
+  heroFeature2: z.string().min(1, 'Recurso 2 é obrigatório').optional(),
+  heroFeature3: z.string().min(1, 'Recurso 3 é obrigatório').optional(),
+  aboutFeature1Title: z.string().min(1, 'Título do recurso 1 é obrigatório').optional(),
+  aboutFeature1Description: z.string().min(1, 'Descrição do recurso 1 é obrigatória').optional(),
+  aboutFeature2Title: z.string().min(1, 'Título do recurso 2 é obrigatório').optional(),
+  aboutFeature2Description: z.string().min(1, 'Descrição do recurso 2 é obrigatória').optional(),
+  aboutFeature3Title: z.string().min(1, 'Título do recurso 3 é obrigatório').optional(),
+  aboutFeature3Description: z.string().min(1, 'Descrição do recurso 3 é obrigatória').optional(),
+  servicesTitle: z.string().min(1, 'Título dos serviços é obrigatório').optional(),
+  servicesSubtitle: z.string().min(1, 'Subtítulo dos serviços é obrigatório').optional(),
+  teamTitle: z.string().min(1, 'Título da equipe é obrigatório').optional(),
+  teamSubtitle: z.string().min(1, 'Subtítulo da equipe é obrigatório').optional(),
+  contactTitle: z.string().min(1, 'Título do contato é obrigatório').optional(),
+  contactSubtitle: z.string().min(1, 'Subtítulo do contato é obrigatório').optional(),
+  whatsappMessage: z.string().min(1, 'Mensagem do WhatsApp é obrigatória').optional(),
 });
 
 export type HomeContentForm = z.infer<typeof homeContentSchema>;

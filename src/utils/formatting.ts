@@ -1,4 +1,3 @@
-
 export const formatCurrency = (value: number): string => {
   return new Intl.NumberFormat('pt-BR', {
     style: 'currency',
@@ -26,3 +25,5 @@ export const formatPhone = (phone: string): string => {
 export const formatPercentage = (value: number, decimals: number = 1): string => {
   return `${value.toFixed(decimals)}%`;
 };
+
+export { formatPhoneNumber, validatePhoneNumber, createWhatsAppLink, createPhoneLink, isValidBrazilianPhone } from './phoneUtils';
