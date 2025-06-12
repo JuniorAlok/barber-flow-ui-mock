@@ -1,6 +1,5 @@
 
 import React, { useState } from 'react';
-import { useForm } from 'react-hook-form';
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from '@/components/ui/dialog';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
@@ -17,6 +16,7 @@ import { useClientAutoCreate } from '@/hooks/useClientAutoCreate';
 import { Booking } from '@/data/types';
 import ClientAutocomplete from '@/components/ClientAutocomplete';
 import { timeSlots } from '@/data/constants';
+import { cn } from '@/lib/utils';
 
 interface BookingModalProps {
   isOpen: boolean;
@@ -110,7 +110,6 @@ const BookingModal: React.FC<BookingModalProps> = ({ isOpen, onClose, booking })
       
       setBookings(prev => [...prev, newBooking]);
       
-      // Auto-create client if not exists
       createClientIfNotExists({
         name: formData.clientName,
         email: formData.clientEmail,
@@ -128,22 +127,25 @@ const BookingModal: React.FC<BookingModalProps> = ({ isOpen, onClose, booking })
 
   return (
     <Dialog open={isOpen} onOpenChange={onClose}>
-      <DialogContent className="sm:max-w-[500px] max-h-[80vh] overflow-y-auto">
-        <DialogHeader>
-          <DialogTitle>{isEdit ? 'Editar Agendamento' : 'Novo Agendamento'}</DialogTitle>
+      <DialogContent className="sm:max-w-2xl max-h-[90vh] overflow-y-auto bg-zinc-950 text-white border-zinc-800 rounded-2xl shadow-xl">
+        <DialogHeader className="pb-6">
+          <DialogTitle className="text-xl font-semibold tracking-tight">
+            {isEdit ? 'Editar Agendamento' : 'Novo Agendamento'}
+          </DialogTitle>
         </DialogHeader>
 
-        <form onSubmit={handleSubmit} className="space-y-4">
-          <div className="grid grid-cols-2 gap-4">
-            <div>
-              <label className="text-sm font-medium">Serviço</label>
+        <form onSubmit={handleSubmit} className="space-y-6">
+          {/* BLOCO 1: Seleção de Serviço e Horário */}
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <div className="space-y-2">
+              <label className="text-sm font-medium text-white">Serviço</label>
               <Select value={formData.serviceId} onValueChange={(value) => setFormData(prev => ({ ...prev, serviceId: value }))}>
-                <SelectTrigger>
+                <SelectTrigger className="w-full rounded-xl bg-zinc-900 text-white border-zinc-700 focus:ring-2 focus:ring-yellow-500 focus:border-yellow-500">
                   <SelectValue placeholder="Selecione um serviço" />
                 </SelectTrigger>
-                <SelectContent>
+                <SelectContent className="bg-zinc-900 border-zinc-700">
                   {services.filter(s => s.isActive).map(service => (
-                    <SelectItem key={service.id} value={service.id}>
+                    <SelectItem key={service.id} value={service.id} className="text-white hover:bg-zinc-800">
                       {service.title} - R$ {service.price}
                     </SelectItem>
                   ))}
@@ -151,53 +153,58 @@ const BookingModal: React.FC<BookingModalProps> = ({ isOpen, onClose, booking })
               </Select>
             </div>
 
-            <div>
-              <label className="text-sm font-medium">Barbeiro</label>
+            <div className="space-y-2">
+              <label className="text-sm font-medium text-white">Barbeiro</label>
               <Select value={formData.barberId} onValueChange={(value) => setFormData(prev => ({ ...prev, barberId: value }))}>
-                <SelectTrigger>
+                <SelectTrigger className="w-full rounded-xl bg-zinc-900 text-white border-zinc-700 focus:ring-2 focus:ring-yellow-500 focus:border-yellow-500">
                   <SelectValue placeholder="Selecione um barbeiro" />
                 </SelectTrigger>
-                <SelectContent>
+                <SelectContent className="bg-zinc-900 border-zinc-700">
                   {barbers.filter(b => b.isActive).map(barber => (
-                    <SelectItem key={barber.id} value={barber.id}>
+                    <SelectItem key={barber.id} value={barber.id} className="text-white hover:bg-zinc-800">
                       {barber.name}
                     </SelectItem>
                   ))}
                 </SelectContent>
               </Select>
             </div>
-          </div>
 
-          <div className="grid grid-cols-2 gap-4">
-            <div>
-              <label className="text-sm font-medium">Data</label>
+            <div className="space-y-2">
+              <label className="text-sm font-medium text-white">Data</label>
               <Popover>
                 <PopoverTrigger asChild>
-                  <Button variant="outline" className="w-full justify-start text-left font-normal">
+                  <Button 
+                    variant="outline" 
+                    className={cn(
+                      "w-full justify-start text-left font-normal rounded-xl bg-zinc-900 text-white border-zinc-700 hover:bg-zinc-800 focus:ring-2 focus:ring-yellow-500 focus:border-yellow-500",
+                      !selectedDate && "text-zinc-400"
+                    )}
+                  >
                     <CalendarIcon className="mr-2 h-4 w-4" />
                     {selectedDate ? format(selectedDate, 'PPP', { locale: ptBR }) : 'Selecione uma data'}
                   </Button>
                 </PopoverTrigger>
-                <PopoverContent className="w-auto p-0">
+                <PopoverContent className="w-auto p-0 bg-zinc-900 border-zinc-700">
                   <Calendar
                     mode="single"
                     selected={selectedDate}
                     onSelect={setSelectedDate}
                     initialFocus
+                    className="pointer-events-auto bg-zinc-900 text-white"
                   />
                 </PopoverContent>
               </Popover>
             </div>
 
-            <div>
-              <label className="text-sm font-medium">Horário</label>
+            <div className="space-y-2">
+              <label className="text-sm font-medium text-white">Horário</label>
               <Select value={formData.time} onValueChange={(value) => setFormData(prev => ({ ...prev, time: value }))}>
-                <SelectTrigger>
+                <SelectTrigger className="w-full rounded-xl bg-zinc-900 text-white border-zinc-700 focus:ring-2 focus:ring-yellow-500 focus:border-yellow-500">
                   <SelectValue placeholder="Selecione um horário" />
                 </SelectTrigger>
-                <SelectContent>
+                <SelectContent className="bg-zinc-900 border-zinc-700">
                   {timeSlots.map(time => (
-                    <SelectItem key={time} value={time}>
+                    <SelectItem key={time} value={time} className="text-white hover:bg-zinc-800">
                       {time}
                     </SelectItem>
                   ))}
@@ -206,64 +213,86 @@ const BookingModal: React.FC<BookingModalProps> = ({ isOpen, onClose, booking })
             </div>
           </div>
 
-          <ClientAutocomplete
-            value={formData.clientName}
-            onClientSelect={handleClientSelect}
-            onValueChange={(value) => setFormData(prev => ({ ...prev, clientName: value }))}
-          />
+          {/* BLOCO 2: Dados do Cliente */}
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <div className="space-y-2">
+              <label className="text-sm font-medium text-white">Nome do Cliente</label>
+              <ClientAutocomplete
+                value={formData.clientName}
+                onClientSelect={handleClientSelect}
+                onValueChange={(value) => setFormData(prev => ({ ...prev, clientName: value }))}
+                className="rounded-xl bg-zinc-900 text-white border-zinc-700 placeholder:text-zinc-400 focus:ring-2 focus:ring-yellow-500 focus:border-yellow-500"
+              />
+            </div>
 
-          <div className="grid grid-cols-2 gap-4">
-            <div>
-              <label className="text-sm font-medium">Email do Cliente</label>
+            <div className="space-y-2">
+              <label className="text-sm font-medium text-white">Telefone</label>
+              <Input
+                type="tel"
+                value={formData.clientPhone}
+                onChange={(e) => setFormData(prev => ({ ...prev, clientPhone: e.target.value }))}
+                placeholder="(11) 99999-9999"
+                className="rounded-xl bg-zinc-900 text-white border-zinc-700 placeholder:text-zinc-400 focus:ring-2 focus:ring-yellow-500 focus:border-yellow-500"
+              />
+            </div>
+
+            <div className="md:col-span-2 space-y-2">
+              <label className="text-sm font-medium text-white">Email</label>
               <Input
                 type="email"
                 value={formData.clientEmail}
                 onChange={(e) => setFormData(prev => ({ ...prev, clientEmail: e.target.value }))}
                 placeholder="email@exemplo.com"
-              />
-            </div>
-
-            <div>
-              <label className="text-sm font-medium">Telefone do Cliente</label>
-              <Input
-                value={formData.clientPhone}
-                onChange={(e) => setFormData(prev => ({ ...prev, clientPhone: e.target.value }))}
-                placeholder="(11) 99999-9999"
+                className="rounded-xl bg-zinc-900 text-white border-zinc-700 placeholder:text-zinc-400 focus:ring-2 focus:ring-yellow-500 focus:border-yellow-500"
               />
             </div>
           </div>
 
-          {isEdit && (
-            <div>
-              <label className="text-sm font-medium">Status</label>
-              <Select value={formData.status} onValueChange={(value: 'pending' | 'confirmed' | 'done' | 'cancelled') => setFormData(prev => ({ ...prev, status: value }))}>
-                <SelectTrigger>
-                  <SelectValue />
-                </SelectTrigger>
-                <SelectContent>
-                  <SelectItem value="pending">Pendente</SelectItem>
-                  <SelectItem value="confirmed">Confirmado</SelectItem>
-                  <SelectItem value="done">Concluído</SelectItem>
-                  <SelectItem value="cancelled">Cancelado</SelectItem>
-                </SelectContent>
-              </Select>
-            </div>
-          )}
+          {/* BLOCO 3: Status e Observações */}
+          <div className="grid grid-cols-1 gap-4">
+            {isEdit && (
+              <div className="space-y-2">
+                <label className="text-sm font-medium text-white">Status</label>
+                <Select value={formData.status} onValueChange={(value: 'pending' | 'confirmed' | 'done' | 'cancelled') => setFormData(prev => ({ ...prev, status: value }))}>
+                  <SelectTrigger className="w-full rounded-xl bg-zinc-900 text-white border-zinc-700 focus:ring-2 focus:ring-yellow-500 focus:border-yellow-500">
+                    <SelectValue />
+                  </SelectTrigger>
+                  <SelectContent className="bg-zinc-900 border-zinc-700">
+                    <SelectItem value="pending" className="text-white hover:bg-zinc-800">Pendente</SelectItem>
+                    <SelectItem value="confirmed" className="text-white hover:bg-zinc-800">Confirmado</SelectItem>
+                    <SelectItem value="done" className="text-white hover:bg-zinc-800">Concluído</SelectItem>
+                    <SelectItem value="cancelled" className="text-white hover:bg-zinc-800">Cancelado</SelectItem>
+                  </SelectContent>
+                </Select>
+              </div>
+            )}
 
-          <div>
-            <label className="text-sm font-medium">Observações</label>
-            <Textarea
-              value={formData.notes}
-              onChange={(e) => setFormData(prev => ({ ...prev, notes: e.target.value }))}
-              placeholder="Observações adicionais..."
-            />
+            <div className="space-y-2">
+              <label className="text-sm font-medium text-white">Observações</label>
+              <Textarea
+                value={formData.notes}
+                onChange={(e) => setFormData(prev => ({ ...prev, notes: e.target.value }))}
+                placeholder="Observações adicionais..."
+                rows={3}
+                className="rounded-xl bg-zinc-900 text-white border-zinc-700 placeholder:text-zinc-400 focus:ring-2 focus:ring-yellow-500 focus:border-yellow-500 resize-none"
+              />
+            </div>
           </div>
 
-          <div className="flex justify-end space-x-2 pt-4">
-            <Button type="button" variant="outline" onClick={onClose}>
+          {/* Ações */}
+          <div className="flex justify-end gap-3 pt-4">
+            <Button 
+              type="button" 
+              variant="outline" 
+              onClick={onClose}
+              className="px-4 py-2 rounded-xl border-zinc-700 text-zinc-400 hover:text-white hover:border-zinc-500 hover:bg-transparent transition-colors"
+            >
               Cancelar
             </Button>
-            <Button type="submit">
+            <Button 
+              type="submit"
+              className="px-6 py-2 rounded-xl bg-gradient-to-r from-yellow-500 to-yellow-400 text-black font-semibold shadow-md hover:scale-[1.03] transition-transform hover:bg-gradient-to-r hover:from-yellow-400 hover:to-yellow-300"
+            >
               {isEdit ? 'Atualizar' : 'Criar'}
             </Button>
           </div>
