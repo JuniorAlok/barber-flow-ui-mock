@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect } from 'react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
@@ -19,6 +18,7 @@ interface CommandFlowProps {
   status: 'waiting' | 'active' | 'completed';
   timer: number;
   className?: string;
+  style?: React.CSSProperties;
 }
 
 const CommandFlow: React.FC<CommandFlowProps> = ({
@@ -30,6 +30,7 @@ const CommandFlow: React.FC<CommandFlowProps> = ({
   status,
   timer,
   className,
+  style,
 }) => {
   const [paymentMethod, setPaymentMethod] = useState<string>('');
   const [showPaymentSelect, setShowPaymentSelect] = useState(false);
@@ -62,7 +63,7 @@ const CommandFlow: React.FC<CommandFlowProps> = ({
   };
 
   return (
-    <Card className={cn('management-item border-0', className)}>
+    <Card className={cn('management-item border-0', className)} style={style}>
       <CardHeader className="pb-3">
         <div className="flex items-center justify-between">
           <div>
