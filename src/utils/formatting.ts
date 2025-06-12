@@ -1,3 +1,4 @@
+
 export const formatCurrency = (value: number): string => {
   return new Intl.NumberFormat('pt-BR', {
     style: 'currency',
@@ -10,6 +11,16 @@ export const formatDate = (date: string): string => {
     day: '2-digit',
     month: '2-digit',
     year: 'numeric',
+  }).format(new Date(date));
+};
+
+export const formatDateTime = (date: string): string => {
+  return new Intl.DateTimeFormat('pt-BR', {
+    day: '2-digit',
+    month: '2-digit',
+    year: 'numeric',
+    hour: '2-digit',
+    minute: '2-digit',
   }).format(new Date(date));
 };
 
@@ -26,4 +37,26 @@ export const formatPercentage = (value: number, decimals: number = 1): string =>
   return `${value.toFixed(decimals)}%`;
 };
 
-export { formatPhoneNumber, validatePhoneNumber, createWhatsAppLink, createPhoneLink, isValidBrazilianPhone } from './phoneUtils';
+export const formatTime = (seconds: number): string => {
+  const hours = Math.floor(seconds / 3600);
+  const minutes = Math.floor((seconds % 3600) / 60);
+  const remainingSeconds = seconds % 60;
+  
+  if (hours > 0) {
+    return `${hours}h ${minutes}m ${remainingSeconds}s`;
+  } else if (minutes > 0) {
+    return `${minutes}m ${remainingSeconds}s`;
+  } else {
+    return `${remainingSeconds}s`;
+  }
+};
+
+// Re-export phone utilities for backward compatibility
+export { 
+  formatPhoneNumber, 
+  validatePhoneNumber, 
+  createWhatsAppLink, 
+  createPhoneLink, 
+  isValidBrazilianPhone,
+  extractPhoneInfo
+} from './phoneUtils';

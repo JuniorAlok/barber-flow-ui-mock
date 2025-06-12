@@ -28,7 +28,8 @@ export const validatePhoneNumber = (phone: string): boolean => {
 
 export const createWhatsAppLink = (phone: string, message?: string): string => {
   const cleaned = phone.replace(/\D/g, '');
-  const formattedPhone = `55${cleaned}`;
+  // Add Brazil country code if not present
+  const formattedPhone = cleaned.startsWith('55') ? cleaned : `55${cleaned}`;
   const encodedMessage = message ? encodeURIComponent(message) : '';
   
   return `https://wa.me/${formattedPhone}${encodedMessage ? `?text=${encodedMessage}` : ''}`;
@@ -55,4 +56,27 @@ export const isValidBrazilianPhone = (phone: string): boolean => {
   }
   
   return false;
+};
+
+export const extractPhoneInfo = (phone: string) => {
+  const cleaned = phone.replace(/\D/g, '');
+  
+  if (cleaned.length >= 10) {
+    const areaCode = cleaned.substring(0, 2);
+    const isMobile = cleaned.length === 11 && cleaned.charAt(2) === '9';
+    
+    return {
+      areaCode,
+      isMobile,
+      formatted: formatPhoneNumber(phone),
+      isValid: validatePhoneNumber(phone)
+    };
+  }
+  
+  return {
+    areaCode: '',
+    isMobile: false,
+    formatted: phone,
+    isValid: false
+  };
 };

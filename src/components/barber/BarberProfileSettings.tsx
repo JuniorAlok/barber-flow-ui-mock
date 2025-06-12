@@ -5,10 +5,11 @@ import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Textarea } from '@/components/ui/textarea';
-import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
+import { ImageUpload } from '@/components/ui/image-upload';
+import { PhoneInput } from '@/components/ui/phone-input';
 import { useAuth } from '@/contexts/AuthContext';
 import { useMockData } from '@/contexts/MockDataContext';
-import { UserCog, Camera, Save, User, Phone, Briefcase, Clock } from 'lucide-react';
+import { UserCog, Save, User, Phone, Briefcase, Clock } from 'lucide-react';
 import { toast } from 'sonner';
 
 const BarberProfileSettings: React.FC = () => {
@@ -102,37 +103,19 @@ const BarberProfileSettings: React.FC = () => {
         </CardHeader>
         
         <CardContent className="space-y-8">
-          {/* Avatar Section */}
-          <div className="flex flex-col md:flex-row items-start md:items-center gap-6">
-            <div className="relative">
-              <Avatar className="w-24 h-24 border-2 border-primary/20">
-                <AvatarImage src={formData.avatarUrl} alt={formData.name} />
-                <AvatarFallback className="bg-primary/10 text-primary text-2xl">
-                  {formData.name.charAt(0)}
-                </AvatarFallback>
-              </Avatar>
-              {isEditing && (
-                <Button
-                  size="sm"
-                  variant="outline"
-                  className="absolute -bottom-2 -right-2 w-8 h-8 rounded-full p-0 border-primary/30"
-                >
-                  <Camera className="w-4 h-4" />
-                </Button>
-              )}
-            </div>
-            
+          {/* Photo Upload Section */}
+          <div className="flex flex-col items-center">
+            <ImageUpload
+              value={formData.avatarUrl}
+              onChange={(url) => handleInputChange('avatarUrl', url)}
+              name={formData.name}
+              size="lg"
+              showUploadButton={isEditing}
+            />
             {isEditing && (
-              <div className="flex-1 max-w-md space-y-2">
-                <Label htmlFor="avatarUrl" className="text-sm text-gray-300">URL da Foto</Label>
-                <Input
-                  id="avatarUrl"
-                  value={formData.avatarUrl}
-                  onChange={(e) => handleInputChange('avatarUrl', e.target.value)}
-                  placeholder="https://exemplo.com/foto.jpg"
-                  className="bg-background/50 border-border/30"
-                />
-              </div>
+              <p className="text-xs text-muted-foreground mt-2 text-center">
+                Clique na câmera para alterar sua foto de perfil
+              </p>
             )}
           </div>
 
@@ -162,15 +145,21 @@ const BarberProfileSettings: React.FC = () => {
                 Telefone
               </Label>
               {isEditing ? (
-                <Input
+                <PhoneInput
                   value={formData.phone}
-                  onChange={(e) => handleInputChange('phone', e.target.value)}
-                  placeholder="(11) 99999-9999"
+                  onChange={(value) => handleInputChange('phone', value)}
                   className="bg-background/50 border-border/30"
+                  showActions={false}
                 />
               ) : (
                 <div className="glass-effect p-3 rounded-lg">
-                  <span className="text-white">{formData.phone}</span>
+                  <PhoneInput
+                    value={formData.phone}
+                    onChange={() => {}}
+                    showActions={true}
+                    whatsappMessage="Olá! Gostaria de agendar um horário."
+                    readOnly
+                  />
                 </div>
               )}
             </div>
