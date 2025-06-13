@@ -1,4 +1,3 @@
-
 import React from 'react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
@@ -19,6 +18,7 @@ interface MetricCardProps {
   className?: string;
   variant?: 'default' | 'compact' | 'detailed';
   loading?: boolean;
+  style?: React.CSSProperties;
 }
 
 const MetricCard: React.FC<MetricCardProps> = ({
@@ -30,7 +30,8 @@ const MetricCard: React.FC<MetricCardProps> = ({
   status = 'neutral',
   className,
   variant = 'default',
-  loading = false
+  loading = false,
+  style
 }) => {
   const getStatusColor = () => {
     switch (status) {
