@@ -38,22 +38,19 @@ const ServiceManagement: React.FC = () => {
 
   return (
     <>
-      <Card className="management-card border-0 animate-fade-in">
-        <CardHeader className="pb-6">
+      <Card className="animate-fade-in">
+        <CardHeader>
           <div className="flex justify-between items-center">
             <div className="flex items-center space-x-3">
-              <div className="p-2 rounded-lg bg-gradient-to-br from-primary/20 to-primary/5">
-                <DollarSign className="h-5 w-5 text-primary" />
+              <div className="p-2 rounded-lg bg-accent/10">
+                <DollarSign className="h-5 w-5 text-accent" />
               </div>
               <div>
-                <CardTitle className="text-xl">Gerenciar Serviços</CardTitle>
+                <CardTitle>Gerenciar Serviços</CardTitle>
                 <p className="text-sm text-muted-foreground">Configure os serviços oferecidos</p>
               </div>
             </div>
-            <Button 
-              onClick={handleNewService}
-              className="gradient-glow hover:scale-105 transition-all duration-300"
-            >
+            <Button onClick={handleNewService}>
               <Plus className="w-4 h-4 mr-2" />
               Novo Serviço
             </Button>
@@ -64,17 +61,14 @@ const ServiceManagement: React.FC = () => {
             {services.map((service, index) => (
               <div 
                 key={service.id} 
-                className="management-item p-6 animate-slide-up"
+                className="border rounded-lg p-6 animate-slide-up"
                 style={{ animationDelay: `${index * 100}ms` }}
               >
                 <div className="flex items-center justify-between">
                   <div className="flex-1">
                     <div className="flex items-center space-x-3 mb-2">
-                      <h3 className="text-lg font-semibold text-foreground">{service.title}</h3>
-                      <Badge 
-                        variant={service.isActive ? "default" : "secondary"}
-                        className={service.isActive ? "bg-green-500/20 text-green-400 border-green-500/30" : ""}
-                      >
+                      <h3 className="text-lg font-semibold">{service.title}</h3>
+                      <Badge variant={service.isActive ? "default" : "secondary"}>
                         {service.isActive ? 'Ativo' : 'Inativo'}
                       </Badge>
                     </div>
@@ -83,12 +77,12 @@ const ServiceManagement: React.FC = () => {
                       <div className="flex items-center space-x-2 text-sm">
                         <Clock className="w-4 h-4 text-muted-foreground" />
                         <span className="text-muted-foreground">Duração:</span>
-                        <span className="font-medium text-foreground">{service.duration} min</span>
+                        <span className="font-medium">{service.duration} min</span>
                       </div>
                       <div className="flex items-center space-x-2 text-sm">
-                        <DollarSign className="w-4 h-4 text-primary" />
+                        <DollarSign className="w-4 h-4 text-accent" />
                         <span className="text-muted-foreground">Preço:</span>
-                        <span className="font-medium text-primary">{formatCurrency(service.price)}</span>
+                        <span className="font-medium text-accent">{formatCurrency(service.price)}</span>
                       </div>
                     </div>
                   </div>
@@ -97,7 +91,6 @@ const ServiceManagement: React.FC = () => {
                       variant="outline"
                       size="sm"
                       onClick={() => handleEditService(service)}
-                      className="hover:border-primary/50 hover:bg-primary/10 transition-all duration-300"
                     >
                       <Edit className="w-4 h-4" />
                     </Button>
@@ -106,7 +99,6 @@ const ServiceManagement: React.FC = () => {
                         checked={service.isActive}
                         onCheckedChange={(checked) => toggleStatus(service.id, checked)}
                         disabled={isUpdating}
-                        className="data-[state=checked]:bg-primary"
                       />
                       <span className="text-sm text-muted-foreground">
                         {service.isActive ? 'Ativo' : 'Inativo'}

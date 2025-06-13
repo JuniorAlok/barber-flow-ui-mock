@@ -121,9 +121,9 @@ const BookingModal: React.FC<BookingModalProps> = ({ isOpen, onClose, booking })
 
   return (
     <Dialog open={isOpen} onOpenChange={onClose}>
-      <DialogContent className="sm:max-w-2xl max-h-[90vh] overflow-y-auto bg-zinc-950 text-white border-zinc-800 rounded-2xl shadow-xl">
-        <DialogHeader className="pb-6">
-          <DialogTitle className="text-xl font-semibold tracking-tight">
+      <DialogContent className="sm:max-w-2xl max-h-[90vh] overflow-y-auto">
+        <DialogHeader>
+          <DialogTitle>
             {isEdit ? 'Editar Agendamento' : 'Novo Agendamento'}
           </DialogTitle>
         </DialogHeader>
@@ -168,14 +168,10 @@ const BookingModal: React.FC<BookingModalProps> = ({ isOpen, onClose, booking })
               type="button" 
               variant="outline" 
               onClick={onClose}
-              className="px-4 py-2 rounded-xl border-zinc-700 text-zinc-400 hover:text-white hover:border-zinc-500 hover:bg-transparent transition-colors"
             >
               Cancelar
             </Button>
-            <Button 
-              type="submit"
-              className="px-6 py-2 rounded-xl bg-gradient-to-r from-yellow-500 to-yellow-400 text-black font-semibold shadow-md hover:scale-[1.03] transition-transform hover:bg-gradient-to-r hover:from-yellow-400 hover:to-yellow-300"
-            >
+            <Button type="submit">
               {isEdit ? 'Atualizar' : 'Criar'}
             </Button>
           </div>

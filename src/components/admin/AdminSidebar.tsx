@@ -74,14 +74,14 @@ export function AdminSidebar({ activeTab, onTabChange }: AdminSidebarProps) {
   const { user, logout } = useAuth();
 
   return (
-    <Sidebar className="border-r border-border/30">
-      <SidebarHeader className="p-4">
+    <Sidebar className="border-r">
+      <SidebarHeader className="p-6">
         <div className="flex items-center gap-3">
-          <div className="w-10 h-10 glass-effect rounded-xl flex items-center justify-center">
-            <Shield className="w-5 h-5 text-primary" />
+          <div className="w-10 h-10 bg-accent/10 rounded-lg flex items-center justify-center">
+            <Shield className="w-5 h-5 text-accent" />
           </div>
           <div>
-            <h2 className="font-bold text-lg text-luxury">ELITE STUDIO</h2>
+            <h2 className="font-bold text-lg">ELITE STUDIO</h2>
             <p className="text-xs text-muted-foreground">Admin Panel</p>
           </div>
         </div>
@@ -111,10 +111,10 @@ export function AdminSidebar({ activeTab, onTabChange }: AdminSidebarProps) {
 
       <SidebarFooter className="p-4">
         <div className="space-y-3">
-          <div className="flex items-center gap-3 glass-effect p-3 rounded-lg">
+          <div className="flex items-center gap-3 bg-muted/50 p-3 rounded-lg">
             <Avatar className="w-8 h-8">
               <AvatarImage src={user?.avatarUrl} />
-              <AvatarFallback className="bg-primary/10 text-primary">
+              <AvatarFallback className="bg-accent/20 text-accent">
                 {user?.name?.charAt(0) || 'A'}
               </AvatarFallback>
             </Avatar>
@@ -127,7 +127,7 @@ export function AdminSidebar({ activeTab, onTabChange }: AdminSidebarProps) {
           <Button 
             variant="outline" 
             onClick={logout}
-            className="w-full border-border/30 hover:border-destructive hover:bg-destructive/10"
+            className="w-full"
           >
             <LogOut className="w-4 h-4 mr-2" />
             Sair
