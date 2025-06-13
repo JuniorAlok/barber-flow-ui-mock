@@ -2,6 +2,8 @@
 import React, { useState } from 'react';
 import { SidebarProvider, SidebarTrigger } from '@/components/ui/sidebar';
 import { AdminSidebar } from '@/components/admin/AdminSidebar';
+import { PageHeader } from '@/components/ui/modern-layout';
+import ModernLayout from '@/components/ui/modern-layout';
 import DashboardMetrics from '@/components/DashboardMetrics';
 import FinanceModule from '@/components/FinanceModule';
 import ClientManagement from '@/components/ClientManagement';
@@ -12,6 +14,32 @@ import ConfigurationManagement from '@/components/admin/ConfigurationManagement'
 
 const AdminDashboard: React.FC = () => {
   const [activeTab, setActiveTab] = useState('dashboard');
+
+  const getPageTitle = () => {
+    switch (activeTab) {
+      case 'dashboard': return 'Dashboard Administrativo';
+      case 'bookings': return 'Gerenciar Agendamentos';
+      case 'finances': return 'Controle Financeiro';
+      case 'clients': return 'Gerenciar Clientes';
+      case 'services': return 'Gerenciar Serviços';
+      case 'barbers': return 'Gerenciar Barbeiros';
+      case 'configurations': return 'Configurações';
+      default: return 'Dashboard Administrativo';
+    }
+  };
+
+  const getPageDescription = () => {
+    switch (activeTab) {
+      case 'dashboard': return 'Visão geral das métricas e atividades da barbearia';
+      case 'bookings': return 'Visualize e gerencie todos os agendamentos';
+      case 'finances': return 'Controle de receitas, despesas e relatórios financeiros';
+      case 'clients': return 'Cadastro e gerenciamento de clientes';
+      case 'services': return 'Configuração de serviços e preços';
+      case 'barbers': return 'Gerenciamento da equipe de barbeiros';
+      case 'configurations': return 'Configurações gerais do sistema';
+      default: return '';
+    }
+  };
 
   const renderContent = () => {
     switch (activeTab) {
@@ -35,34 +63,29 @@ const AdminDashboard: React.FC = () => {
   };
 
   return (
-    <div className="min-h-screen bg-background">
+    <ModernLayout variant="dashboard">
       <SidebarProvider>
         <div className="flex w-full min-h-screen">
           <AdminSidebar activeTab={activeTab} onTabChange={setActiveTab} />
           <main className="flex-1">
-            <div className="glass-effect-strong border-b border-primary/20 sticky top-0 z-40">
-              <div className="flex items-center justify-between p-4">
-                <div className="flex items-center gap-4">
+            <PageHeader
+              title={getPageTitle()}
+              description={getPageDescription()}
+              actions={
+                <div className="flex items-center gap-2">
                   <SidebarTrigger className="md:hidden" />
-                  <h1 className="text-xl font-bold text-luxury">
-                    {activeTab === 'dashboard' && 'Dashboard Administrativo'}
-                    {activeTab === 'bookings' && 'Gerenciar Agendamentos'}
-                    {activeTab === 'finances' && 'Controle Financeiro'}
-                    {activeTab === 'clients' && 'Gerenciar Clientes'}
-                    {activeTab === 'services' && 'Gerenciar Serviços'}
-                    {activeTab === 'barbers' && 'Gerenciar Barbeiros'}
-                    {activeTab === 'configurations' && 'Configurações'}
-                  </h1>
                 </div>
+              }
+            />
+            <div className="container-responsive page-padding">
+              <div className="animate-fade-in">
+                {renderContent()}
               </div>
-            </div>
-            <div className="container mx-auto p-6">
-              {renderContent()}
             </div>
           </main>
         </div>
       </SidebarProvider>
-    </div>
+    </ModernLayout>
   );
 };
 

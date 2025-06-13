@@ -2,15 +2,16 @@
 import React from 'react';
 import BarberHeader from '@/components/barber/BarberHeader';
 import BarberTabs from '@/components/barber/BarberTabs';
+import ModernLayout from '@/components/ui/modern-layout';
 
 const BarberDashboard: React.FC = () => {
   return (
-    <div className="min-h-screen bg-background">
+    <ModernLayout variant="dashboard">
       <BarberHeader />
-      <div className="container mx-auto p-3 md:p-6 max-w-7xl">
+      <div className="container-responsive page-padding">
         <BarberTabs />
       </div>
-    </div>
+    </ModernLayout>
   );
 };
 

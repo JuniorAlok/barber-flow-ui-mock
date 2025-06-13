@@ -3,278 +3,325 @@
 @tailwind components;
 @tailwind utilities;
 
-/* Elite Barber Studio Design System - Luxury Theme */
-
 @layer base {
   :root {
-    /* Dark luxury background */
-    --background: 20 14% 4%;
-    --foreground: 60 9% 98%;
-
-    /* Rich dark cards */
-    --card: 24 12% 8%;
-    --card-foreground: 60 9% 98%;
-
-    --popover: 24 12% 8%;
-    --popover-foreground: 60 9% 98%;
-
-    /* Luxury gold primary */
-    --primary: 45 96% 58%;
-    --primary-foreground: 20 14% 4%;
-
-    /* Deep charcoal secondary */
-    --secondary: 20 8% 12%;
-    --secondary-foreground: 60 9% 98%;
-
-    /* Muted tones */
-    --muted: 20 8% 12%;
-    --muted-foreground: 24 5% 64%;
-
-    /* Accent gold */
-    --accent: 45 96% 58%;
-    --accent-foreground: 20 14% 4%;
-
-    /* Destructive red */
+    --background: 220 15% 8%;
+    --foreground: 220 10% 98%;
+    --card: 220 15% 10%;
+    --card-foreground: 220 10% 95%;
+    --popover: 220 15% 12%;
+    --popover-foreground: 220 10% 95%;
+    --primary: 45 100% 60%;
+    --primary-foreground: 220 15% 8%;
+    --secondary: 220 15% 15%;
+    --secondary-foreground: 220 10% 90%;
+    --muted: 220 15% 15%;
+    --muted-foreground: 220 10% 65%;
+    --accent: 220 15% 18%;
+    --accent-foreground: 220 10% 95%;
     --destructive: 0 84% 60%;
-    --destructive-foreground: 60 9% 98%;
-
-    /* Borders and inputs */
-    --border: 20 8% 15%;
-    --input: 20 8% 15%;
-    --ring: 45 96% 58%;
-
+    --destructive-foreground: 220 10% 98%;
+    --border: 220 15% 20%;
+    --input: 220 15% 18%;
+    --ring: 45 100% 60%;
     --radius: 0.75rem;
-
-    /* Sidebar colors */
-    --sidebar-background: 20 14% 4%;
-    --sidebar-foreground: 60 9% 98%;
-    --sidebar-primary: 45 96% 58%;
-    --sidebar-primary-foreground: 20 14% 4%;
-    --sidebar-accent: 20 8% 12%;
-    --sidebar-accent-foreground: 60 9% 98%;
-    --sidebar-border: 20 8% 15%;
-    --sidebar-ring: 45 96% 58%;
+    
+    /* Sidebar variables */
+    --sidebar-background: 220 15% 9%;
+    --sidebar-foreground: 220 10% 95%;
+    --sidebar-primary: 45 100% 60%;
+    --sidebar-primary-foreground: 220 15% 8%;
+    --sidebar-accent: 220 15% 15%;
+    --sidebar-accent-foreground: 220 10% 90%;
+    --sidebar-border: 220 15% 18%;
+    --sidebar-ring: 45 100% 60%;
+    
+    /* Luxury gradient colors */
+    --luxury-gold: 45 100% 60%;
+    --luxury-gold-dark: 38 92% 50%;
+    --luxury-amber: 43 96% 56%;
+    --luxury-bronze: 30 58% 45%;
   }
 
-  .dark {
-    --background: 20 14% 4%;
-    --foreground: 60 9% 98%;
-    --card: 24 12% 8%;
-    --card-foreground: 60 9% 98%;
-    --popover: 24 12% 8%;
-    --popover-foreground: 60 9% 98%;
-    --primary: 45 96% 58%;
-    --primary-foreground: 20 14% 4%;
-    --secondary: 20 8% 12%;
-    --secondary-foreground: 60 9% 98%;
-    --muted: 20 8% 12%;
-    --muted-foreground: 24 5% 64%;
-    --accent: 45 96% 58%;
-    --accent-foreground: 20 14% 4%;
-    --destructive: 0 84% 60%;
-    --destructive-foreground: 60 9% 98%;
-    --border: 20 8% 15%;
-    --input: 20 8% 15%;
-    --ring: 45 96% 58%;
-  }
-}
-
-@layer base {
   * {
     @apply border-border;
   }
-
+  
   body {
-    @apply bg-background text-foreground;
-    font-feature-settings: "rlig" 1, "calt" 1;
-    font-family: 'Inter', -apple-system, BlinkMacSystemFont, system-ui, sans-serif;
+    @apply bg-background text-foreground font-sans antialiased;
+    background-image: 
+      radial-gradient(circle at 25% 25%, hsl(var(--primary) / 0.05) 0%, transparent 50%),
+      radial-gradient(circle at 75% 75%, hsl(var(--primary) / 0.03) 0%, transparent 50%);
+    min-height: 100vh;
+  }
+
+  html {
+    scroll-behavior: smooth;
+  }
+}
+
+@layer components {
+  /* Glass Effects */
+  .glass-effect {
+    @apply backdrop-blur-md bg-white/5 border border-white/10;
+  }
+  
+  .glass-effect-strong {
+    @apply backdrop-blur-xl bg-black/40 border border-white/10;
+  }
+  
+  .glass-card {
+    @apply glass-effect rounded-xl p-6 shadow-2xl;
+  }
+  
+  /* Gradient Effects */
+  .gradient-luxury {
+    background: linear-gradient(135deg, 
+      hsl(var(--luxury-gold)) 0%, 
+      hsl(var(--luxury-amber)) 50%, 
+      hsl(var(--luxury-bronze)) 100%);
+  }
+  
+  .gradient-dark {
+    background: linear-gradient(135deg, 
+      hsl(var(--background)) 0%, 
+      hsl(var(--card)) 50%, 
+      hsl(var(--muted)) 100%);
+  }
+  
+  .hero-gradient {
+    background: linear-gradient(135deg, 
+      hsl(var(--background) / 0.95) 0%, 
+      hsl(var(--card) / 0.8) 50%, 
+      hsl(var(--background) / 0.95) 100%);
+  }
+  
+  /* Button Styles */
+  .btn-luxury {
+    @apply bg-gradient-to-r from-primary via-luxury-amber to-luxury-gold 
+           text-black font-bold tracking-wide
+           hover:shadow-2xl hover:shadow-primary/25
+           transition-all duration-300
+           border-0 rounded-xl;
+  }
+  
+  .btn-ghost-luxury {
+    @apply border border-primary/30 bg-transparent text-primary
+           hover:bg-primary/10 hover:border-primary
+           transition-all duration-300 rounded-xl;
+  }
+  
+  /* Text Styles */
+  .text-luxury {
+    @apply bg-gradient-to-r from-primary via-luxury-amber to-luxury-gold
+           bg-clip-text text-transparent font-bold;
+  }
+  
+  .text-shadow-luxury {
+    text-shadow: 0 2px 10px hsl(var(--primary) / 0.3);
+  }
+  
+  /* Card Styles */
+  .management-card {
+    @apply glass-card border-white/10 
+           hover:shadow-2xl hover:shadow-primary/10
+           transition-all duration-300
+           hover:border-primary/20;
+  }
+  
+  .metric-card {
+    @apply management-card relative overflow-hidden;
+  }
+  
+  .metric-card::before {
+    content: '';
+    @apply absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-primary to-luxury-amber;
+  }
+  
+  /* Layout Utilities */
+  .container-responsive {
+    @apply container mx-auto px-4 sm:px-6 lg:px-8;
+  }
+  
+  .page-padding {
+    @apply p-4 md:p-6 lg:p-8;
+  }
+  
+  .section-spacing {
+    @apply py-12 md:py-16 lg:py-20;
+  }
+  
+  /* Navigation Styles */
+  .nav-link {
+    @apply relative px-3 py-2 text-sm font-medium text-muted-foreground
+           hover:text-foreground transition-colors duration-200
+           after:absolute after:bottom-0 after:left-0 after:w-0 after:h-0.5
+           after:bg-primary after:transition-all after:duration-300
+           hover:after:w-full;
+  }
+  
+  .nav-link-active {
+    @apply text-primary after:w-full;
+  }
+  
+  /* Status Styles */
+  .status-active {
+    @apply bg-green-500/20 text-green-400 border-green-500/30;
+  }
+  
+  .status-pending {
+    @apply bg-yellow-500/20 text-yellow-400 border-yellow-500/30;
+  }
+  
+  .status-completed {
+    @apply bg-blue-500/20 text-blue-400 border-blue-500/30;
+  }
+  
+  .status-cancelled {
+    @apply bg-red-500/20 text-red-400 border-red-500/30;
+  }
+  
+  /* Animation Utilities */
+  .hover-lift {
+    @apply transition-transform duration-200 hover:-translate-y-1;
+  }
+  
+  .hover-glow {
+    @apply transition-shadow duration-300 hover:shadow-lg hover:shadow-primary/20;
+  }
+  
+  /* Form Styles */
+  .form-group {
+    @apply space-y-2;
+  }
+  
+  .form-input {
+    @apply bg-card border-border rounded-lg px-3 py-2
+           focus:border-primary focus:ring-2 focus:ring-primary/20
+           transition-all duration-200;
+  }
+  
+  .form-label {
+    @apply text-sm font-medium text-foreground;
+  }
+  
+  /* Table Styles */
+  .table-header {
+    @apply bg-muted/30 border-b border-border/50;
+  }
+  
+  .table-row {
+    @apply border-b border-border/30 hover:bg-muted/20 transition-colors;
+  }
+  
+  .table-cell {
+    @apply px-4 py-3;
+  }
+  
+  /* Mobile Responsive Utilities */
+  .mobile-container {
+    @apply px-3 sm:px-4 md:px-6;
+  }
+  
+  .mobile-text {
+    @apply text-sm sm:text-base;
+  }
+  
+  .mobile-spacing {
+    @apply space-y-4 md:space-y-6;
+  }
+  
+  /* Dark Mode Overrides */
+  .dark {
+    --background: 220 15% 8%;
+    --foreground: 220 10% 98%;
+    --card: 220 15% 10%;
+    --card-foreground: 220 10% 95%;
   }
 }
 
 @layer utilities {
-  /* Luxury Glass Effects */
-  .glass-effect {
-    backdrop-filter: blur(16px);
-    background: rgba(255, 193, 7, 0.03);
-    border: 1px solid rgba(255, 193, 7, 0.1);
-    box-shadow: 
-      0 8px 32px rgba(0, 0, 0, 0.4),
-      inset 0 1px 0 rgba(255, 255, 255, 0.05);
+  /* Custom Scrollbar */
+  .scrollbar-thin {
+    scrollbar-width: thin;
+    scrollbar-color: hsl(var(--muted)) hsl(var(--background));
   }
   
-  .glass-effect-strong {
-    backdrop-filter: blur(24px);
-    background: rgba(255, 193, 7, 0.08);
-    border: 1px solid rgba(255, 193, 7, 0.15);
-    box-shadow: 
-      0 16px 48px rgba(0, 0, 0, 0.6),
-      inset 0 1px 0 rgba(255, 255, 255, 0.1);
+  .scrollbar-thin::-webkit-scrollbar {
+    width: 6px;
   }
   
-  /* Luxury Gradients */
-  .gold-gradient {
-    background: linear-gradient(135deg, hsl(45 96% 58%) 0%, hsl(38 100% 50%) 50%, hsl(30 100% 45%) 100%);
-  }
-
-  .luxury-gradient {
-    background: linear-gradient(135deg, 
-      rgba(255, 193, 7, 0.9) 0%, 
-      rgba(255, 215, 0, 0.8) 25%,
-      rgba(218, 165, 32, 0.9) 50%,
-      rgba(184, 134, 11, 0.8) 75%,
-      rgba(146, 101, 5, 0.9) 100%);
-  }
-
-  .gradient-glow {
-    background: linear-gradient(135deg, hsl(45 96% 58%) 0%, hsl(38 100% 50%) 100%);
-    box-shadow: 0 0 40px rgba(255, 193, 7, 0.4);
-  }
-
-  .hero-gradient {
-    background: linear-gradient(135deg, 
-      rgba(20, 20, 20, 0.95) 0%,
-      rgba(30, 30, 30, 0.9) 50%,
-      rgba(20, 20, 20, 0.95) 100%);
+  .scrollbar-thin::-webkit-scrollbar-track {
+    background: hsl(var(--background));
   }
   
-  /* Luxury Animations */
-  .animate-fade-in {
-    animation: luxuryFadeIn 0.8s ease-out;
+  .scrollbar-thin::-webkit-scrollbar-thumb {
+    background-color: hsl(var(--muted));
+    border-radius: 3px;
   }
   
-  .animate-slide-up {
-    animation: luxurySlideUp 0.8s ease-out;
+  .scrollbar-thin::-webkit-scrollbar-thumb:hover {
+    background-color: hsl(var(--muted-foreground));
   }
-
-  .animate-scale-in {
-    animation: luxuryScaleIn 0.6s ease-out;
+  
+  /* Text Utilities */
+  .text-balance {
+    text-wrap: balance;
   }
-
-  .animate-glow {
-    animation: luxuryGlow 3s ease-in-out infinite alternate;
+  
+  /* Animation Delays */
+  .animate-delay-100 {
+    animation-delay: 100ms;
   }
-
-  /* Luxury Hover Effects */
-  .hover-lift {
-    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  
+  .animate-delay-200 {
+    animation-delay: 200ms;
   }
-
-  .hover-lift:hover {
-    transform: translateY(-8px);
-    box-shadow: 0 25px 50px rgba(0, 0, 0, 0.6);
+  
+  .animate-delay-300 {
+    animation-delay: 300ms;
   }
-
-  .hover-gold:hover {
-    color: hsl(45 96% 58%);
-    transition: color 0.3s ease;
+  
+  .animate-delay-500 {
+    animation-delay: 500ms;
   }
-
-  /* Luxury Cards */
-  .luxury-card {
-    @apply glass-effect hover-lift rounded-xl border border-border/30 hover:border-primary/20 transition-all duration-500;
-    background: linear-gradient(145deg, rgba(255, 193, 7, 0.02), rgba(0, 0, 0, 0.3));
+  
+  /* Grid Utilities */
+  .grid-auto-fit {
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
   }
-
-  .luxury-card:hover {
-    @apply glass-effect-strong;
-    transform: translateY(-8px) scale(1.02);
-  }
-
-  /* Elite Button Styles */
-  .btn-luxury {
-    @apply bg-gradient-to-r from-primary via-yellow-500 to-primary text-primary-foreground font-semibold px-8 py-4 rounded-lg transition-all duration-300;
-    box-shadow: 0 8px 32px rgba(255, 193, 7, 0.3);
-  }
-
-  .btn-luxury:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 12px 40px rgba(255, 193, 7, 0.5);
-  }
-
-  /* Premium Text Effects */
-  .text-luxury {
-    background: linear-gradient(135deg, hsl(45 96% 58%), hsl(38 100% 50%));
-    -webkit-background-clip: text;
-    background-clip: text;
-    -webkit-text-fill-color: transparent;
-  }
-
-  .text-shadow-luxury {
-    text-shadow: 0 4px 8px rgba(0, 0, 0, 0.8);
-  }
-
-  /* Section Backgrounds */
-  .section-luxury {
-    background: linear-gradient(180deg, 
-      rgba(20, 20, 20, 0.98) 0%,
-      rgba(25, 25, 25, 0.95) 50%,
-      rgba(20, 20, 20, 0.98) 100%);
-  }
-
-  .section-premium {
-    background: linear-gradient(180deg, 
-      rgba(30, 30, 30, 0.95) 0%,
-      rgba(20, 20, 20, 0.98) 100%);
+  
+  .grid-auto-fill {
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
   }
 }
 
-/* Luxury Keyframes */
-@keyframes luxuryFadeIn {
-  from {
-    opacity: 0;
-    transform: translateY(30px);
+/* Print Styles */
+@media print {
+  .no-print {
+    display: none !important;
   }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-
-@keyframes luxurySlideUp {
-  from {
-    opacity: 0;
-    transform: translateY(50px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
+  
+  .print-only {
+    display: block !important;
   }
 }
 
-@keyframes luxuryScaleIn {
-  from {
-    opacity: 0;
-    transform: scale(0.9);
-  }
-  to {
-    opacity: 1;
-    transform: scale(1);
+/* High Contrast Mode */
+@media (prefers-contrast: high) {
+  :root {
+    --border: 220 15% 30%;
+    --primary: 45 100% 70%;
   }
 }
 
-@keyframes luxuryGlow {
-  0%, 100% {
-    box-shadow: 0 0 30px rgba(255, 193, 7, 0.4);
+/* Reduced Motion */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
   }
-  50% {
-    box-shadow: 0 0 50px rgba(255, 193, 7, 0.6);
-  }
-}
-
-/* Premium Scrollbar */
-::-webkit-scrollbar {
-  width: 8px;
-}
-
-::-webkit-scrollbar-track {
-  background: rgba(20, 20, 20, 0.5);
-}
-
-::-webkit-scrollbar-thumb {
-  background: linear-gradient(135deg, hsl(45 96% 58%), hsl(38 100% 50%));
-  border-radius: 4px;
-}
-
-::-webkit-scrollbar-thumb:hover {
-  background: linear-gradient(135deg, hsl(45 96% 65%), hsl(38 100% 55%));
 }
