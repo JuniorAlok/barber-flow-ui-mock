@@ -33,11 +33,11 @@ const BookingCalendar: React.FC<BookingCalendarProps> = ({ onNewBooking, onEditB
 
   const getStatusColor = (status: string) => {
     switch (status) {
-      case 'confirmed': return 'bg-green-500/20 text-green-400 border-green-500/30';
-      case 'pending': return 'bg-yellow-500/20 text-yellow-400 border-yellow-500/30';
-      case 'done': return 'bg-blue-500/20 text-blue-400 border-blue-500/30';
-      case 'cancelled': return 'bg-red-500/20 text-red-400 border-red-500/30';
-      default: return 'bg-gray-500/20 text-gray-400 border-gray-500/30';
+      case 'confirmed': return 'status-success';
+      case 'pending': return 'status-warning';
+      case 'done': return 'status-info';
+      case 'cancelled': return 'status-error';
+      default: return 'bg-muted text-muted-foreground';
     }
   };
 
@@ -52,18 +52,28 @@ const BookingCalendar: React.FC<BookingCalendarProps> = ({ onNewBooking, onEditB
   return (
     <div className="grid lg:grid-cols-2 gap-6">
       {/* Calendar View */}
-      <Card className="management-card">
+      <Card className="management-card animate-fade-in">
         <CardHeader>
-          <div className="flex items-center justify-between">
+          <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
             <div className="flex items-center space-x-3">
               <CalendarIcon className="h-5 w-5 text-primary" />
-              <CardTitle>Calendário de Agendamentos</CardTitle>
+              <CardTitle className="text-responsive-lg">Calendário de Agendamentos</CardTitle>
             </div>
             <div className="flex items-center space-x-2">
-              <Button variant="outline" size="sm" onClick={() => navigateMonth('prev')}>
+              <Button 
+                variant="outline" 
+                size="sm" 
+                onClick={() => navigateMonth('prev')}
+                className="focus-ring"
+              >
                 <ChevronLeft className="h-4 w-4" />
               </Button>
-              <Button variant="outline" size="sm" onClick={() => navigateMonth('next')}>
+              <Button 
+                variant="outline" 
+                size="sm" 
+                onClick={() => navigateMonth('next')}
+                className="focus-ring"
+              >
                 <ChevronRight className="h-4 w-4" />
               </Button>
             </div>
@@ -76,7 +86,7 @@ const BookingCalendar: React.FC<BookingCalendarProps> = ({ onNewBooking, onEditB
             onSelect={(date) => date && setSelectedDate(date)}
             month={currentMonth}
             onMonthChange={setCurrentMonth}
-            className="rounded-md border border-border/30"
+            className="rounded-md border border-border/30 w-full"
             modifiers={{
               hasBookings: (date) => getBookingsForDate(date).length > 0
             }}
@@ -91,13 +101,13 @@ const BookingCalendar: React.FC<BookingCalendarProps> = ({ onNewBooking, onEditB
       </Card>
 
       {/* Selected Date Details */}
-      <Card className="management-card">
+      <Card className="management-card animate-fade-in">
         <CardHeader>
-          <div className="flex items-center justify-between">
-            <CardTitle>
+          <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
+            <CardTitle className="text-responsive-lg">
               {selectedDate ? formatDate(selectedDate.toISOString()) : 'Selecione uma data'}
             </CardTitle>
-            <Button onClick={onNewBooking} className="btn-luxury">
+            <Button onClick={onNewBooking} className="btn-luxury focus-ring">
               Novo Agendamento
             </Button>
           </div>
@@ -106,38 +116,45 @@ const BookingCalendar: React.FC<BookingCalendarProps> = ({ onNewBooking, onEditB
           {selectedDateBookings.length === 0 ? (
             <div className="text-center py-8">
               <CalendarIcon className="h-12 w-12 text-muted-foreground mx-auto mb-4" />
-              <p className="text-muted-foreground">Nenhum agendamento para esta data</p>
+              <p className="text-responsive-sm text-muted-foreground">Nenhum agendamento para esta data</p>
             </div>
           ) : (
             <div className="space-y-3">
-              {selectedDateBookings.map((booking) => (
+              {selectedDateBookings.map((booking, index) => (
                 <div
                   key={booking.id}
                   onClick={() => onEditBooking(booking)}
-                  className="glass-effect p-4 rounded-lg cursor-pointer hover:bg-primary/5 transition-colors"
+                  className="management-item p-4 cursor-pointer hover:bg-primary/5 transition-colors animate-slide-up focus-ring"
+                  style={{ animationDelay: `${index * 100}ms` }}
+                  tabIndex={0}
+                  onKeyDown={(e) => {
+                    if (e.key === 'Enter' || e.key === ' ') {
+                      onEditBooking(booking);
+                    }
+                  }}
                 >
-                  <div className="flex items-start justify-between mb-2">
+                  <div className="flex flex-col sm:flex-row sm:items-start sm:justify-between gap-3 mb-2">
                     <div className="flex items-center space-x-2">
-                      <Clock className="h-4 w-4 text-primary" />
-                      <span className="font-medium">{booking.time}</span>
+                      <Clock className="h-4 w-4 text-primary flex-shrink-0" />
+                      <span className="font-medium text-responsive-sm">{booking.time}</span>
                     </div>
                     <Badge className={getStatusColor(booking.status)}>
                       {booking.status}
                     </Badge>
                   </div>
                   
-                  <div className="space-y-1 text-sm">
+                  <div className="space-y-1 text-responsive-xs">
                     <div className="flex items-center space-x-2">
-                      <User className="h-3 w-3 text-muted-foreground" />
-                      <span>{booking.clientName}</span>
+                      <User className="h-3 w-3 text-muted-foreground flex-shrink-0" />
+                      <span className="truncate">{booking.clientName}</span>
                     </div>
                     <div className="flex items-center space-x-2">
-                      <Scissors className="h-3 w-3 text-muted-foreground" />
-                      <span>{getServiceName(booking.serviceId)}</span>
+                      <Scissors className="h-3 w-3 text-muted-foreground flex-shrink-0" />
+                      <span className="truncate">{getServiceName(booking.serviceId)}</span>
                     </div>
                     <div className="flex items-center space-x-2">
-                      <User className="h-3 w-3 text-muted-foreground" />
-                      <span>{getBarberName(booking.barberId)}</span>
+                      <User className="h-3 w-3 text-muted-foreground flex-shrink-0" />
+                      <span className="truncate">{getBarberName(booking.barberId)}</span>
                     </div>
                   </div>
                 </div>

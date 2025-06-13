@@ -9,26 +9,26 @@ const AdminHeader: React.FC = () => {
 
   return (
     <header className="border-b bg-card sticky top-0 z-40">
-      <div className="container mx-auto flex justify-between items-center p-6">
+      <div className="container-responsive flex justify-between items-center py-6">
         <div className="flex items-center gap-4">
           <div className="w-12 h-12 bg-accent/10 rounded-lg flex items-center justify-center">
             <Shield className="w-6 h-6 text-accent" />
           </div>
           <div>
-            <h1 className="text-2xl md:text-3xl font-bold tracking-wide">
+            <h1 className="text-responsive-xl font-bold tracking-wide text-luxury">
               ELITE STUDIO
             </h1>
-            <p className="text-sm text-muted-foreground">Painel Administrativo</p>
+            <p className="text-responsive-xs text-muted-foreground">Painel Administrativo</p>
           </div>
         </div>
         
         <div className="flex items-center gap-4">
           <div className="hidden md:flex items-center gap-3 bg-muted/50 px-4 py-2 rounded-lg">
             <BarChart3 className="w-5 h-5 text-accent" />
-            <span className="text-sm font-medium">Dashboard Admin</span>
+            <span className="text-responsive-sm font-medium">Dashboard Admin</span>
           </div>
           
-          <Button variant="outline" onClick={logout}>
+          <Button variant="outline" onClick={logout} className="focus-ring">
             <LogOut className="w-4 h-4 mr-2" />
             Sair
           </Button>

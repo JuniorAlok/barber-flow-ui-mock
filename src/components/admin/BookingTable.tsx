@@ -45,10 +45,10 @@ const BookingTable: React.FC<BookingTableProps> = ({
   getStatusBadge,
 }) => {
   return (
-    <Card>
+    <Card className="management-card animate-fade-in">
       <CardHeader>
-        <div className="flex justify-between items-center">
-          <CardTitle>Gerenciar Agendamentos</CardTitle>
+        <div className="flex flex-col sm:flex-row sm:justify-between sm:items-center gap-4">
+          <CardTitle className="text-responsive-lg">Gerenciar Agendamentos</CardTitle>
           <ViewModeToggle
             viewMode={viewMode}
             setViewMode={setViewMode}
@@ -56,72 +56,86 @@ const BookingTable: React.FC<BookingTableProps> = ({
           />
         </div>
       </CardHeader>
-      <CardContent>
-        <div className="rounded-md border">
-          <Table>
-            <TableHeader>
-              <TableRow>
-                <TableHead>Cliente</TableHead>
-                <TableHead>Serviço</TableHead>
-                <TableHead>Barbeiro</TableHead>
-                <TableHead>Data</TableHead>
-                <TableHead>Horário</TableHead>
-                <TableHead>Status</TableHead>
-                <TableHead>Ações</TableHead>
-              </TableRow>
-            </TableHeader>
-            <TableBody>
-              {bookings.map((booking) => (
-                <TableRow key={booking.id}>
-                  <TableCell>
-                    <div>
-                      <div className="font-medium">{booking.clientName}</div>
-                      <div className="text-sm text-muted-foreground">{booking.clientPhone}</div>
-                    </div>
-                  </TableCell>
-                  <TableCell>{getServiceName(booking.serviceId)}</TableCell>
-                  <TableCell>{getBarberName(booking.barberId)}</TableCell>
-                  <TableCell>
-                    {format(new Date(booking.date), 'dd/MM/yyyy', { locale: ptBR })}
-                  </TableCell>
-                  <TableCell>{booking.time}</TableCell>
-                  <TableCell>{getStatusBadge(booking.status)}</TableCell>
-                  <TableCell>
-                    <div className="flex items-center gap-2">
-                      <Button
-                        variant="outline"
-                        size="sm"
-                        onClick={() => onEditBooking(booking)}
-                      >
-                        <Edit className="w-4 h-4" />
-                      </Button>
-                      <Select
-                        value={booking.status}
-                        onValueChange={(value) => onUpdateStatus(booking.id, value)}
-                      >
-                        <SelectTrigger className="w-32">
-                          <SelectValue />
-                        </SelectTrigger>
-                        <SelectContent>
-                          <SelectItem value="pending">Pendente</SelectItem>
-                          <SelectItem value="confirmed">Confirmar</SelectItem>
-                          <SelectItem value="done">Concluído</SelectItem>
-                          <SelectItem value="cancelled">Cancelar</SelectItem>
-                        </SelectContent>
-                      </Select>
-                      <Button
-                        variant="destructive"
-                        size="sm"
-                        onClick={() => onDeleteBooking(booking.id)}
-                      >
-                        <Trash2 className="w-4 h-4" />
-                      </Button>
-                    </div>
-                  </TableCell>
+      <CardContent className="p-0 sm:p-6">
+        <div className="rounded-md border border-border/30 overflow-hidden">
+          <div className="overflow-x-auto">
+            <Table>
+              <TableHeader>
+                <TableRow className="bg-muted/30">
+                  <TableHead className="text-responsive-xs font-semibold">Cliente</TableHead>
+                  <TableHead className="text-responsive-xs font-semibold hidden sm:table-cell">Serviço</TableHead>
+                  <TableHead className="text-responsive-xs font-semibold hidden md:table-cell">Barbeiro</TableHead>
+                  <TableHead className="text-responsive-xs font-semibold">Data</TableHead>
+                  <TableHead className="text-responsive-xs font-semibold hidden sm:table-cell">Horário</TableHead>
+                  <TableHead className="text-responsive-xs font-semibold">Status</TableHead>
+                  <TableHead className="text-responsive-xs font-semibold">Ações</TableHead>
                 </TableRow>
-              ))}
-            </TableBody>
-          </Table>
+              </TableHeader>
+              <TableBody>
+                {bookings.map((booking, index) => (
+                  <TableRow 
+                    key={booking.id}
+                    className="hover:bg-muted/30 transition-colors animate-slide-up border-border/30"
+                    style={{ animationDelay: `${index * 50}ms` }}
+                  >
+                    <TableCell className="p-3">
+                      <div>
+                        <div className="font-medium text-responsive-sm">{booking.clientName}</div>
+                        <div className="text-responsive-xs text-muted-foreground sm:hidden">
+                          {getServiceName(booking.serviceId)}
+                        </div>
+                        <div className="text-responsive-xs text-muted-foreground">{booking.clientPhone}</div>
+                      </div>
+                    </TableCell>
+                    <TableCell className="hidden sm:table-cell text-responsive-sm">{getServiceName(booking.serviceId)}</TableCell>
+                    <TableCell className="hidden md:table-cell text-responsive-sm">{getBarberName(booking.barberId)}</TableCell>
+                    <TableCell className="text-responsive-sm">
+                      <div>
+                        {format(new Date(booking.date), 'dd/MM', { locale: ptBR })}
+                        <div className="sm:hidden text-responsive-xs text-muted-foreground">{booking.time}</div>
+                      </div>
+                    </TableCell>
+                    <TableCell className="hidden sm:table-cell text-responsive-sm">{booking.time}</TableCell>
+                    <TableCell>{getStatusBadge(booking.status)}</TableCell>
+                    <TableCell>
+                      <div className="flex items-center gap-1 sm:gap-2">
+                        <Button
+                          variant="outline"
+                          size="sm"
+                          onClick={() => onEditBooking(booking)}
+                          className="focus-ring p-1 sm:p-2"
+                        >
+                          <Edit className="w-3 h-3 sm:w-4 sm:h-4" />
+                        </Button>
+                        <Select
+                          value={booking.status}
+                          onValueChange={(value) => onUpdateStatus(booking.id, value)}
+                        >
+                          <SelectTrigger className="w-20 sm:w-32 h-8 sm:h-9 text-responsive-xs">
+                            <SelectValue />
+                          </SelectTrigger>
+                          <SelectContent className="bg-popover border-border">
+                            <SelectItem value="pending">Pendente</SelectItem>
+                            <SelectItem value="confirmed">Confirmar</SelectItem>
+                            <SelectItem value="done">Concluído</SelectItem>
+                            <SelectItem value="cancelled">Cancelar</SelectItem>
+                          </SelectContent>
+                        </Select>
+                        <Button
+                          variant="destructive"
+                          size="sm"
+                          onClick={() => onDeleteBooking(booking.id)}
+                          className="focus-ring p-1 sm:p-2"
+                        >
+                          <Trash2 className="w-3 h-3 sm:w-4 sm:h-4" />
+                        </Button>
+                      </div>
+                    </TableCell>
+                  </TableRow>
+                ))}
+              </TableBody>
+            </Table>
+          </div>
         </div>
       </CardContent>
     </Card>

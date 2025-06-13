@@ -7,7 +7,7 @@ const BarberDashboard: React.FC = () => {
   return (
     <div className="min-h-screen bg-background">
       <BarberHeader />
-      <div className="container mx-auto px-4 md:px-6 py-6">
+      <div className="container-responsive page-padding">
         <BarberTabs />
       </div>
     </div>

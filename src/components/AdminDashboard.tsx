@@ -2,7 +2,6 @@
 import React, { useState } from 'react';
 import { SidebarProvider, SidebarTrigger } from '@/components/ui/sidebar';
 import { AdminSidebar } from '@/components/admin/AdminSidebar';
-import { Button } from '@/components/ui/button';
 import DashboardMetrics from '@/components/DashboardMetrics';
 import FinanceModule from '@/components/FinanceModule';
 import ClientManagement from '@/components/ClientManagement';
@@ -68,15 +67,15 @@ const AdminDashboard: React.FC = () => {
           <AdminSidebar activeTab={activeTab} onTabChange={setActiveTab} />
           <main className="flex-1">
             <header className="border-b bg-card">
-              <div className="flex h-16 items-center px-6">
-                <SidebarTrigger className="md:hidden" />
+              <div className="flex h-16 items-center page-padding">
+                <SidebarTrigger className="md:hidden focus-ring" />
                 <div className="ml-4 md:ml-0">
-                  <h1 className="text-lg font-semibold">{getPageTitle()}</h1>
-                  <p className="text-sm text-muted-foreground">{getPageDescription()}</p>
+                  <h1 className="text-responsive-base font-semibold text-luxury">{getPageTitle()}</h1>
+                  <p className="text-responsive-xs text-muted-foreground">{getPageDescription()}</p>
                 </div>
               </div>
             </header>
-            <div className="p-6">
+            <div className="page-padding">
               <div className="animate-fade-in">
                 {renderContent()}
               </div>
