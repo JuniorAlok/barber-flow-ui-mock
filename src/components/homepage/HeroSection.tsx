@@ -1,31 +1,28 @@
-
 import React from 'react';
 import { Button } from '@/components/ui/button';
 import { Scissors, Star, Award } from 'lucide-react';
 import { useMockData } from '@/contexts/MockDataContext';
-
 interface HeroSectionProps {
   title: string;
   subtitle: string;
   ctaText: string;
   onBookingOpen: () => void;
 }
-
-const HeroSection: React.FC<HeroSectionProps> = ({ title, subtitle, ctaText, onBookingOpen }) => {
-  const { homeContent } = useMockData();
-  
-  return (
-    <section className="relative min-h-screen flex items-center justify-center overflow-hidden">
+const HeroSection: React.FC<HeroSectionProps> = ({
+  title,
+  subtitle,
+  ctaText,
+  onBookingOpen
+}) => {
+  const {
+    homeContent
+  } = useMockData();
+  return <section className="relative min-h-screen flex items-center justify-center overflow-hidden">
       {/* Background with overlay */}
       <div className="absolute inset-0 bg-gradient-to-br from-black via-gray-900 to-black">
-        <div 
-          className="absolute inset-0 bg-cover bg-center opacity-20"
-          style={{
-            backgroundImage: homeContent.heroImageUrl 
-              ? `url('${homeContent.heroImageUrl}')` 
-              : "url('https://images.unsplash.com/photo-1585747860715-2ba37e788b70?w=1920')"
-          }}
-        ></div>
+        <div className="absolute inset-0 bg-cover bg-center opacity-20" style={{
+        backgroundImage: homeContent.heroImageUrl ? `url('${homeContent.heroImageUrl}')` : "url('https://images.unsplash.com/photo-1585747860715-2ba37e788b70?w=1920')"
+      }}></div>
         <div className="absolute inset-0 hero-gradient"></div>
       </div>
       
@@ -51,39 +48,29 @@ const HeroSection: React.FC<HeroSectionProps> = ({ title, subtitle, ctaText, onB
           </h1>
           
           {/* Subtitle - Better responsive sizing */}
-          <p className="text-sm sm:text-base md:text-xl lg:text-2xl text-gray-300 max-w-3xl mx-auto leading-relaxed animate-fade-in font-light px-4">
+          <p className="text-sm sm:text-base md:text-xl lg:text-sm text-gray-300 max-w-3xl mx-auto leading-relaxed animate-fade-in font-light px-4">
             {subtitle}
           </p>
           
           {/* Features - Responsive layout */}
           <div className="flex flex-col sm:flex-row flex-wrap justify-center gap-2 md:gap-8 my-6 md:my-12 animate-scale-in">
-            {homeContent.heroFeature1 && (
-              <div className="flex items-center gap-2 md:gap-3 text-gray-300">
+            {homeContent.heroFeature1 && <div className="flex items-center gap-2 md:gap-3 text-gray-300">
                 <Scissors className="w-4 h-4 md:w-6 md:h-6 text-primary" />
                 <span className="font-medium text-xs md:text-base">{homeContent.heroFeature1}</span>
-              </div>
-            )}
-            {homeContent.heroFeature2 && (
-              <div className="flex items-center gap-2 md:gap-3 text-gray-300">
+              </div>}
+            {homeContent.heroFeature2 && <div className="flex items-center gap-2 md:gap-3 text-gray-300">
                 <Star className="w-4 h-4 md:w-6 md:h-6 text-primary" />
                 <span className="font-medium text-xs md:text-base">{homeContent.heroFeature2}</span>
-              </div>
-            )}
-            {homeContent.heroFeature3 && (
-              <div className="flex items-center gap-2 md:gap-3 text-gray-300">
+              </div>}
+            {homeContent.heroFeature3 && <div className="flex items-center gap-2 md:gap-3 text-gray-300">
                 <Award className="w-4 h-4 md:w-6 md:h-6 text-primary" />
                 <span className="font-medium text-xs md:text-base">{homeContent.heroFeature3}</span>
-              </div>
-            )}
+              </div>}
           </div>
           
           {/* CTA Button - Responsive sizing */}
           <div className="pt-2 md:pt-8 animate-fade-in">
-            <Button 
-              size="lg" 
-              onClick={onBookingOpen}
-              className="btn-luxury text-sm md:text-lg px-6 md:px-12 py-3 md:py-6 font-bold tracking-wide uppercase hover:scale-105 transition-transform duration-300 w-full sm:w-auto"
-            >
+            <Button size="lg" onClick={onBookingOpen} className="btn-luxury text-sm md:text-lg px-6 md:px-12 py-3 md:py-6 font-bold tracking-wide uppercase hover:scale-105 transition-transform duration-300 w-full sm:w-auto">
               {ctaText}
             </Button>
           </div>
@@ -97,8 +84,6 @@ const HeroSection: React.FC<HeroSectionProps> = ({ title, subtitle, ctaText, onB
       
       {/* Bottom fade */}
       <div className="absolute bottom-0 left-0 right-0 h-32 bg-gradient-to-t from-background to-transparent"></div>
-    </section>
-  );
+    </section>;
 };
-
 export default HeroSection;
