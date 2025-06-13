@@ -62,7 +62,12 @@ export default {
 					'accent-foreground': 'hsl(var(--sidebar-accent-foreground))',
 					border: 'hsl(var(--sidebar-border))',
 					ring: 'hsl(var(--sidebar-ring))'
-				}
+				},
+				// Add luxury colors so Tailwind can generate utility classes
+				'luxury-gold': 'hsl(var(--luxury-gold))',
+				'luxury-gold-dark': 'hsl(var(--luxury-gold-dark))',
+				'luxury-amber': 'hsl(var(--luxury-amber))',
+				'luxury-bronze': 'hsl(var(--luxury-bronze))'
 			},
 			borderRadius: {
 				lg: 'var(--radius)',
