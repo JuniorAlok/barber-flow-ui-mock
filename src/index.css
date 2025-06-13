@@ -34,6 +34,14 @@
     --sidebar-accent-foreground: 240 5.9% 10%;
     --sidebar-border: 220 13% 91%;
     --sidebar-ring: 217.2 91.2% 59.8%;
+    
+    /* Enhanced Dark Theme Variables */
+    --glass-bg: rgba(255, 255, 255, 0.1);
+    --glass-border: rgba(255, 255, 255, 0.2);
+    --luxury-gradient: linear-gradient(135deg, var(--accent), var(--primary));
+    --shadow-light: rgba(0, 0, 0, 0.1);
+    --shadow-medium: rgba(0, 0, 0, 0.15);
+    --shadow-heavy: rgba(0, 0, 0, 0.25);
   }
 
   .dark {
@@ -65,6 +73,14 @@
     --sidebar-accent-foreground: 240 4.8% 95.9%;
     --sidebar-border: 240 3.7% 15.9%;
     --sidebar-ring: 217.2 91.2% 59.8%;
+    
+    /* Enhanced Dark Theme Variables */
+    --glass-bg: rgba(0, 0, 0, 0.4);
+    --glass-border: rgba(255, 255, 255, 0.1);
+    --luxury-gradient: linear-gradient(135deg, var(--accent), var(--primary));
+    --shadow-light: rgba(0, 0, 0, 0.3);
+    --shadow-medium: rgba(0, 0, 0, 0.4);
+    --shadow-heavy: rgba(0, 0, 0, 0.6);
   }
 }
 
@@ -73,7 +89,7 @@
     @apply border-border;
   }
   body {
-    @apply bg-background text-foreground font-sans;
+    @apply bg-background text-foreground font-sans transition-colors duration-300;
   }
 }
 
@@ -87,54 +103,139 @@
     @apply px-4 py-6 md:px-6 md:py-8;
   }
   
-  /* Card Components */
+  /* Enhanced Card Components with Dark Theme Support */
   .management-card {
-    @apply bg-card text-card-foreground rounded-xl border border-border/50 shadow-sm hover:shadow-md transition-shadow duration-300;
+    @apply bg-card/90 text-card-foreground rounded-xl border border-border/50 shadow-sm hover:shadow-md transition-all duration-300 backdrop-blur-sm;
   }
   
   .management-item {
-    @apply bg-card/50 border border-border/30 rounded-lg hover:bg-card/80 hover:border-border/50 transition-all duration-300;
+    @apply bg-card/50 border border-border/30 rounded-lg hover:bg-card/80 hover:border-border/50 transition-all duration-300 backdrop-blur-sm;
   }
   
-  /* Button Variants */
+  /* Enhanced Glass Effects */
+  .glass-effect {
+    background: var(--glass-bg);
+    border: 1px solid var(--glass-border);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+  }
+  
+  .glass-effect-strong {
+    background: var(--glass-bg);
+    border: 1px solid var(--glass-border);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    box-shadow: 0 8px 32px var(--shadow-medium);
+  }
+  
+  /* Visual Filters */
+  .filter-blur-sm {
+    filter: blur(2px);
+  }
+  
+  .filter-blur-md {
+    filter: blur(4px);
+  }
+  
+  .filter-blur-lg {
+    filter: blur(8px);
+  }
+  
+  .filter-brightness-75 {
+    filter: brightness(0.75);
+  }
+  
+  .filter-brightness-125 {
+    filter: brightness(1.25);
+  }
+  
+  .filter-contrast-125 {
+    filter: contrast(1.25);
+  }
+  
+  .filter-saturate-150 {
+    filter: saturate(1.5);
+  }
+  
+  .filter-sepia {
+    filter: sepia(1);
+  }
+  
+  .filter-grayscale {
+    filter: grayscale(1);
+  }
+  
+  .filter-invert {
+    filter: invert(1);
+  }
+  
+  .filter-hue-rotate-90 {
+    filter: hue-rotate(90deg);
+  }
+  
+  .filter-hue-rotate-180 {
+    filter: hue-rotate(180deg);
+  }
+  
+  /* Enhanced Button Variants */
   .btn-luxury {
-    @apply bg-gradient-to-r from-accent to-accent/80 text-accent-foreground hover:from-accent/90 hover:to-accent/70 shadow-md hover:shadow-lg transition-all duration-300;
+    @apply bg-gradient-to-r from-accent to-accent/80 text-accent-foreground hover:from-accent/90 hover:to-accent/70 shadow-md hover:shadow-lg transition-all duration-300 border-0;
   }
   
   .gradient-glow {
     @apply bg-gradient-to-r from-primary to-primary/80 text-primary-foreground hover:from-primary/90 hover:to-primary/70 shadow-md hover:shadow-lg transition-all duration-300;
   }
   
-  /* Navigation */
+  .gradient-border {
+    background: var(--luxury-gradient);
+    padding: 1px;
+    border-radius: 1rem;
+  }
+  
+  .gradient-border > * {
+    @apply bg-background rounded-xl;
+  }
+  
+  /* Enhanced Navigation */
   .nav-link {
     @apply inline-flex items-center justify-center rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 hover:bg-accent hover:text-accent-foreground h-10 px-4 py-2;
   }
   
-  /* Typography */
+  /* Enhanced Typography */
   .text-luxury {
     @apply bg-gradient-to-r from-foreground to-foreground/80 bg-clip-text text-transparent;
   }
   
-  /* Status Indicators */
+  /* Enhanced Status Indicators */
   .status-success {
-    @apply bg-green-500/20 text-green-400 border-green-500/30;
+    @apply bg-green-500/20 text-green-400 border-green-500/30 backdrop-blur-sm;
   }
   
   .status-warning {
-    @apply bg-yellow-500/20 text-yellow-400 border-yellow-500/30;
+    @apply bg-yellow-500/20 text-yellow-400 border-yellow-500/30 backdrop-blur-sm;
   }
   
   .status-error {
-    @apply bg-red-500/20 text-red-400 border-red-500/30;
+    @apply bg-red-500/20 text-red-400 border-red-500/30 backdrop-blur-sm;
   }
   
   .status-info {
-    @apply bg-blue-500/20 text-blue-400 border-blue-500/30;
+    @apply bg-blue-500/20 text-blue-400 border-blue-500/30 backdrop-blur-sm;
+  }
+  
+  /* Enhanced Metric Cards */
+  .metric-card {
+    @apply management-card hover:shadow-xl hover:scale-[1.02] transition-all duration-300;
+  }
+  
+  /* Dark Theme Toggle */
+  .theme-toggle {
+    @apply p-2 rounded-lg bg-secondary/50 hover:bg-secondary transition-colors duration-200 focus-ring;
   }
 }
 
 @layer utilities {
-  /* Animation Utilities */
+  /* Enhanced Animation Utilities */
   .animate-fade-in {
     animation: fade-in 0.5s ease-out forwards;
   }
@@ -147,7 +248,11 @@
     animation: scale-in 0.3s ease-out forwards;
   }
   
-  /* Interactive Utilities */
+  .floating-element {
+    animation: float 6s ease-in-out infinite;
+  }
+  
+  /* Enhanced Interactive Utilities */
   .hover-lift {
     @apply transition-transform duration-300 hover:-translate-y-1;
   }
@@ -156,12 +261,12 @@
     @apply transition-shadow duration-300 hover:shadow-lg hover:shadow-accent/25;
   }
   
-  /* Focus Utilities */
+  /* Enhanced Focus Utilities */
   .focus-ring {
-    @apply focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2;
+    @apply focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 transition-all duration-200;
   }
   
-  /* Responsive Text */
+  /* Enhanced Responsive Text */
   .text-responsive-xs {
     @apply text-xs sm:text-sm;
   }
@@ -181,9 +286,22 @@
   .text-responsive-xl {
     @apply text-xl sm:text-2xl lg:text-3xl;
   }
+  
+  /* Enhanced Dark Theme Utilities */
+  .dark-card {
+    @apply bg-card/80 backdrop-blur-sm border-border/30;
+  }
+  
+  .dark-surface {
+    @apply bg-background/95 backdrop-blur-md;
+  }
+  
+  .dark-overlay {
+    @apply bg-background/60 backdrop-blur-sm;
+  }
 }
 
-/* Keyframes for animations */
+/* Enhanced Keyframes */
 @keyframes fade-in {
   from {
     opacity: 0;
@@ -217,7 +335,16 @@
   }
 }
 
-/* Dark mode support for animations */
+@keyframes float {
+  0%, 100% {
+    transform: translateY(0px);
+  }
+  50% {
+    transform: translateY(-10px);
+  }
+}
+
+/* Enhanced Dark Mode Support */
 @media (prefers-color-scheme: dark) {
   .management-card {
     @apply bg-card/80 backdrop-blur-sm;
@@ -228,7 +355,7 @@
   }
 }
 
-/* High contrast mode support */
+/* Enhanced High Contrast Support */
 @media (prefers-contrast: high) {
   .management-card {
     @apply border-2;
@@ -237,17 +364,27 @@
   .btn-luxury {
     @apply border border-accent;
   }
+  
+  .glass-effect,
+  .glass-effect-strong {
+    @apply border-2;
+  }
 }
 
-/* Reduced motion support */
+/* Enhanced Reduced Motion Support */
 @media (prefers-reduced-motion: reduce) {
   .animate-fade-in,
   .animate-slide-up,
-  .animate-scale-in {
+  .animate-scale-in,
+  .floating-element {
     animation: none;
   }
   
   .hover-lift {
     @apply hover:transform-none;
+  }
+  
+  * {
+    transition-duration: 0.1s !important;
   }
 }

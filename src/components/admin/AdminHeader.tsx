@@ -3,12 +3,13 @@ import React from 'react';
 import { Button } from '@/components/ui/button';
 import { LogOut, Shield, BarChart3 } from 'lucide-react';
 import { useAuth } from '@/contexts/AuthContext';
+import { ThemeToggle } from '@/components/ui/theme-toggle';
 
 const AdminHeader: React.FC = () => {
   const { logout } = useAuth();
 
   return (
-    <header className="border-b bg-card sticky top-0 z-40">
+    <header className="border-b bg-card/95 backdrop-blur-md sticky top-0 z-40">
       <div className="container-responsive flex justify-between items-center py-6">
         <div className="flex items-center gap-4">
           <div className="w-12 h-12 bg-accent/10 rounded-lg flex items-center justify-center">
@@ -23,10 +24,12 @@ const AdminHeader: React.FC = () => {
         </div>
         
         <div className="flex items-center gap-4">
-          <div className="hidden md:flex items-center gap-3 bg-muted/50 px-4 py-2 rounded-lg">
+          <div className="hidden md:flex items-center gap-3 bg-muted/50 px-4 py-2 rounded-lg backdrop-blur-sm">
             <BarChart3 className="w-5 h-5 text-accent" />
             <span className="text-responsive-sm font-medium">Dashboard Admin</span>
           </div>
+          
+          <ThemeToggle variant="icon-only" />
           
           <Button variant="outline" onClick={logout} className="focus-ring">
             <LogOut className="w-4 h-4 mr-2" />
