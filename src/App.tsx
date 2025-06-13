@@ -15,6 +15,7 @@ import AdminDashboard from "./pages/AdminDashboard";
 import BarberDashboard from "./pages/BarberDashboard";
 import LandingPage from "./pages/LandingPage";
 import NotFound from "./pages/NotFound";
+import ScaffoldDemo from "./pages/ScaffoldDemo";
 
 const queryClient = new QueryClient();
 
@@ -43,6 +44,7 @@ const App = () => {
                 <Routes>
                   <Route path="/" element={<Index />} />
                   <Route path="/landing" element={<LandingPage />} />
+                  <Route path="/scaffold" element={<ScaffoldDemo />} />
                   <Route path="/admin/login" element={<AdminLogin />} />
                   <Route path="/admin/dashboard" element={<AdminDashboard />} />
                   <Route path="/barber/login" element={<BarberLogin />} />

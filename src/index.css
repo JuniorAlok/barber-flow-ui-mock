@@ -232,6 +232,17 @@
   .theme-toggle {
     @apply p-2 rounded-lg bg-secondary/50 hover:bg-secondary transition-colors duration-200 focus-ring;
   }
+
+  /* Background Patterns */
+  .bg-grid-pattern {
+    background-image: radial-gradient(circle, rgba(255,255,255,0.1) 1px, transparent 1px);
+    background-size: 20px 20px;
+  }
+
+  /* Text Shadows for Luxury Effect */
+  .text-shadow-luxury {
+    text-shadow: 0 2px 4px rgba(0,0,0,0.1);
+  }
 }
 
 @layer utilities {
