@@ -48,7 +48,7 @@ const HeroSection: React.FC<HeroSectionProps> = ({
           </h1>
           
           {/* Subtitle - Better responsive sizing */}
-          <p className="text-sm sm:text-base md:text-xl lg:text-sm text-gray-300 max-w-3xl mx-auto leading-relaxed animate-fade-in font-light px-4">
+          <p className="text-sm sm:text-base md:text-xl text-gray-300 max-w-3xl mx-auto leading-relaxed animate-fade-in font-light px-4 lg:text-2xl">
             {subtitle}
           </p>
           
