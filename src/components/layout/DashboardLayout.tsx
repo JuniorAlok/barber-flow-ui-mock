@@ -18,16 +18,16 @@ export const DashboardLayout: React.FC<DashboardLayoutProps> = ({
   className
 }) => {
   return (
-    <div className="min-h-screen bg-background">
+    <div className="min-h-screen bg-neutral-900">
       {/* Sidebar */}
-      <aside className="fixed left-0 top-0 z-30 h-screen w-64 glass-effect-strong border-r border-border/50">
+      <aside className="fixed left-0 top-0 z-30 h-screen w-64 glass-effect-strong border-r border-neutral-800 bg-neutral-950/95">
         <AdminSidebar activeTab="dashboard" onTabChange={() => {}} />
       </aside>
 
       {/* Main Content Area */}
-      <div className="ml-64">
+      <div className="ml-64 bg-neutral-900 min-h-screen">
         {/* Header */}
-        <header className="glass-effect-strong border-b border-border/50 sticky top-0 z-20">
+        <header className="glass-effect-strong border-b border-neutral-800 sticky top-0 z-20 bg-neutral-950/80">
           <AdminHeader />
         </header>
 
@@ -35,7 +35,8 @@ export const DashboardLayout: React.FC<DashboardLayoutProps> = ({
         <main className={cn(
           "container-responsive py-6",
           "grid grid-cols-12 gap-6",
-          className
+          className,
+          "bg-neutral-900 min-h-[calc(100vh-64px)]"
         )}>
           {children}
         </main>
@@ -45,3 +46,4 @@ export const DashboardLayout: React.FC<DashboardLayoutProps> = ({
 };
 
 export default DashboardLayout;
+
