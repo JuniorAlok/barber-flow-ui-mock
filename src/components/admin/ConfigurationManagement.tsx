@@ -1,4 +1,3 @@
-
 import React from 'react';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
@@ -8,6 +7,7 @@ import { useToast } from '@/hooks/use-toast';
 import { homeContentSchema, HomeContentForm } from '@/utils/validation';
 import HomepageForm from './forms/HomepageForm';
 import PreviewHomeHero from './PreviewHomeHero';
+import PreviewHomeAbout from './PreviewHomeAbout';
 
 const ConfigurationManagement: React.FC = () => {
   const { homeContent, setHomeContent } = useMockData();
@@ -61,15 +61,21 @@ const ConfigurationManagement: React.FC = () => {
       </div>
 
       {/* Coluna 2: Preview */}
-      <div className="hidden lg:block sticky top-24">
+      <div className="hidden lg:block sticky top-24 space-y-4">
         <div className="rounded-lg border border-neutral-800 bg-neutral-950/85 shadow-xl overflow-hidden">
           <div className="px-6 py-3 border-b border-neutral-800 bg-neutral-900">
-            <span className="text-sm font-medium text-muted-foreground">Preview em tempo real</span>
+            <span className="text-sm font-medium text-muted-foreground">Preview em tempo real: Hero</span>
           </div>
           <div className="p-4 bg-neutral-950">
-            {/* Usando o componente de preview (apenas a seção Hero para início, pode expandir depois) */}
             <PreviewHomeHero data={formValues} />
-            {/* Mais preview de outras seções podem ser adicionados aqui, conforme necessário */}
+          </div>
+        </div>
+        <div className="rounded-lg border border-neutral-800 bg-neutral-950/85 shadow-xl overflow-hidden">
+          <div className="px-6 py-3 border-b border-neutral-800 bg-neutral-900">
+            <span className="text-sm font-medium text-muted-foreground">Preview em tempo real: Sobre</span>
+          </div>
+          <div className="p-4 bg-neutral-950">
+            <PreviewHomeAbout data={formValues} />
           </div>
         </div>
       </div>
