@@ -177,7 +177,7 @@ const BookingModal: React.FC<BookingModalProps> = ({ isOpen, onClose }) => {
 
   return (
     <Dialog open={isOpen} onOpenChange={handleClose}>
-      <DialogContent className="sm:max-w-[500px] max-h-[80vh] overflow-y-auto">
+      <DialogContent className="sm:max-w-[500px] max-h-[80vh] overflow-y-auto bg-zinc-900 border-zinc-700 text-white">
         <DialogHeader>
           <DialogTitle>Agendamento</DialogTitle>
           <BookingProgress currentStep={currentStep} totalSteps={totalSteps} />
@@ -187,7 +187,7 @@ const BookingModal: React.FC<BookingModalProps> = ({ isOpen, onClose }) => {
           {renderStepContent()}
         </div>
 
-        <div className="flex justify-between pt-4 border-t">
+        <div className="flex justify-between pt-4 border-t border-zinc-700">
           <Button
             variant="outline"
             onClick={prevStep}
@@ -201,12 +201,13 @@ const BookingModal: React.FC<BookingModalProps> = ({ isOpen, onClose }) => {
             <Button
               onClick={nextStep}
               disabled={!canProceed()}
+              className="bg-gradient-to-r from-yellow-500 to-orange-500 hover:from-yellow-600 hover:to-orange-600 text-black font-medium transition-all duration-300"
             >
               Próximo
               <ChevronRight className="w-4 h-4 ml-2" />
             </Button>
           ) : (
-            <Button onClick={handleFinish}>
+            <Button onClick={handleFinish} className="bg-gradient-to-r from-yellow-500 to-orange-500 hover:from-yellow-600 hover:to-orange-600 text-black font-medium transition-all duration-300">
               Finalizar Agendamento
             </Button>
           )}

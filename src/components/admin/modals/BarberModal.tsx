@@ -62,9 +62,9 @@ const BarberModal: React.FC<BarberModalProps> = ({ isOpen, onClose, barber }) =>
 
   return (
     <Dialog open={isOpen} onOpenChange={onClose}>
-      <DialogContent className="sm:max-w-[500px] max-h-[80vh] overflow-y-auto">
+      <DialogContent className="sm:max-w-[500px] max-h-[80vh] overflow-y-auto bg-zinc-900 border-zinc-700 text-white">
         <DialogHeader>
-          <DialogTitle>{isEdit ? 'Editar Barbeiro' : 'Novo Barbeiro'}</DialogTitle>
+          <DialogTitle className="text-xl font-bold">{isEdit ? 'Editar Barbeiro' : 'Novo Barbeiro'}</DialogTitle>
         </DialogHeader>
 
         <Form {...form}>
@@ -76,7 +76,7 @@ const BarberModal: React.FC<BarberModalProps> = ({ isOpen, onClose, barber }) =>
                 <FormItem>
                   <FormLabel>Nome</FormLabel>
                   <FormControl>
-                    <Input {...field} />
+                    <Input {...field} className="rounded-xl bg-zinc-800 border-zinc-700 text-white placeholder:text-zinc-400 focus:ring-2 focus:ring-yellow-500 focus:border-yellow-500"/>
                   </FormControl>
                   <FormMessage />
                 </FormItem>
@@ -90,7 +90,7 @@ const BarberModal: React.FC<BarberModalProps> = ({ isOpen, onClose, barber }) =>
                 <FormItem>
                   <FormLabel>Especialização</FormLabel>
                   <FormControl>
-                    <Input {...field} />
+                    <Input {...field} className="rounded-xl bg-zinc-800 border-zinc-700 text-white placeholder:text-zinc-400 focus:ring-2 focus:ring-yellow-500 focus:border-yellow-500"/>
                   </FormControl>
                   <FormMessage />
                 </FormItem>
@@ -104,7 +104,7 @@ const BarberModal: React.FC<BarberModalProps> = ({ isOpen, onClose, barber }) =>
                 <FormItem>
                   <FormLabel>Experiência</FormLabel>
                   <FormControl>
-                    <Input {...field} placeholder="Ex: 5 anos de experiência" />
+                    <Input {...field} placeholder="Ex: 5 anos de experiência" className="rounded-xl bg-zinc-800 border-zinc-700 text-white placeholder:text-zinc-400 focus:ring-2 focus:ring-yellow-500 focus:border-yellow-500"/>
                   </FormControl>
                   <FormMessage />
                 </FormItem>
@@ -119,7 +119,7 @@ const BarberModal: React.FC<BarberModalProps> = ({ isOpen, onClose, barber }) =>
                   <FormItem>
                     <FormLabel>Telefone</FormLabel>
                     <FormControl>
-                      <Input {...field} />
+                      <Input {...field} className="rounded-xl bg-zinc-800 border-zinc-700 text-white placeholder:text-zinc-400 focus:ring-2 focus:ring-yellow-500 focus:border-yellow-500"/>
                     </FormControl>
                     <FormMessage />
                   </FormItem>
@@ -133,7 +133,7 @@ const BarberModal: React.FC<BarberModalProps> = ({ isOpen, onClose, barber }) =>
                   <FormItem>
                     <FormLabel>Email</FormLabel>
                     <FormControl>
-                      <Input type="email" {...field} />
+                      <Input type="email" {...field} className="rounded-xl bg-zinc-800 border-zinc-700 text-white placeholder:text-zinc-400 focus:ring-2 focus:ring-yellow-500 focus:border-yellow-500"/>
                     </FormControl>
                     <FormMessage />
                   </FormItem>
@@ -148,7 +148,7 @@ const BarberModal: React.FC<BarberModalProps> = ({ isOpen, onClose, barber }) =>
                 <FormItem>
                   <FormLabel>URL do Avatar</FormLabel>
                   <FormControl>
-                    <Input {...field} />
+                    <Input {...field} className="rounded-xl bg-zinc-800 border-zinc-700 text-white placeholder:text-zinc-400 focus:ring-2 focus:ring-yellow-500 focus:border-yellow-500"/>
                   </FormControl>
                   <FormMessage />
                 </FormItem>
@@ -163,7 +163,7 @@ const BarberModal: React.FC<BarberModalProps> = ({ isOpen, onClose, barber }) =>
                   <FormItem>
                     <FormLabel>Avaliação (0-5)</FormLabel>
                     <FormControl>
-                      <Input type="number" min="0" max="5" step="0.1" {...field} onChange={(e) => field.onChange(Number(e.target.value))} />
+                      <Input type="number" min="0" max="5" step="0.1" {...field} onChange={(e) => field.onChange(Number(e.target.value))} className="rounded-xl bg-zinc-800 border-zinc-700 text-white placeholder:text-zinc-400 focus:ring-2 focus:ring-yellow-500 focus:border-yellow-500"/>
                     </FormControl>
                     <FormMessage />
                   </FormItem>
@@ -177,7 +177,7 @@ const BarberModal: React.FC<BarberModalProps> = ({ isOpen, onClose, barber }) =>
                   <FormItem>
                     <FormLabel>Comissão (%)</FormLabel>
                     <FormControl>
-                      <Input type="number" min="0" max="100" {...field} onChange={(e) => field.onChange(Number(e.target.value))} />
+                      <Input type="number" min="0" max="100" {...field} onChange={(e) => field.onChange(Number(e.target.value))} className="rounded-xl bg-zinc-800 border-zinc-700 text-white placeholder:text-zinc-400 focus:ring-2 focus:ring-yellow-500 focus:border-yellow-500"/>
                     </FormControl>
                     <FormMessage />
                   </FormItem>
@@ -189,11 +189,11 @@ const BarberModal: React.FC<BarberModalProps> = ({ isOpen, onClose, barber }) =>
               control={form.control}
               name="isActive"
               render={({ field }) => (
-                <FormItem className="flex items-center space-x-2">
+                <FormItem className="flex items-center space-x-2 pt-2">
                   <FormControl>
-                    <Switch checked={field.value} onCheckedChange={field.onChange} />
+                    <Switch checked={field.value} onCheckedChange={field.onChange} className="data-[state=checked]:bg-yellow-500"/>
                   </FormControl>
-                  <FormLabel>Ativo</FormLabel>
+                  <FormLabel className="!mt-0">Ativo</FormLabel>
                 </FormItem>
               )}
             />
@@ -202,7 +202,7 @@ const BarberModal: React.FC<BarberModalProps> = ({ isOpen, onClose, barber }) =>
               <Button type="button" variant="outline" onClick={onClose}>
                 Cancelar
               </Button>
-              <Button type="submit">
+              <Button type="submit" className="bg-gradient-to-r from-yellow-500 to-orange-500 hover:from-yellow-600 hover:to-orange-600 text-black font-medium transition-all duration-300">
                 {isEdit ? 'Atualizar' : 'Criar'}
               </Button>
             </div>

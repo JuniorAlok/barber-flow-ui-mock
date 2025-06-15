@@ -84,13 +84,13 @@ export const EnhancedForm: React.FC<EnhancedFormProps> = ({
     <motion.div
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
-      className={cn('management-card p-8', className)}
+      className={cn('management-card p-8 bg-zinc-900 border border-zinc-700 rounded-2xl text-white', className)}
     >
       <div className="mb-6">
-        <h3 className="text-2xl font-bold text-luxury mb-2">
+        <h3 className="text-2xl font-bold text-white mb-2">
           Formulário de Contato
         </h3>
-        <p className="text-muted-foreground">
+        <p className="text-zinc-400">
           Preencha os dados abaixo para entrar em contato
         </p>
       </div>
@@ -108,7 +108,7 @@ export const EnhancedForm: React.FC<EnhancedFormProps> = ({
                   <Input
                     placeholder="Digite seu nome"
                     {...field}
-                    className="focus-ring"
+                    className="rounded-xl bg-zinc-800 border-zinc-700 text-white placeholder:text-zinc-400 focus:ring-2 focus:ring-yellow-500 focus:border-yellow-500"
                   />
                 </FormControl>
                 <FormMessage />
@@ -128,7 +128,7 @@ export const EnhancedForm: React.FC<EnhancedFormProps> = ({
                     type="email"
                     placeholder="seu@email.com"
                     {...field}
-                    className="focus-ring"
+                    className="rounded-xl bg-zinc-800 border-zinc-700 text-white placeholder:text-zinc-400 focus:ring-2 focus:ring-yellow-500 focus:border-yellow-500"
                   />
                 </FormControl>
                 <FormMessage />
@@ -145,14 +145,14 @@ export const EnhancedForm: React.FC<EnhancedFormProps> = ({
                 <FormLabel>Serviço</FormLabel>
                 <Select onValueChange={field.onChange} defaultValue={field.value}>
                   <FormControl>
-                    <SelectTrigger className="focus-ring">
+                    <SelectTrigger className="rounded-xl bg-zinc-800 border-zinc-700 text-white focus:ring-2 focus:ring-yellow-500 focus:border-yellow-500">
                       <SelectValue placeholder="Selecione um serviço" />
                     </SelectTrigger>
                   </FormControl>
-                  <SelectContent>
-                    <SelectItem value="haircut">Corte de Cabelo</SelectItem>
-                    <SelectItem value="beard">Barba</SelectItem>
-                    <SelectItem value="combo">Combo Completo</SelectItem>
+                  <SelectContent className="bg-zinc-900 border-zinc-700 text-white">
+                    <SelectItem value="haircut" className="text-white hover:!bg-zinc-700">Corte de Cabelo</SelectItem>
+                    <SelectItem value="beard" className="text-white hover:!bg-zinc-700">Barba</SelectItem>
+                    <SelectItem value="combo" className="text-white hover:!bg-zinc-700">Combo Completo</SelectItem>
                   </SelectContent>
                 </Select>
                 <FormMessage />
@@ -202,6 +202,7 @@ export const EnhancedForm: React.FC<EnhancedFormProps> = ({
                   <Checkbox
                     checked={field.value}
                     onCheckedChange={field.onChange}
+                    className="data-[state=checked]:bg-yellow-500 data-[state=checked]:text-black border-zinc-600"
                   />
                 </FormControl>
                 <div className="space-y-1 leading-none">
@@ -218,7 +219,7 @@ export const EnhancedForm: React.FC<EnhancedFormProps> = ({
             <Button
               type="submit"
               disabled={isSubmitting}
-              className="btn-luxury min-w-[140px]"
+              className="bg-gradient-to-r from-yellow-500 to-orange-500 hover:from-yellow-600 hover:to-orange-600 text-black font-medium transition-all duration-300 min-w-[140px]"
             >
               {isSubmitting ? (
                 <>

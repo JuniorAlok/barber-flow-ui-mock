@@ -121,9 +121,9 @@ const BookingModal: React.FC<BookingModalProps> = ({ isOpen, onClose, booking })
 
   return (
     <Dialog open={isOpen} onOpenChange={onClose}>
-      <DialogContent className="sm:max-w-2xl max-h-[90vh] overflow-y-auto">
+      <DialogContent className="sm:max-w-2xl max-h-[90vh] overflow-y-auto bg-zinc-900 border-zinc-700 text-white">
         <DialogHeader>
-          <DialogTitle>
+          <DialogTitle className="text-xl font-bold">
             {isEdit ? 'Editar Agendamento' : 'Novo Agendamento'}
           </DialogTitle>
         </DialogHeader>
@@ -163,7 +163,7 @@ const BookingModal: React.FC<BookingModalProps> = ({ isOpen, onClose, booking })
             onNotesChange={(value) => setFormData(prev => ({ ...prev, notes: value }))}
           />
 
-          <div className="flex justify-end gap-3 pt-4">
+          <div className="flex justify-end gap-3 pt-4 border-t border-zinc-700">
             <Button 
               type="button" 
               variant="outline" 
@@ -171,7 +171,7 @@ const BookingModal: React.FC<BookingModalProps> = ({ isOpen, onClose, booking })
             >
               Cancelar
             </Button>
-            <Button type="submit">
+            <Button type="submit" className="bg-gradient-to-r from-yellow-500 to-orange-500 hover:from-yellow-600 hover:to-orange-600 text-black font-medium transition-all duration-300">
               {isEdit ? 'Atualizar' : 'Criar'}
             </Button>
           </div>
