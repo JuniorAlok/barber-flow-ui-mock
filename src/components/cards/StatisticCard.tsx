@@ -1,10 +1,8 @@
-
 /**
  * Statistic Card Component
  * Displays metrics with trend indicators and animations
  */
 import React from 'react';
-import { motion } from 'framer-motion';
 import { Card, CardContent } from '@/components/ui/card';
 import { TrendingUp, TrendingDown, Minus, LucideIcon } from 'lucide-react';
 import { cn } from '@/lib/utils';
@@ -88,60 +86,53 @@ export const StatisticCard: React.FC<StatisticCardProps> = ({
   }
 
   return (
-    <motion.div
-      initial={{ opacity: 0, y: 20 }}
-      animate={{ opacity: 1, y: 0 }}
-      whileHover={{ y: -2 }}
-      transition={{ duration: 0.3 }}
-    >
-      <Card className={cn(
-        'hover-lift hover-glow transition-all duration-300',
-        getVariantStyles(),
-        className
-      )}>
-        <CardContent className="p-6">
-          <div className="flex items-center justify-between mb-4">
-            <p className="text-sm font-medium text-muted-foreground">
-              {title}
-            </p>
-            {Icon && (
-              <div className="p-2 rounded-lg bg-accent/10">
-                <Icon className="w-5 h-5 text-accent" />
+    <Card className={cn(
+      'hover-lift hover-glow transition-all duration-300 h-full',
+      getVariantStyles(),
+      className
+    )}>
+      <CardContent className="p-6 flex flex-col h-full">
+        <div className="flex items-center justify-between mb-4">
+          <p className="text-sm font-medium text-muted-foreground">
+            {title}
+          </p>
+          {Icon && (
+            <div className="p-2 rounded-lg bg-accent/10">
+              <Icon className="w-5 h-5 text-accent" />
+            </div>
+          )}
+        </div>
+        
+        <div className="space-y-2 mt-auto">
+          <p className="text-3xl font-bold tracking-tight text-luxury">
+            {value}
+          </p>
+          
+          <div className="flex items-center justify-between">
+            {description && (
+              <p className="text-sm text-muted-foreground">
+                {description}
+              </p>
+            )}
+            
+            {trend && (
+              <div className={cn(
+                'flex items-center gap-1 text-sm font-medium',
+                getTrendColor()
+              )}>
+                {getTrendIcon()}
+                <span>{Math.abs(trend.value)}%</span>
+                {trend.label && (
+                  <span className="text-muted-foreground ml-1">
+                    {trend.label}
+                  </span>
+                )}
               </div>
             )}
           </div>
-          
-          <div className="space-y-2">
-            <p className="text-3xl font-bold tracking-tight text-luxury">
-              {value}
-            </p>
-            
-            <div className="flex items-center justify-between">
-              {description && (
-                <p className="text-sm text-muted-foreground">
-                  {description}
-                </p>
-              )}
-              
-              {trend && (
-                <div className={cn(
-                  'flex items-center gap-1 text-sm font-medium',
-                  getTrendColor()
-                )}>
-                  {getTrendIcon()}
-                  <span>{Math.abs(trend.value)}%</span>
-                  {trend.label && (
-                    <span className="text-muted-foreground ml-1">
-                      {trend.label}
-                    </span>
-                  )}
-                </div>
-              )}
-            </div>
-          </div>
-        </CardContent>
-      </Card>
-    </motion.div>
+        </div>
+      </CardContent>
+    </Card>
   );
 };
 
@@ -166,14 +157,13 @@ export const StatisticsGrid: React.FC<StatisticsGridProps> = ({
       className
     )}>
       {stats.map((stat, index) => (
-        <motion.div
+        <div
           key={index}
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: index * 0.1 }}
+          className="animate-fade-in-up"
+          style={{ animationDelay: `${index * 100}ms` }}
         >
           <StatisticCard {...stat} loading={loading} />
-        </motion.div>
+        </div>
       ))}
     </div>
   );
