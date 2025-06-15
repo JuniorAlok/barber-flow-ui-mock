@@ -1,13 +1,11 @@
-import React, { useState, useEffect } from 'react';
+
+import React, { useState } from 'react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
-import { Badge } from '@/components/ui/badge';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Play, Square, Clock, CreditCard } from 'lucide-react';
-import { formatTime } from '@/utils/formatting';
 import StatusIndicator from './status-indicator';
 import { cn } from '@/lib/utils';
-import { AnimatedPresence } from '@/components/ui/motion-components';
 
 interface CommandFlowProps {
   orderId: string;
@@ -119,8 +117,7 @@ const CommandFlow: React.FC<CommandFlowProps> = ({
         </div>
 
         {/* Payment Method Selection */}
-        <AnimatedPresence>
-          {showPaymentSelect && (
+        {showPaymentSelect && (
             <div
               className="space-y-3 overflow-hidden animate-fade-in"
             >
@@ -159,8 +156,7 @@ const CommandFlow: React.FC<CommandFlowProps> = ({
                 </div>
               </div>
             </div>
-          )}
-        </AnimatePresence>
+        )}
 
         {status === 'completed' && (
           <div
