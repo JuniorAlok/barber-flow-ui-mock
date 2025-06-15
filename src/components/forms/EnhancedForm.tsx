@@ -1,10 +1,8 @@
-
 /**
  * Enhanced Form Components
  * Modern form components with validation and animations
  */
 import React, { useState } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { z } from 'zod';
@@ -30,6 +28,7 @@ import { RadioGroup, RadioGroupItem } from '@/components/ui/radio-group';
 import { Label } from '@/components/ui/label';
 import { CheckCircle, AlertCircle, Loader2 } from 'lucide-react';
 import { cn } from '@/lib/utils';
+import { AnimatedPresence } from '@/components/ui/motion-components';
 
 // Form schema example
 const formSchema = z.object({
@@ -81,10 +80,8 @@ export const EnhancedForm: React.FC<EnhancedFormProps> = ({
   };
 
   return (
-    <motion.div
-      initial={{ opacity: 0, y: 20 }}
-      animate={{ opacity: 1, y: 0 }}
-      className={cn('management-card p-8 bg-zinc-900 border border-zinc-700 rounded-2xl text-white', className)}
+    <div
+      className={cn('management-card p-8 bg-zinc-900 border border-zinc-700 rounded-2xl text-white animate-fade-in', className)}
     >
       <div className="mb-6">
         <h3 className="text-2xl font-bold text-white mb-2">
@@ -231,35 +228,29 @@ export const EnhancedForm: React.FC<EnhancedFormProps> = ({
               )}
             </Button>
 
-            <AnimatePresence>
+            <AnimatedPresence>
               {submitStatus === 'success' && (
-                <motion.div
-                  initial={{ opacity: 0, scale: 0.8 }}
-                  animate={{ opacity: 1, scale: 1 }}
-                  exit={{ opacity: 0, scale: 0.8 }}
-                  className="flex items-center gap-2 text-green-600"
+                <div
+                  className="flex items-center gap-2 text-green-600 animate-scale-in"
                 >
                   <CheckCircle className="w-4 h-4" />
                   <span className="text-sm font-medium">Enviado com sucesso!</span>
-                </motion.div>
+                </div>
               )}
               
               {submitStatus === 'error' && (
-                <motion.div
-                  initial={{ opacity: 0, scale: 0.8 }}
-                  animate={{ opacity: 1, scale: 1 }}
-                  exit={{ opacity: 0, scale: 0.8 }}
-                  className="flex items-center gap-2 text-red-600"
+                <div
+                  className="flex items-center gap-2 text-red-600 animate-scale-in"
                 >
                   <AlertCircle className="w-4 h-4" />
                   <span className="text-sm font-medium">Erro ao enviar</span>
-                </motion.div>
+                </div>
               )}
-            </AnimatePresence>
+            </AnimatedPresence>
           </div>
         </form>
       </Form>
-    </motion.div>
+    </div>
   );
 };
 
