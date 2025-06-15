@@ -1,10 +1,8 @@
-
 /**
  * Call-to-Action Section Component
  * Contrasting section with accent background and luxury button
  */
 import React from 'react';
-import { motion } from 'framer-motion';
 import { Button } from '@/components/ui/button';
 import { ArrowRight, Sparkles } from 'lucide-react';
 
@@ -37,50 +35,37 @@ export const CTASection: React.FC<CTASectionProps> = ({
       </div>
 
       <div className="relative z-10 container-responsive text-center">
-        <motion.div
-          initial={{ opacity: 0, y: 30 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6 }}
-          viewport={{ once: true }}
-          className="max-w-4xl mx-auto"
+        <div
+          className="max-w-4xl mx-auto animate-fade-in-up"
         >
           {/* Icon */}
-          <motion.div
-            initial={{ opacity: 0, scale: 0.8 }}
-            whileInView={{ opacity: 1, scale: 1 }}
-            transition={{ duration: 0.5, delay: 0.2 }}
-            className="inline-flex items-center justify-center w-16 h-16 bg-accent-foreground/10 rounded-full mb-8"
+          <div
+            className="inline-flex items-center justify-center w-16 h-16 bg-accent-foreground/10 rounded-full mb-8 animate-scale-in"
+            style={{ animationDelay: '200ms' }}
           >
             <Sparkles className="w-8 h-8 text-accent-foreground" />
-          </motion.div>
+          </div>
 
           {/* Title */}
-          <motion.h2
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, delay: 0.1 }}
-            className="text-3xl md:text-4xl lg:text-5xl font-bold text-accent-foreground mb-6 leading-tight"
+          <h2
+            className="text-3xl md:text-4xl lg:text-5xl font-bold text-accent-foreground mb-6 leading-tight animate-fade-in-up"
+            style={{ animationDelay: '100ms' }}
           >
             {title}
-          </motion.h2>
+          </h2>
 
           {/* Subtitle */}
-          <motion.p
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, delay: 0.2 }}
-            className="text-lg md:text-xl text-accent-foreground/90 mb-8 max-w-2xl mx-auto leading-relaxed"
+          <p
+            className="text-lg md:text-xl text-accent-foreground/90 mb-8 max-w-2xl mx-auto leading-relaxed animate-fade-in-up"
+            style={{ animationDelay: '200ms' }}
           >
             {subtitle}
-          </motion.p>
+          </p>
 
           {/* CTA Button */}
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, delay: 0.3 }}
-            whileHover={{ scale: 1.05 }}
-            whileTap={{ scale: 0.95 }}
+          <div
+            className="animate-fade-in-up transition-transform duration-300 hover:scale-105 active:scale-95"
+            style={{ animationDelay: '300ms' }}
           >
             <Button
               size="lg"
@@ -90,18 +75,16 @@ export const CTASection: React.FC<CTASectionProps> = ({
               {buttonText}
               <ArrowRight className="ml-2 h-5 w-5" />
             </Button>
-          </motion.div>
+          </div>
 
           {/* Additional info */}
-          <motion.p
-            initial={{ opacity: 0 }}
-            whileInView={{ opacity: 1 }}
-            transition={{ duration: 0.6, delay: 0.4 }}
-            className="text-accent-foreground/70 text-sm mt-6"
+          <p
+            className="text-accent-foreground/70 text-sm mt-6 animate-fade-in"
+            style={{ animationDelay: '400ms' }}
           >
             Sem compromisso • Consulta gratuita • Atendimento imediato
-          </motion.p>
-        </motion.div>
+          </p>
+        </div>
       </div>
 
       {/* Bottom fade effect */}
