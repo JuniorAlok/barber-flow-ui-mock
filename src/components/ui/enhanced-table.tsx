@@ -2,7 +2,6 @@
 import React from 'react';
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
 import { Card } from '@/components/ui/card';
-import { motion } from 'framer-motion';
 import { cn } from '@/lib/utils';
 
 interface Column {
@@ -50,16 +49,15 @@ const EnhancedTable: React.FC<EnhancedTableProps> = ({
         </TableHeader>
         <TableBody>
           {data.map((row, index) => (
-            <motion.tr
+            <tr
               key={index}
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.2, delay: index * 0.05 }}
               className={cn(
                 'border-b border-border/30 transition-colors duration-200',
+                'animate-fade-in',
                 hoverable && 'hover:bg-muted/50 cursor-pointer',
                 striped && index % 2 === 0 && 'bg-muted/20'
               )}
+              style={{ animationDelay: `${index * 50}ms` }}
             >
               {columns.map((column) => (
                 <TableCell
@@ -75,7 +73,7 @@ const EnhancedTable: React.FC<EnhancedTableProps> = ({
                     : row[column.key]}
                 </TableCell>
               ))}
-            </motion.tr>
+            </tr>
           ))}
         </TableBody>
       </Table>

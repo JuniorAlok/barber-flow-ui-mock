@@ -1,6 +1,5 @@
 
 import React from 'react';
-import { motion } from 'framer-motion';
 import { Calendar, Scissors, BarChart3, User } from 'lucide-react';
 import { cn } from '@/lib/utils';
 
@@ -19,11 +18,10 @@ interface IconButtonProps {
 }
 
 const IconButton: React.FC<IconButtonProps> = ({ icon, label, isActive, onClick }) => (
-  <motion.button
-    whileTap={{ scale: 0.95 }}
+  <button
     onClick={onClick}
     className={cn(
-      "flex flex-col items-center justify-center p-2 rounded-lg transition-colors",
+      "flex flex-col items-center justify-center p-2 rounded-lg transition-all duration-200 active:scale-95",
       isActive 
         ? "text-yellow-500 bg-yellow-500/10" 
         : "text-gray-400 hover:text-white active:bg-yellow-700/20"
@@ -33,7 +31,7 @@ const IconButton: React.FC<IconButtonProps> = ({ icon, label, isActive, onClick 
       {icon}
     </div>
     <span className="text-xs font-medium">{label}</span>
-  </motion.button>
+  </button>
 );
 
 interface BottomNavigationProps {
@@ -79,12 +77,10 @@ const BottomNavigation: React.FC<BottomNavigationProps> = ({
   ];
 
   return (
-    <motion.div
-      initial={{ y: 100 }}
-      animate={{ y: 0 }}
-      transition={{ duration: 0.3, ease: "easeOut" }}
+    <div
       className={cn(
         "fixed bottom-0 inset-x-0 bg-black/95 backdrop-blur-sm border-t border-yellow-800/30 p-2 flex justify-around shadow-lg md:hidden z-50",
+        "animate-slide-in-right",
         className
       )}
     >
@@ -97,7 +93,7 @@ const BottomNavigation: React.FC<BottomNavigationProps> = ({
           onClick={item.onClick}
         />
       ))}
-    </motion.div>
+    </div>
   );
 };
 
