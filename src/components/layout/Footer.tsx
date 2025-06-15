@@ -4,7 +4,6 @@
  * Responsive footer with links, social icons, and proper contrast
  */
 import React from 'react';
-import { motion } from 'framer-motion';
 import { Heart, Mail, Phone, MapPin } from 'lucide-react';
 
 export const Footer: React.FC = () => {
@@ -33,11 +32,8 @@ export const Footer: React.FC = () => {
       <div className="container-responsive py-12">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
           {/* Brand Section */}
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5 }}
-            className="col-span-1 lg:col-span-2"
+          <div
+            className="col-span-1 lg:col-span-2 animate-fade-in-up"
           >
             <h3 className="text-2xl font-bold text-luxury mb-4">
               Elite Studio
@@ -50,13 +46,12 @@ export const Footer: React.FC = () => {
             <div className="flex gap-4">
               {/* Social Icons would go here */}
             </div>
-          </motion.div>
+          </div>
 
           {/* Company Links */}
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5, delay: 0.1 }}
+          <div
+            className="animate-fade-in-up"
+            style={{ animationDelay: '100ms' }}
           >
             <h4 className="font-semibold text-foreground mb-4">Empresa</h4>
             <ul className="space-y-3">
@@ -71,13 +66,12 @@ export const Footer: React.FC = () => {
                 </li>
               ))}
             </ul>
-          </motion.div>
+          </div>
 
           {/* Support Links */}
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5, delay: 0.2 }}
+          <div
+            className="animate-fade-in-up"
+            style={{ animationDelay: '200ms' }}
           >
             <h4 className="font-semibold text-foreground mb-4">Suporte</h4>
             <ul className="space-y-3">
@@ -92,15 +86,13 @@ export const Footer: React.FC = () => {
                 </li>
               ))}
             </ul>
-          </motion.div>
+          </div>
         </div>
 
         {/* Contact Section */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.5, delay: 0.3 }}
-          className="mt-8 pt-8 border-t border-border/50"
+        <div
+          className="mt-8 pt-8 border-t border-border/50 animate-fade-in-up"
+          style={{ animationDelay: '300ms' }}
         >
           <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-6">
             <div className="space-y-2">
@@ -119,21 +111,19 @@ export const Footer: React.FC = () => {
               </div>
             </div>
           </div>
-        </motion.div>
+        </div>
 
         {/* Copyright */}
-        <motion.div
-          initial={{ opacity: 0 }}
-          whileInView={{ opacity: 1 }}
-          transition={{ duration: 0.5, delay: 0.4 }}
-          className="mt-8 pt-8 border-t border-border/50 text-center"
+        <div
+          className="mt-8 pt-8 border-t border-border/50 text-center animate-fade-in"
+          style={{ animationDelay: '400ms' }}
         >
           <p className="text-muted-foreground text-sm flex items-center justify-center gap-2">
             © {currentYear} Elite Studio. Feito com 
             <Heart className="w-4 h-4 text-red-500" />
             em São Paulo.
           </p>
-        </motion.div>
+        </div>
       </div>
     </footer>
   );
