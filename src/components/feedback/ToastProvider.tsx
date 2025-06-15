@@ -1,10 +1,9 @@
-
 /**
  * Toast Provider Component
  * Global toast notification system with animations
  */
 import React, { createContext, useContext, useState, useCallback } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
+import { AnimatedPresence } from '@/components/ui/motion-components';
 import { CheckCircle, AlertCircle, Info, X } from 'lucide-react';
 import { cn } from '@/lib/utils';
 
@@ -71,7 +70,7 @@ interface ToastContainerProps {
 const ToastContainer: React.FC<ToastContainerProps> = ({ toasts, onRemove }) => {
   return (
     <div className="fixed top-4 right-4 z-50 flex flex-col gap-2 max-w-sm">
-      <AnimatePresence>
+      <AnimatedPresence>
         {toasts.map(toast => (
           <ToastItem
             key={toast.id}
@@ -79,7 +78,7 @@ const ToastContainer: React.FC<ToastContainerProps> = ({ toasts, onRemove }) => 
             onRemove={() => onRemove(toast.id)}
           />
         ))}
-      </AnimatePresence>
+      </AnimatedPresence>
     </div>
   );
 };
@@ -121,14 +120,11 @@ const ToastItem: React.FC<ToastItemProps> = ({ toast, onRemove }) => {
   };
 
   return (
-    <motion.div
-      initial={{ opacity: 0, x: 100, scale: 0.8 }}
-      animate={{ opacity: 1, x: 0, scale: 1 }}
-      exit={{ opacity: 0, x: 100, scale: 0.8 }}
-      transition={{ duration: 0.3, ease: 'easeOut' }}
+    <div
       className={cn(
         'relative p-4 rounded-lg border backdrop-blur-sm shadow-lg',
         'min-w-[320px] max-w-sm',
+        'animate-slide-in-right',
         getVariantStyles()
       )}
     >
@@ -155,7 +151,7 @@ const ToastItem: React.FC<ToastItemProps> = ({ toast, onRemove }) => {
           <X className="w-4 h-4" />
         </button>
       </div>
-    </motion.div>
+    </div>
   );
 };
 
