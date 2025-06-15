@@ -1,7 +1,5 @@
-
 import React from 'react';
 import { Badge } from '@/components/ui/badge';
-import { motion } from 'framer-motion';
 import { CheckCircle, Clock, AlertCircle, XCircle } from 'lucide-react';
 import { cn } from '@/lib/utils';
 
@@ -88,13 +86,9 @@ const StatusIndicator: React.FC<StatusIndicatorProps> = ({
 
   if (animated) {
     return (
-      <motion.div
-        initial={{ scale: 0.8, opacity: 0 }}
-        animate={{ scale: 1, opacity: 1 }}
-        transition={{ duration: 0.2 }}
-      >
+      <div className="animate-scale-in">
         {BadgeContent}
-      </motion.div>
+      </div>
     );
   }
 
