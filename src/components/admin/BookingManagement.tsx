@@ -1,11 +1,16 @@
 
-import React, { useState } from 'react';
+import React, { useState, useMemo } from 'react';
 import { useBookingActions } from '@/hooks/useBookingActions';
 import { useBookingStatus } from '@/hooks/useBookingStatus';
 import BookingModal from './modals/BookingModal';
 import BookingCalendar from './BookingCalendar';
 import BookingTable from './BookingTable';
 import ViewModeToggle from './ViewModeToggle';
+import { useDateFilter } from '@/hooks/useDateFilter';
+import DateRangeFilter from '@/components/ui/DateRangeFilter';
+import { isWithinInterval } from 'date-fns';
+import { Card, CardHeader } from '@/components/ui/card';
+import { SectionTitle } from '@/components/ui/typography';
 
 type ViewMode = 'list' | 'calendar';
 
@@ -24,6 +29,15 @@ const BookingManagement: React.FC = () => {
     getServiceName,
     getBarberName,
   } = useBookingActions();
+  const { period, dateRange, setPeriod, setDateRange, filteredDateRange } = useDateFilter();
+
+  const filteredBookings = useMemo(() => {
+    if (!filteredDateRange.from || !filteredDateRange.to) return [];
+    return bookings.filter(booking => {
+      const bookingDate = new Date(booking.date);
+      return isWithinInterval(bookingDate, { start: filteredDateRange.from!, end: filteredDateRange.to! });
+    });
+  }, [bookings, filteredDateRange]);
 
   const renderCalendarView = () => (
     <div className="space-y-4">
@@ -36,6 +50,7 @@ const BookingManagement: React.FC = () => {
         />
       </div>
       <BookingCalendar 
+        bookings={filteredBookings}
         onNewBooking={handleNewBooking}
         onEditBooking={handleEditBooking}
       />
@@ -43,10 +58,24 @@ const BookingManagement: React.FC = () => {
   );
 
   return (
-    <>
+    <div className="space-y-6">
+       <Card className="management-card">
+        <CardHeader>
+          <div className="flex flex-col gap-4">
+            <SectionTitle as="div" className="!mb-0">Filtrar Período</SectionTitle>
+            <DateRangeFilter
+              period={period}
+              onPeriodChange={setPeriod}
+              dateRange={dateRange}
+              onDateRangeChange={setDateRange}
+            />
+          </div>
+        </CardHeader>
+      </Card>
+
       {viewMode === 'list' ? (
         <BookingTable
-          bookings={bookings}
+          bookings={filteredBookings}
           viewMode={viewMode}
           setViewMode={setViewMode}
           onNewBooking={handleNewBooking}
@@ -66,7 +95,7 @@ const BookingManagement: React.FC = () => {
         onClose={handleCloseModal}
         booking={editingBooking}
       />
-    </>
+    </div>
   );
 };
 

@@ -1,5 +1,5 @@
 
-import React, { useState } from 'react';
+import React, { useState, useMemo } from 'react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
@@ -9,14 +9,18 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
 import { Badge } from '@/components/ui/badge';
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from '@/components/ui/dialog';
-import { Plus, TrendingUp, TrendingDown, DollarSign, CreditCard } from 'lucide-react';
+import { Plus, TrendingUp, TrendingDown, DollarSign } from 'lucide-react';
 import { useMockData } from '@/contexts/MockDataContext';
-import { format } from 'date-fns';
+import { format, isWithinInterval } from 'date-fns';
 import { ptBR } from 'date-fns/locale';
 import { toast } from '@/hooks/use-toast';
+import { useDateFilter } from '@/hooks/useDateFilter';
+import DateRangeFilter from '@/components/ui/DateRangeFilter';
+import { SectionTitle } from '@/components/ui/typography';
 
 const FinanceModule: React.FC = () => {
   const { transactions, setTransactions } = useMockData();
+  const { period, dateRange, setPeriod, setDateRange, filteredDateRange } = useDateFilter('this_month');
   const [isDialogOpen, setIsDialogOpen] = useState(false);
   const [newTransaction, setNewTransaction] = useState({
     type: 'income' as 'income' | 'expense',
@@ -26,8 +30,16 @@ const FinanceModule: React.FC = () => {
     date: format(new Date(), 'yyyy-MM-dd')
   });
 
-  const totalIncome = transactions.filter(t => t.type === 'income').reduce((sum, t) => sum + t.amount, 0);
-  const totalExpenses = transactions.filter(t => t.type === 'expense').reduce((sum, t) => sum + t.amount, 0);
+  const filteredTransactions = useMemo(() => {
+    if (!filteredDateRange.from || !filteredDateRange.to) return [];
+    return transactions.filter(transaction => {
+      const transactionDate = new Date(transaction.date);
+      return isWithinInterval(transactionDate, { start: filteredDateRange.from!, end: filteredDateRange.to! });
+    });
+  }, [transactions, filteredDateRange]);
+
+  const totalIncome = filteredTransactions.filter(t => t.type === 'income').reduce((sum, t) => sum + t.amount, 0);
+  const totalExpenses = filteredTransactions.filter(t => t.type === 'expense').reduce((sum, t) => sum + t.amount, 0);
   const netProfit = totalIncome - totalExpenses;
 
   const incomeCategories = ['Serviços', 'Produtos', 'Outros'];
@@ -66,6 +78,20 @@ const FinanceModule: React.FC = () => {
 
   return (
     <div className="space-y-6 animate-fade-in">
+       <Card>
+        <CardHeader>
+          <div className="flex flex-col gap-4">
+            <SectionTitle as="div" className="!mb-0">Filtrar Período</SectionTitle>
+            <DateRangeFilter
+              period={period}
+              onPeriodChange={setPeriod}
+              dateRange={dateRange}
+              onDateRangeChange={setDateRange}
+            />
+          </div>
+        </CardHeader>
+      </Card>
+
       {/* Resumo Financeiro */}
       <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
         <Card className="glass-effect">
@@ -203,7 +229,7 @@ const FinanceModule: React.FC = () => {
               </TableRow>
             </TableHeader>
             <TableBody>
-              {transactions.map((transaction) => (
+              {filteredTransactions.map((transaction) => (
                 <TableRow key={transaction.id}>
                   <TableCell>
                     {format(new Date(transaction.date), 'dd/MM/yyyy', { locale: ptBR })}

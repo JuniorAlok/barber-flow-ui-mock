@@ -4,9 +4,13 @@ import { Button } from '@/components/ui/button';
 import { Calendar, List } from 'lucide-react';
 import BarberBookingList from './BarberBookingList';
 import BookingCalendar from '../admin/BookingCalendar';
+import { useAuth } from '@/contexts/AuthContext';
+import { useMockData } from '@/contexts/MockDataContext';
 
 const BarberBookingManagement: React.FC = () => {
   const [viewMode, setViewMode] = useState<'list' | 'calendar'>('list');
+  const { user } = useAuth();
+  const { bookings } = useMockData();
 
   const handleNewBooking = () => {
     console.log('Nova reserva - funcionalidade a ser implementada');
@@ -15,6 +19,8 @@ const BarberBookingManagement: React.FC = () => {
   const handleEditBooking = (booking: any) => {
     console.log('Editar reserva:', booking);
   };
+
+  const barberBookings = user ? bookings.filter(b => b.barberId === user.id) : [];
 
   return (
     <div className="space-y-6">
@@ -45,6 +51,7 @@ const BarberBookingManagement: React.FC = () => {
         <BarberBookingList />
       ) : (
         <BookingCalendar 
+          bookings={barberBookings}
           onNewBooking={handleNewBooking}
           onEditBooking={handleEditBooking}
         />

@@ -7,14 +7,16 @@ import { useMockData } from '@/contexts/MockDataContext';
 import { formatDate } from '@/utils/formatting';
 import { Calendar as CalendarIcon, Clock, User, Scissors, ChevronLeft, ChevronRight } from 'lucide-react';
 import { SectionTitle, Caption } from '@/components/ui/typography';
+import { Booking } from '@/data/types';
 
 interface BookingCalendarProps {
   onNewBooking: () => void;
-  onEditBooking: (booking: any) => void;
+  onEditBooking: (booking: Booking) => void;
+  bookings: Booking[];
 }
 
-const BookingCalendar: React.FC<BookingCalendarProps> = ({ onNewBooking, onEditBooking }) => {
-  const { bookings, services, barbers } = useMockData();
+const BookingCalendar: React.FC<BookingCalendarProps> = ({ onNewBooking, onEditBooking, bookings }) => {
+  const { services, barbers } = useMockData();
   const [selectedDate, setSelectedDate] = useState<Date>(new Date());
   const [currentMonth, setCurrentMonth] = useState(new Date());
 

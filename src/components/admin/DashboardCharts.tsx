@@ -6,9 +6,14 @@ import { useMockData } from '@/contexts/MockDataContext';
 import { formatCurrency } from '@/utils/formatting';
 import { Users, DollarSign, Calendar } from 'lucide-react';
 import { SectionTitle, Caption } from '@/components/ui/typography';
+import { Booking } from '@/data/types';
 
-const DashboardCharts: React.FC = () => {
-  const { bookings, services, barbers, transactions } = useMockData();
+interface DashboardChartsProps {
+  bookings: Booking[];
+}
+
+const DashboardCharts: React.FC<DashboardChartsProps> = ({ bookings }) => {
+  const { services, barbers, transactions } = useMockData();
 
   // Dados para gráfico de receita mensal
   const monthlyRevenueData = [
