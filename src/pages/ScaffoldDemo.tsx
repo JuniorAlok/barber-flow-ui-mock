@@ -4,7 +4,6 @@
  * Demonstrates all components and sections in a cohesive layout
  */
 import React, { useState } from 'react';
-import { motion } from 'framer-motion';
 import { Users, Calendar, DollarSign, TrendingUp, Scissors, Star, Award } from 'lucide-react';
 
 // Layout Components
@@ -112,23 +111,15 @@ const ScaffoldDemo: React.FC = () => {
         <section className="py-20">
           <div className="container-responsive">
             {/* Statistics Grid */}
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              className="mb-16"
-            >
+            <div className="mb-16 animate-fade-in-up">
               <h2 className="text-3xl font-bold text-luxury mb-8 text-center">
                 Métricas do Dashboard
               </h2>
               <StatisticsGrid stats={sampleStats} />
-            </motion.div>
+            </div>
 
             {/* Cards Demo */}
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              className="mb-16"
-            >
+            <div className="mb-16 animate-fade-in-up">
               <h2 className="text-3xl font-bold text-luxury mb-8 text-center">
                 Componentes de Card
               </h2>
@@ -175,28 +166,20 @@ const ScaffoldDemo: React.FC = () => {
                   </CardContent>
                 </Card>
               </div>
-            </motion.div>
+            </div>
 
             {/* Forms Demo */}
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              className="mb-16"
-            >
+            <div className="mb-16 animate-fade-in-up">
               <h2 className="text-3xl font-bold text-luxury mb-8 text-center">
                 Formulários Avançados
               </h2>
               <div className="max-w-2xl mx-auto">
                 <EnhancedForm onSubmit={handleFormSubmit} />
               </div>
-            </motion.div>
+            </div>
 
             {/* Visual Filters Demo */}
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              className="mb-16"
-            >
+            <div className="mb-16 animate-fade-in-up">
               <h2 className="text-3xl font-bold text-luxury mb-8 text-center">
                 Filtros Visuais
               </h2>
@@ -219,14 +202,10 @@ const ScaffoldDemo: React.FC = () => {
                   </div>
                 </FilterPreview>
               </div>
-            </motion.div>
+            </div>
 
             {/* Interactive Components Demo */}
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              className="mb-16"
-            >
+            <div className="mb-16 animate-fade-in-up">
               <h2 className="text-3xl font-bold text-luxury mb-8 text-center">
                 Componentes Interativos
               </h2>
@@ -250,7 +229,7 @@ const ScaffoldDemo: React.FC = () => {
                   Toast Info
                 </Button>
               </div>
-            </motion.div>
+            </div>
           </div>
         </section>
 
