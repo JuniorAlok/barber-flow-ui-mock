@@ -3,11 +3,11 @@ import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
-import { motion, AnimatePresence } from 'framer-motion';
 import { Play, Square, Clock, CreditCard } from 'lucide-react';
 import { formatTime } from '@/utils/formatting';
 import StatusIndicator from './status-indicator';
 import { cn } from '@/lib/utils';
+import { AnimatedPresence } from '@/components/ui/motion-components';
 
 interface CommandFlowProps {
   orderId: string;
@@ -77,25 +77,21 @@ const CommandFlow: React.FC<CommandFlowProps> = ({
       <CardContent className="space-y-4">
         {/* Timer Display */}
         {status === 'active' && (
-          <motion.div
-            initial={{ opacity: 0, scale: 0.9 }}
-            animate={{ opacity: 1, scale: 1 }}
-            className="flex items-center justify-center p-4 bg-primary/10 rounded-lg"
+          <div
+            className="flex items-center justify-center p-4 bg-primary/10 rounded-lg animate-fade-in"
           >
             <Clock className="w-5 h-5 text-primary mr-2" />
             <span className="text-2xl font-mono font-bold text-primary">
               {formatTimer(timer)}
             </span>
-          </motion.div>
+          </div>
         )}
 
         {/* Action Buttons */}
         <div className="flex gap-3">
           {status === 'waiting' && (
-            <motion.div
-              initial={{ opacity: 0, x: -20 }}
-              animate={{ opacity: 1, x: 0 }}
-              className="flex-1"
+            <div
+              className="flex-1 animate-fade-in"
             >
               <Button
                 onClick={handleStartCommand}
@@ -104,14 +100,12 @@ const CommandFlow: React.FC<CommandFlowProps> = ({
                 <Play className="w-4 h-4 mr-2" />
                 Iniciar Comanda
               </Button>
-            </motion.div>
+            </div>
           )}
 
           {status === 'active' && !showPaymentSelect && (
-            <motion.div
-              initial={{ opacity: 0, x: -20 }}
-              animate={{ opacity: 1, x: 0 }}
-              className="flex-1"
+            <div
+              className="flex-1 animate-fade-in"
             >
               <Button
                 onClick={handleFinishClick}
@@ -120,18 +114,15 @@ const CommandFlow: React.FC<CommandFlowProps> = ({
                 <Square className="w-4 h-4 mr-2" />
                 Finalizar e Registrar Pagamento
               </Button>
-            </motion.div>
+            </div>
           )}
         </div>
 
         {/* Payment Method Selection */}
-        <AnimatePresence>
+        <AnimatedPresence>
           {showPaymentSelect && (
-            <motion.div
-              initial={{ opacity: 0, height: 0 }}
-              animate={{ opacity: 1, height: 'auto' }}
-              exit={{ opacity: 0, height: 0 }}
-              className="space-y-3 overflow-hidden"
+            <div
+              className="space-y-3 overflow-hidden animate-fade-in"
             >
               <div className="p-4 bg-muted/30 rounded-lg space-y-3">
                 <div className="flex items-center gap-2">
@@ -167,21 +158,19 @@ const CommandFlow: React.FC<CommandFlowProps> = ({
                   </Button>
                 </div>
               </div>
-            </motion.div>
+            </div>
           )}
         </AnimatePresence>
 
         {status === 'completed' && (
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            className="text-center p-3 bg-green-500/10 rounded-lg"
+          <div
+            className="text-center p-3 bg-green-500/10 rounded-lg animate-fade-in"
           >
             <p className="text-green-400 font-medium">Serviço Concluído</p>
             <p className="text-sm text-muted-foreground">
               Duração: {formatTimer(timer)}
             </p>
-          </motion.div>
+          </div>
         )}
       </CardContent>
     </Card>
