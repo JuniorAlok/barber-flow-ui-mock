@@ -9,7 +9,7 @@ interface TypographyProps {
 
 export const Title: React.FC<TypographyProps> = ({ children, className }) => (
   <h1 className={cn(
-    "font-bold text-2xl lg:text-3xl text-white mb-4",
+    "font-display font-bold text-2xl lg:text-3xl text-foreground mb-4",
     className
   )}>
     {children}
@@ -18,7 +18,7 @@ export const Title: React.FC<TypographyProps> = ({ children, className }) => (
 
 export const Subtitle: React.FC<TypographyProps> = ({ children, className }) => (
   <h2 className={cn(
-    "font-semibold text-xl lg:text-2xl text-white mb-3",
+    "font-sans font-semibold text-xl lg:text-2xl text-foreground mb-3",
     className
   )}>
     {children}
@@ -27,7 +27,7 @@ export const Subtitle: React.FC<TypographyProps> = ({ children, className }) => 
 
 export const SectionTitle: React.FC<TypographyProps> = ({ children, className }) => (
   <h3 className={cn(
-    "font-medium text-lg lg:text-xl text-white mb-2",
+    "font-sans font-medium text-lg lg:text-xl text-foreground mb-2",
     className
   )}>
     {children}
@@ -36,7 +36,7 @@ export const SectionTitle: React.FC<TypographyProps> = ({ children, className })
 
 export const Body: React.FC<TypographyProps> = ({ children, className }) => (
   <p className={cn(
-    "text-base lg:text-lg text-gray-300 leading-relaxed",
+    "font-sans text-base lg:text-lg text-muted-foreground leading-relaxed",
     className
   )}>
     {children}
@@ -45,7 +45,7 @@ export const Body: React.FC<TypographyProps> = ({ children, className }) => (
 
 export const Caption: React.FC<TypographyProps> = ({ children, className }) => (
   <span className={cn(
-    "text-sm md:text-base text-gray-400 font-medium",
+    "font-sans text-sm md:text-base text-muted-foreground font-medium",
     className
   )}>
     {children}
@@ -54,7 +54,7 @@ export const Caption: React.FC<TypographyProps> = ({ children, className }) => (
 
 export const Highlight: React.FC<TypographyProps> = ({ children, className }) => (
   <span className={cn(
-    "text-yellow-500 font-semibold",
+    "font-sans text-primary font-semibold",
     className
   )}>
     {children}
@@ -66,5 +66,5 @@ interface SeparatorProps {
 }
 
 export const Separator: React.FC<SeparatorProps> = ({ className }) => (
-  <hr className={cn("border-gray-700 my-4", className)} />
+  <hr className={cn("border-border my-4", className)} />
 );

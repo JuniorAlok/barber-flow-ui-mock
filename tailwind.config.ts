@@ -19,6 +19,16 @@ export default {
 			},
 		},
 		extend: {
+			fontSize: {
+                'responsive-xs': ['0.75rem', { lineHeight: '1rem' }],
+                'responsive-sm': ['0.875rem', { lineHeight: '1.25rem' }],
+                'responsive-base': ['1rem', { lineHeight: '1.5rem' }],
+                'responsive-lg': ['1.125rem', { lineHeight: '1.75rem' }],
+                'responsive-xl': ['1.25rem', { lineHeight: '1.75rem' }],
+                'responsive-2xl': ['1.5rem', { lineHeight: '2rem' }],
+                'responsive-3xl': ['1.875rem', { lineHeight: '2.25rem' }],
+                'responsive-4xl': ['2.25rem', { lineHeight: '2.5rem' }],
+            },
 			colors: {
 				border: "hsl(var(--border))",
 				input: "hsl(var(--input))",
@@ -71,6 +81,7 @@ export default {
 			},
 			fontFamily: {
 				sans: ["Inter", "sans-serif"],
+				display: ["Playfair Display", "serif"],
 			},
 			keyframes: {
 				"accordion-down": {

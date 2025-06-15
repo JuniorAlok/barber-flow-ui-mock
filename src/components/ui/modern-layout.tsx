@@ -97,7 +97,7 @@ export const PageHeader: React.FC<PageHeaderProps> = ({
         )}
         <div className="flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
           <div className="space-y-1">
-            <h1 className="text-2xl md:text-3xl font-bold tracking-tight text-luxury">
+            <h1 className="font-display text-2xl md:text-3xl font-bold tracking-tight text-foreground">
               {title}
             </h1>
             {description && (
