@@ -1,10 +1,8 @@
-
 /**
  * Enhanced Modal Component
  * Responsive modal with animations and accessibility
  */
 import React from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
 import {
   Dialog,
   DialogContent,
