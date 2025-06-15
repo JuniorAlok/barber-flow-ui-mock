@@ -1,7 +1,5 @@
-
 import React, { useState } from 'react';
 import { Input } from '@/components/ui/input';
-import { motion, AnimatePresence } from 'framer-motion';
 import { CheckCircle, AlertCircle } from 'lucide-react';
 import { cn } from '@/lib/utils';
 
@@ -72,22 +70,16 @@ const EnhancedInput: React.FC<EnhancedInputProps> = ({
         )}
       </div>
 
-      <AnimatePresence>
-        {(error || success) && (
-          <motion.div
-            initial={{ opacity: 0, y: -10 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: -10 }}
-            transition={{ duration: 0.2 }}
-            className={cn(
-              'text-sm font-medium',
-              error ? 'text-red-500' : 'text-green-500'
-            )}
-          >
-            {error || success}
-          </motion.div>
-        )}
-      </AnimatePresence>
+      {(error || success) && (
+        <div
+          className={cn(
+            'text-sm font-medium animate-fade-in',
+            error ? 'text-red-500' : 'text-green-500'
+          )}
+        >
+          {error || success}
+        </div>
+      )}
     </div>
   );
 };

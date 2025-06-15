@@ -3,7 +3,6 @@
  * Global toast notification system with animations
  */
 import React, { createContext, useContext, useState, useCallback } from 'react';
-import { AnimatedPresence } from '@/components/ui/motion-components';
 import { CheckCircle, AlertCircle, Info, X } from 'lucide-react';
 import { cn } from '@/lib/utils';
 
@@ -70,15 +69,13 @@ interface ToastContainerProps {
 const ToastContainer: React.FC<ToastContainerProps> = ({ toasts, onRemove }) => {
   return (
     <div className="fixed top-4 right-4 z-50 flex flex-col gap-2 max-w-sm">
-      <AnimatedPresence>
-        {toasts.map(toast => (
-          <ToastItem
-            key={toast.id}
-            toast={toast}
-            onRemove={() => onRemove(toast.id)}
-          />
-        ))}
-      </AnimatedPresence>
+      {toasts.map(toast => (
+        <ToastItem
+          key={toast.id}
+          toast={toast}
+          onRemove={() => onRemove(toast.id)}
+        />
+      ))}
     </div>
   );
 };

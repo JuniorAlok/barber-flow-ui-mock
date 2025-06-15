@@ -1,8 +1,6 @@
-
 import React, { useState } from 'react';
 import { Button } from '@/components/ui/button';
 import { CheckCircle, AlertCircle, Loader2 } from 'lucide-react';
-import { motion } from 'framer-motion';
 import { cn } from '@/lib/utils';
 import { toast } from 'sonner';
 
@@ -89,26 +87,21 @@ const EnhancedButton: React.FC<EnhancedButtonProps> = ({
   };
 
   return (
-    <motion.div
-      whileTap={{ scale: 0.95 }}
-      transition={{ duration: 0.15 }}
+    <Button
+      variant={getButtonVariant()}
+      size={size}
+      onClick={handleClick}
+      disabled={disabled || state === 'loading'}
+      className={cn(
+        'transition-all duration-200 font-semibold rounded-xl',
+        'hover:scale-105 active:scale-95',
+        state === 'success' && 'bg-green-600 hover:bg-green-700',
+        state === 'error' && 'bg-red-600 hover:bg-red-700',
+        className
+      )}
     >
-      <Button
-        variant={getButtonVariant()}
-        size={size}
-        onClick={handleClick}
-        disabled={disabled || state === 'loading'}
-        className={cn(
-          'transition-all duration-200 font-semibold rounded-xl',
-          'hover:scale-105 active:scale-95',
-          state === 'success' && 'bg-green-600 hover:bg-green-700',
-          state === 'error' && 'bg-red-600 hover:bg-red-700',
-          className
-        )}
-      >
-        {getButtonContent()}
-      </Button>
-    </motion.div>
+      {getButtonContent()}
+    </Button>
   );
 };
 

@@ -1,4 +1,3 @@
-
 import { Toaster } from "@/components/ui/toaster";
 import { Toaster as Sonner } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
@@ -23,15 +22,13 @@ const ThemeInitializer = ({ children }: { children: React.ReactNode }) => {
   const { theme } = useTheme();
   
   useEffect(() => {
-    console.log('App: Theme initialized:', theme);
+    // console.log('App: Theme initialized:', theme); // Removed
   }, [theme]);
 
   return <>{children}</>;
 };
 
 const App = () => {
-  console.log('App: Component rendering');
-  
   return (
     <ErrorBoundary>
       <QueryClientProvider client={queryClient}>

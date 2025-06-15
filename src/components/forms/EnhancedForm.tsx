@@ -228,25 +228,23 @@ export const EnhancedForm: React.FC<EnhancedFormProps> = ({
               )}
             </Button>
 
-            <AnimatedPresence>
-              {submitStatus === 'success' && (
-                <div
-                  className="flex items-center gap-2 text-green-600 animate-scale-in"
-                >
-                  <CheckCircle className="w-4 h-4" />
-                  <span className="text-sm font-medium">Enviado com sucesso!</span>
-                </div>
-              )}
-              
-              {submitStatus === 'error' && (
-                <div
-                  className="flex items-center gap-2 text-red-600 animate-scale-in"
-                >
-                  <AlertCircle className="w-4 h-4" />
-                  <span className="text-sm font-medium">Erro ao enviar</span>
-                </div>
-              )}
-            </AnimatedPresence>
+            {submitStatus === 'success' && (
+              <div
+                className="flex items-center gap-2 text-green-600 animate-scale-in"
+              >
+                <CheckCircle className="w-4 h-4" />
+                <span className="text-sm font-medium">Enviado com sucesso!</span>
+              </div>
+            )}
+            
+            {submitStatus === 'error' && (
+              <div
+                className="flex items-center gap-2 text-red-600 animate-scale-in"
+              >
+                <AlertCircle className="w-4 h-4" />
+                <span className="text-sm font-medium">Erro ao enviar</span>
+              </div>
+            )}
           </div>
         </form>
       </Form>

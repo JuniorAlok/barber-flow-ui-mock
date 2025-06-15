@@ -95,8 +95,3 @@ export const StaggeredList: React.FC<StaggeredListProps> = ({
     ))}
   </div>
 );
-
-// Simple AnimatedPresence replacement
-export const AnimatedPresence: React.FC<{children: React.ReactNode}> = ({ children }) => {
-  return <>{children}</>;
-};

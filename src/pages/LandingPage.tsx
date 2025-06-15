@@ -9,14 +9,10 @@ const LandingPage = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
-    console.log('LandingPage: Auth state check:', { isAuthenticated, isAdmin, isBarber });
-    
     if (isAuthenticated) {
       if (isAdmin) {
-        console.log('LandingPage: Authenticated admin - redirecting to admin dashboard');
         navigate('/admin/dashboard', { replace: true });
       } else if (isBarber) {
-        console.log('LandingPage: Authenticated barber - redirecting to barber dashboard');
         navigate('/barber/dashboard', { replace: true });
       }
       // If authenticated but no specific role, stay on landing page
