@@ -28,7 +28,6 @@ import { RadioGroup, RadioGroupItem } from '@/components/ui/radio-group';
 import { Label } from '@/components/ui/label';
 import { CheckCircle, AlertCircle, Loader2 } from 'lucide-react';
 import { cn } from '@/lib/utils';
-import { AnimatedPresence } from '@/components/ui/motion-components';
 
 // Form schema example
 const formSchema = z.object({
