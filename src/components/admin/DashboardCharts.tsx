@@ -1,10 +1,9 @@
-
 import React from 'react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, LineChart, Line, PieChart, Pie, Cell, Area, AreaChart } from 'recharts';
+import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, AreaChart, Area, PieChart, Pie, Cell } from 'recharts';
 import { useMockData } from '@/contexts/MockDataContext';
 import { formatCurrency } from '@/utils/formatting';
-import { TrendingUp, Users, DollarSign, Calendar } from 'lucide-react';
+import { Users, DollarSign, Calendar } from 'lucide-react';
 
 const DashboardCharts: React.FC = () => {
   const { bookings, services, barbers, transactions } = useMockData();
@@ -43,21 +42,12 @@ const DashboardCharts: React.FC = () => {
   }).sort((a, b) => b.revenue - a.revenue);
 
   // Cores modernas para os gráficos
-  const COLORS = [
-    '#FFD700', // Primary gold
-    '#4F46E5', // Indigo
-    '#06B6D4', // Cyan
-    '#10B981', // Emerald
-    '#F59E0B', // Amber
-    '#EF4444', // Red
-    '#8B5CF6', // Violet
-    '#F97316'  // Orange
-  ];
+  const COLORS = [ '#A9A9A9', '#808080', '#696969', '#A9A9A9', '#808080', '#696969' ];
 
   const CustomTooltip = ({ active, payload, label }: any) => {
     if (active && payload && payload.length) {
       return (
-        <div className="glass-effect rounded-lg p-4 border border-primary/20 shadow-lg">
+        <div className="bg-background border rounded-lg p-4 shadow-lg">
           <p className="text-sm font-medium text-foreground mb-2">{label}</p>
           {payload.map((entry: any, index: number) => (
             <p key={index} className="text-sm" style={{ color: entry.color }}>
@@ -76,11 +66,11 @@ const DashboardCharts: React.FC = () => {
   return (
     <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
       {/* Gráfico de Receita Mensal com Área */}
-      <Card className="chart-container border-0 hover-lift">
+      <Card>
         <CardHeader className="pb-4">
           <div className="flex items-center space-x-2">
-            <div className="p-2 rounded-lg bg-gradient-to-br from-primary/20 to-primary/5">
-              <DollarSign className="h-5 w-5 text-primary" />
+            <div className="p-2 rounded-lg border">
+              <DollarSign className="h-5 w-5" />
             </div>
             <div>
               <CardTitle className="text-lg">Receita e Agendamentos</CardTitle>
@@ -91,66 +81,24 @@ const DashboardCharts: React.FC = () => {
         <CardContent>
           <ResponsiveContainer width="100%" height={300}>
             <AreaChart data={monthlyRevenueData}>
-              <defs>
-                <linearGradient id="revenueGradient" x1="0" y1="0" x2="0" y2="1">
-                  <stop offset="5%" stopColor="#FFD700" stopOpacity={0.3}/>
-                  <stop offset="95%" stopColor="#FFD700" stopOpacity={0}/>
-                </linearGradient>
-                <linearGradient id="bookingsGradient" x1="0" y1="0" x2="0" y2="1">
-                  <stop offset="5%" stopColor="#4F46E5" stopOpacity={0.3}/>
-                  <stop offset="95%" stopColor="#4F46E5" stopOpacity={0}/>
-                </linearGradient>
-              </defs>
               <CartesianGrid strokeDasharray="3 3" stroke="rgba(255,255,255,0.1)" />
-              <XAxis 
-                dataKey="month" 
-                axisLine={false}
-                tickLine={false}
-                tick={{ fill: '#94A3B8', fontSize: 12 }}
-              />
-              <YAxis 
-                yAxisId="left"
-                axisLine={false}
-                tickLine={false}
-                tick={{ fill: '#94A3B8', fontSize: 12 }}
-              />
-              <YAxis 
-                yAxisId="right" 
-                orientation="right"
-                axisLine={false}
-                tickLine={false}
-                tick={{ fill: '#94A3B8', fontSize: 12 }}
-              />
+              <XAxis dataKey="month" axisLine={false} tickLine={false} tick={{ fill: '#94A3B8', fontSize: 12 }} />
+              <YAxis yAxisId="left" axisLine={false} tickLine={false} tick={{ fill: '#94A3B8', fontSize: 12 }} />
+              <YAxis yAxisId="right" orientation="right" axisLine={false} tickLine={false} tick={{ fill: '#94A3B8', fontSize: 12 }} />
               <Tooltip content={<CustomTooltip />} />
-              <Area 
-                yAxisId="left"
-                type="monotone"
-                dataKey="revenue" 
-                stroke="#FFD700"
-                strokeWidth={2}
-                fillOpacity={1}
-                fill="url(#revenueGradient)" 
-              />
-              <Area 
-                yAxisId="right"
-                type="monotone"
-                dataKey="bookings" 
-                stroke="#4F46E5"
-                strokeWidth={2}
-                fillOpacity={1}
-                fill="url(#bookingsGradient)" 
-              />
+              <Area yAxisId="left" type="monotone" dataKey="revenue" stroke="#FFFFFF" fill="rgba(255,255,255,0.1)" />
+              <Area yAxisId="right" type="monotone" dataKey="bookings" stroke="#808080" fill="rgba(128,128,128,0.1)" />
             </AreaChart>
           </ResponsiveContainer>
         </CardContent>
       </Card>
 
       {/* Gráfico de Serviços Populares Aprimorado */}
-      <Card className="chart-container border-0 hover-lift">
+      <Card>
         <CardHeader className="pb-4">
           <div className="flex items-center space-x-2">
-            <div className="p-2 rounded-lg bg-gradient-to-br from-cyan-500/20 to-cyan-500/5">
-              <Calendar className="h-5 w-5 text-cyan-400" />
+            <div className="p-2 rounded-lg border">
+              <Calendar className="h-5 w-5" />
             </div>
             <div>
               <CardTitle className="text-lg">Serviços Mais Populares</CardTitle>
@@ -174,10 +122,7 @@ const DashboardCharts: React.FC = () => {
                 stroke="rgba(255,255,255,0.1)"
               >
                 {servicePopularityData.map((entry, index) => (
-                  <Cell 
-                    key={`cell-${index}`} 
-                    fill={COLORS[index % COLORS.length]}
-                  />
+                  <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
                 ))}
               </Pie>
               <Tooltip content={<CustomTooltip />} />
@@ -187,11 +132,11 @@ const DashboardCharts: React.FC = () => {
       </Card>
 
       {/* Gráfico de Performance dos Barbeiros */}
-      <Card className="chart-container border-0 hover-lift lg:col-span-2">
+      <Card className="lg:col-span-2">
         <CardHeader className="pb-4">
           <div className="flex items-center space-x-2">
-            <div className="p-2 rounded-lg bg-gradient-to-br from-emerald-500/20 to-emerald-500/5">
-              <Users className="h-5 w-5 text-emerald-400" />
+            <div className="p-2 rounded-lg border">
+              <Users className="h-5 w-5" />
             </div>
             <div>
               <CardTitle className="text-lg">Performance dos Barbeiros</CardTitle>
@@ -202,41 +147,12 @@ const DashboardCharts: React.FC = () => {
         <CardContent>
           <ResponsiveContainer width="100%" height={350}>
             <BarChart data={barberPerformanceData} margin={{ top: 20, right: 30, left: 20, bottom: 5 }}>
-              <defs>
-                <linearGradient id="revenueBarGradient" x1="0" y1="0" x2="0" y2="1">
-                  <stop offset="5%" stopColor="#FFD700" stopOpacity={0.9}/>
-                  <stop offset="95%" stopColor="#FFD700" stopOpacity={0.6}/>
-                </linearGradient>
-                <linearGradient id="commissionBarGradient" x1="0" y1="0" x2="0" y2="1">
-                  <stop offset="5%" stopColor="#10B981" stopOpacity={0.9}/>
-                  <stop offset="95%" stopColor="#10B981" stopOpacity={0.6}/>
-                </linearGradient>
-              </defs>
               <CartesianGrid strokeDasharray="3 3" stroke="rgba(255,255,255,0.1)" />
-              <XAxis 
-                dataKey="name" 
-                axisLine={false}
-                tickLine={false}
-                tick={{ fill: '#94A3B8', fontSize: 12 }}
-              />
-              <YAxis 
-                axisLine={false}
-                tickLine={false}
-                tick={{ fill: '#94A3B8', fontSize: 12 }}
-              />
+              <XAxis dataKey="name" axisLine={false} tickLine={false} tick={{ fill: '#94A3B8', fontSize: 12 }} />
+              <YAxis axisLine={false} tickLine={false} tick={{ fill: '#94A3B8', fontSize: 12 }} />
               <Tooltip content={<CustomTooltip />} />
-              <Bar 
-                dataKey="revenue" 
-                fill="url(#revenueBarGradient)" 
-                name="revenue"
-                radius={[4, 4, 0, 0]}
-              />
-              <Bar 
-                dataKey="commission" 
-                fill="url(#commissionBarGradient)" 
-                name="commission"
-                radius={[4, 4, 0, 0]}
-              />
+              <Bar dataKey="revenue" fill="rgba(255,255,255,0.2)" name="revenue" radius={[4, 4, 0, 0]} />
+              <Bar dataKey="commission" fill="rgba(128,128,128,0.2)" name="commission" radius={[4, 4, 0, 0]} />
             </BarChart>
           </ResponsiveContainer>
         </CardContent>

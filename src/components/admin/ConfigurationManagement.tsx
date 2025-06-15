@@ -62,19 +62,19 @@ const ConfigurationManagement: React.FC = () => {
 
       {/* Coluna 2: Preview */}
       <div className="hidden lg:block sticky top-24 space-y-4">
-        <div className="rounded-lg border border-neutral-800 bg-neutral-950/85 shadow-xl overflow-hidden">
-          <div className="px-6 py-3 border-b border-neutral-800 bg-neutral-900">
+        <div className="rounded-lg border">
+          <div className="px-6 py-3 border-b">
             <span className="text-sm font-medium text-muted-foreground">Preview em tempo real: Hero</span>
           </div>
-          <div className="p-4 bg-neutral-950">
+          <div className="p-4">
             <PreviewHomeHero data={formValues} />
           </div>
         </div>
-        <div className="rounded-lg border border-neutral-800 bg-neutral-950/85 shadow-xl overflow-hidden">
-          <div className="px-6 py-3 border-b border-neutral-800 bg-neutral-900">
+        <div className="rounded-lg border">
+          <div className="px-6 py-3 border-b">
             <span className="text-sm font-medium text-muted-foreground">Preview em tempo real: Sobre</span>
           </div>
-          <div className="p-4 bg-neutral-950">
+          <div className="p-4">
             <PreviewHomeAbout data={formValues} />
           </div>
         </div>

@@ -1,4 +1,3 @@
-
 import React, { useState } from 'react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Switch } from '@/components/ui/switch';
@@ -38,19 +37,19 @@ const ServiceManagement: React.FC = () => {
 
   return (
     <>
-      <Card className="management-card animate-fade-in">
+      <Card>
         <CardHeader className="pb-6">
           <div className="flex flex-col sm:flex-row sm:justify-between sm:items-center gap-4">
             <div className="flex items-center space-x-3">
-              <div className="p-2 rounded-lg bg-accent/10">
-                <DollarSign className="h-5 w-5 text-accent" />
+              <div className="p-2 rounded-lg border">
+                <DollarSign className="h-5 w-5" />
               </div>
               <div>
-                <CardTitle className="text-responsive-lg text-luxury">Gerenciar Serviços</CardTitle>
+                <CardTitle className="text-responsive-lg">Gerenciar Serviços</CardTitle>
                 <p className="text-responsive-xs text-muted-foreground">Configure os serviços oferecidos</p>
               </div>
             </div>
-            <Button onClick={handleNewService} className="btn-luxury focus-ring">
+            <Button onClick={handleNewService}>
               <Plus className="w-4 h-4 mr-2" />
               Novo Serviço
             </Button>
@@ -61,8 +60,7 @@ const ServiceManagement: React.FC = () => {
             {services.map((service, index) => (
               <div 
                 key={service.id} 
-                className="management-item p-4 sm:p-6 animate-slide-up hover-lift"
-                style={{ animationDelay: `${index * 100}ms` }}
+                className="border rounded-lg p-4 sm:p-6"
               >
                 <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
                   <div className="flex-1">
@@ -70,7 +68,6 @@ const ServiceManagement: React.FC = () => {
                       <h3 className="text-responsive-base font-semibold">{service.title}</h3>
                       <Badge 
                         variant={service.isActive ? "default" : "secondary"}
-                        className={service.isActive ? "status-success" : ""}
                       >
                         {service.isActive ? 'Ativo' : 'Inativo'}
                       </Badge>
@@ -94,7 +91,6 @@ const ServiceManagement: React.FC = () => {
                       variant="outline"
                       size="sm"
                       onClick={() => handleEditService(service)}
-                      className="focus-ring"
                     >
                       <Edit className="w-4 h-4" />
                       <span className="ml-2 sm:hidden">Editar</span>
@@ -104,7 +100,6 @@ const ServiceManagement: React.FC = () => {
                         checked={service.isActive}
                         onCheckedChange={(checked) => toggleStatus(service.id, checked)}
                         disabled={isUpdating}
-                        className="focus-ring"
                       />
                       <span className="text-responsive-xs text-muted-foreground">
                         {service.isActive ? 'Ativo' : 'Inativo'}

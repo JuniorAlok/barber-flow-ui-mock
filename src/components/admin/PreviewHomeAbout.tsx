@@ -1,4 +1,3 @@
-
 import React from 'react';
 import AboutSection from '@/components/homepage/AboutSection';
 import { HomeContentForm } from '@/utils/validation';
@@ -21,13 +20,8 @@ const PreviewHomeAbout: React.FC<PreviewHomeAboutProps> = ({ data }) => {
     aboutFeature3Description = "Agilidade e precisão no seu atendimento.",
   } = data || {};
 
-  // Mock barbers doesn't affect the preview, just the about fields
-  // AboutSection will eagerly use useMockData for features, but here the goal is to preview titles/descriptions from the form
-
-  // To override useMockData context in AboutSection preview, would need more context work;
-  // for now, preview main title/description is enough for client validation
   return (
-    <div className="rounded-xl border border-primary/10 bg-background shadow-inner overflow-hidden p-4 max-w-lg mx-auto mt-8" style={{ minHeight: 340, background: "#161922" }}>
+    <div className="rounded-xl border p-4 max-w-lg mx-auto mt-8">
       <AboutSection 
         title={aboutTitle}
         description={aboutDescription}

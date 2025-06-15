@@ -1,4 +1,3 @@
-
 import React from 'react';
 import HeroSection from '@/components/homepage/HeroSection';
 import { HomeContentForm } from '@/utils/validation';
@@ -40,7 +39,7 @@ const PreviewHomeHero: React.FC<PreviewHomeHeroProps> = ({ data }) => {
 
   // Usar CSS scale-down para simular uma visualização em miniatura/tablet/mobile, se quiser.
   return (
-    <div className="rounded-xl border border-primary/10 bg-background shadow-inner overflow-hidden p-4 max-w-lg mx-auto" style={{ minHeight: 380, background: "#15181e" }}>
+    <div className="rounded-xl border p-4 max-w-lg mx-auto">
       {/* Render 👇 Visualização HeroSection (props injetadas) */}
       <HeroSection
         title={previewContent.title}

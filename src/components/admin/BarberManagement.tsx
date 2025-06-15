@@ -1,4 +1,3 @@
-
 import React, { useState } from 'react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Switch } from '@/components/ui/switch';
@@ -37,22 +36,19 @@ const BarberManagement: React.FC = () => {
 
   return (
     <>
-      <Card className="management-card animate-fade-in">
+      <Card>
         <CardHeader className="pb-6">
           <div className="flex flex-col sm:flex-row sm:justify-between sm:items-center gap-4">
             <div className="flex items-center space-x-3">
-              <div className="p-2 rounded-lg bg-blue-500/10">
-                <Users className="h-5 w-5 text-blue-400" />
+              <div className="p-2 rounded-lg border">
+                <Users className="h-5 w-5" />
               </div>
               <div>
-                <CardTitle className="text-responsive-lg text-luxury">Gerenciar Barbeiros</CardTitle>
+                <CardTitle className="text-responsive-lg">Gerenciar Barbeiros</CardTitle>
                 <p className="text-responsive-xs text-muted-foreground">Configure sua equipe de profissionais</p>
               </div>
             </div>
-            <Button 
-              onClick={handleNewBarber}
-              className="gradient-glow focus-ring hover-lift"
-            >
+            <Button onClick={handleNewBarber}>
               <Plus className="w-4 h-4 mr-2" />
               Novo Barbeiro
             </Button>
@@ -63,8 +59,7 @@ const BarberManagement: React.FC = () => {
             {barbers.map((barber, index) => (
               <div 
                 key={barber.id} 
-                className="management-item p-4 sm:p-6 animate-slide-up hover-lift"
-                style={{ animationDelay: `${index * 100}ms` }}
+                className="border rounded-lg p-4 sm:p-6"
               >
                 <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-4">
                   <div className="flex flex-col sm:flex-row items-start sm:items-center space-y-4 sm:space-y-0 sm:space-x-6">
@@ -72,7 +67,7 @@ const BarberManagement: React.FC = () => {
                       <img 
                         src={barber.avatarUrl} 
                         alt={barber.name}
-                        className="w-16 h-16 rounded-full object-cover ring-2 ring-primary/20 hover:ring-primary/40 transition-all duration-300"
+                        className="w-16 h-16 rounded-full object-cover border-2"
                       />
                       {barber.isActive && (
                         <div className="absolute -bottom-1 -right-1 w-5 h-5 bg-green-500 rounded-full border-2 border-background"></div>
@@ -83,7 +78,6 @@ const BarberManagement: React.FC = () => {
                         <h3 className="text-responsive-base font-semibold text-foreground">{barber.name}</h3>
                         <Badge 
                           variant={barber.isActive ? "default" : "secondary"}
-                          className={barber.isActive ? "status-success" : ""}
                         >
                           {barber.isActive ? 'Ativo' : 'Inativo'}
                         </Badge>
@@ -111,7 +105,6 @@ const BarberManagement: React.FC = () => {
                       variant="outline"
                       size="sm"
                       onClick={() => handleEditBarber(barber)}
-                      className="focus-ring"
                     >
                       <Edit className="w-4 h-4" />
                       <span className="ml-2 sm:hidden">Editar</span>
@@ -128,7 +121,6 @@ const BarberManagement: React.FC = () => {
                           checked={barber.isActive}
                           onCheckedChange={(checked) => toggleStatus(barber.id, checked)}
                           disabled={isUpdating}
-                          className="focus-ring"
                         />
                         <span className="text-responsive-xs text-muted-foreground">
                           {barber.isActive ? 'Ativo' : 'Inativo'}
