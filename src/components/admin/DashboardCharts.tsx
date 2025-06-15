@@ -1,9 +1,11 @@
+
 import React from 'react';
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { Card, CardContent, CardHeader } from '@/components/ui/card';
 import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, AreaChart, Area, PieChart, Pie, Cell } from 'recharts';
 import { useMockData } from '@/contexts/MockDataContext';
 import { formatCurrency } from '@/utils/formatting';
 import { Users, DollarSign, Calendar } from 'lucide-react';
+import { SectionTitle, Caption } from '@/components/ui/typography';
 
 const DashboardCharts: React.FC = () => {
   const { bookings, services, barbers, transactions } = useMockData();
@@ -48,14 +50,14 @@ const DashboardCharts: React.FC = () => {
     if (active && payload && payload.length) {
       return (
         <div className="bg-background border rounded-lg p-4 shadow-lg">
-          <p className="text-sm font-medium text-foreground mb-2">{label}</p>
+          <Caption as="p" className="font-medium text-foreground mb-2">{label}</Caption>
           {payload.map((entry: any, index: number) => (
-            <p key={index} className="text-sm" style={{ color: entry.color }}>
+            <Caption as="p" key={index} style={{ color: entry.color }}>
               {entry.name === 'revenue' || entry.name === 'commission' 
                 ? `${entry.name === 'revenue' ? 'Receita' : 'Comissão'}: ${formatCurrency(entry.value)}`
                 : `${entry.name === 'bookings' ? 'Agendamentos' : entry.name}: ${entry.value}`
               }
-            </p>
+            </Caption>
           ))}
         </div>
       );
@@ -73,8 +75,8 @@ const DashboardCharts: React.FC = () => {
               <DollarSign className="h-5 w-5" />
             </div>
             <div>
-              <CardTitle className="text-lg">Receita e Agendamentos</CardTitle>
-              <p className="text-sm text-muted-foreground">Evolução mensal</p>
+              <SectionTitle as="div" className="!mb-0">Receita e Agendamentos</SectionTitle>
+              <Caption as="p" className="!text-sm !font-normal">Evolução mensal</Caption>
             </div>
           </div>
         </CardHeader>
@@ -101,8 +103,8 @@ const DashboardCharts: React.FC = () => {
               <Calendar className="h-5 w-5" />
             </div>
             <div>
-              <CardTitle className="text-lg">Serviços Mais Populares</CardTitle>
-              <p className="text-sm text-muted-foreground">Distribuição de procura</p>
+              <SectionTitle as="div" className="!mb-0">Serviços Mais Populares</SectionTitle>
+              <Caption as="p" className="!text-sm !font-normal">Distribuição de procura</Caption>
             </div>
           </div>
         </CardHeader>
@@ -139,8 +141,8 @@ const DashboardCharts: React.FC = () => {
               <Users className="h-5 w-5" />
             </div>
             <div>
-              <CardTitle className="text-lg">Performance dos Barbeiros</CardTitle>
-              <p className="text-sm text-muted-foreground">Receita e comissões por profissional</p>
+              <SectionTitle as="div" className="!mb-0">Performance dos Barbeiros</SectionTitle>
+              <Caption as="p" className="!text-sm !font-normal">Receita e comissões por profissional</Caption>
             </div>
           </div>
         </CardHeader>

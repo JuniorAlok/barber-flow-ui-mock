@@ -1,6 +1,6 @@
 
 import React from 'react';
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { Card, CardContent, CardHeader } from '@/components/ui/card';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Button } from '@/components/ui/button';
 import { Trash2, Edit } from 'lucide-react';
@@ -16,6 +16,7 @@ import {
   TableHeader,
   TableRow,
 } from '@/components/ui/table';
+import { SectionTitle, Caption } from '@/components/ui/typography';
 
 type ViewMode = 'list' | 'calendar';
 
@@ -48,7 +49,7 @@ const BookingTable: React.FC<BookingTableProps> = ({
     <Card className="management-card animate-fade-in">
       <CardHeader>
         <div className="flex flex-col sm:flex-row sm:justify-between sm:items-center gap-4">
-          <CardTitle className="text-responsive-lg">Gerenciar Agendamentos</CardTitle>
+          <SectionTitle as="div" className="!mb-0">Gerenciar Agendamentos</SectionTitle>
           <ViewModeToggle
             viewMode={viewMode}
             setViewMode={setViewMode}
@@ -62,13 +63,13 @@ const BookingTable: React.FC<BookingTableProps> = ({
             <Table>
               <TableHeader>
                 <TableRow className="bg-muted/30">
-                  <TableHead className="text-responsive-xs font-semibold">Cliente</TableHead>
-                  <TableHead className="text-responsive-xs font-semibold hidden sm:table-cell">Serviço</TableHead>
-                  <TableHead className="text-responsive-xs font-semibold hidden md:table-cell">Barbeiro</TableHead>
-                  <TableHead className="text-responsive-xs font-semibold">Data</TableHead>
-                  <TableHead className="text-responsive-xs font-semibold hidden sm:table-cell">Horário</TableHead>
-                  <TableHead className="text-responsive-xs font-semibold">Status</TableHead>
-                  <TableHead className="text-responsive-xs font-semibold">Ações</TableHead>
+                  <TableHead><Caption className="font-semibold text-foreground">Cliente</Caption></TableHead>
+                  <TableHead className="hidden sm:table-cell"><Caption className="font-semibold text-foreground">Serviço</Caption></TableHead>
+                  <TableHead className="hidden md:table-cell"><Caption className="font-semibold text-foreground">Barbeiro</Caption></TableHead>
+                  <TableHead><Caption className="font-semibold text-foreground">Data</Caption></TableHead>
+                  <TableHead className="hidden sm:table-cell"><Caption className="font-semibold text-foreground">Horário</Caption></TableHead>
+                  <TableHead><Caption className="font-semibold text-foreground">Status</Caption></TableHead>
+                  <TableHead><Caption className="font-semibold text-foreground">Ações</Caption></TableHead>
                 </TableRow>
               </TableHeader>
               <TableBody>
@@ -80,22 +81,22 @@ const BookingTable: React.FC<BookingTableProps> = ({
                   >
                     <TableCell className="p-3">
                       <div>
-                        <div className="font-medium text-responsive-sm">{booking.clientName}</div>
-                        <div className="text-responsive-xs text-muted-foreground sm:hidden">
+                        <Caption className="font-medium text-foreground !text-sm">{booking.clientName}</Caption>
+                        <Caption className="sm:hidden !text-xs !font-normal">
                           {getServiceName(booking.serviceId)}
-                        </div>
-                        <div className="text-responsive-xs text-muted-foreground">{booking.clientPhone}</div>
+                        </Caption>
+                        <Caption className="!text-xs !font-normal">{booking.clientPhone}</Caption>
                       </div>
                     </TableCell>
-                    <TableCell className="hidden sm:table-cell text-responsive-sm">{getServiceName(booking.serviceId)}</TableCell>
-                    <TableCell className="hidden md:table-cell text-responsive-sm">{getBarberName(booking.barberId)}</TableCell>
-                    <TableCell className="text-responsive-sm">
+                    <TableCell className="hidden sm:table-cell"><Caption className="!text-sm !font-normal">{getServiceName(booking.serviceId)}</Caption></TableCell>
+                    <TableCell className="hidden md:table-cell"><Caption className="!text-sm !font-normal">{getBarberName(booking.barberId)}</Caption></TableCell>
+                    <TableCell>
                       <div>
-                        {format(new Date(booking.date), 'dd/MM', { locale: ptBR })}
-                        <div className="sm:hidden text-responsive-xs text-muted-foreground">{booking.time}</div>
+                        <Caption className="!text-sm !font-normal">{format(new Date(booking.date), 'dd/MM', { locale: ptBR })}</Caption>
+                        <Caption className="sm:hidden !text-xs !font-normal">{booking.time}</Caption>
                       </div>
                     </TableCell>
-                    <TableCell className="hidden sm:table-cell text-responsive-sm">{booking.time}</TableCell>
+                    <TableCell className="hidden sm:table-cell"><Caption className="!text-sm !font-normal">{booking.time}</Caption></TableCell>
                     <TableCell>{getStatusBadge(booking.status)}</TableCell>
                     <TableCell>
                       <div className="flex items-center gap-1 sm:gap-2">

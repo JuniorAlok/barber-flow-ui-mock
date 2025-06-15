@@ -5,7 +5,7 @@ import { DollarSign, TrendingUp, Users, Calendar, Target, Percent } from 'lucide
 import { useMockData } from '@/contexts/MockDataContext';
 import DashboardCharts from './admin/DashboardCharts';
 import { StatisticsGrid, StatisticCardProps } from '@/components/cards/StatisticCard';
-import { SectionTitle } from '@/components/ui/typography';
+import { SectionTitle, Title, Body, Subtitle, Caption } from '@/components/ui/typography';
 import { formatCurrency } from '@/utils/formatting';
 
 const DashboardMetrics: React.FC = () => {
@@ -105,8 +105,8 @@ const DashboardMetrics: React.FC = () => {
     <div className="space-y-8 animate-fade-in">
       <div className="rounded-2xl border p-8 bg-card/50">
         <div>
-          <h1 className="text-3xl font-bold font-display mb-2">Dashboard Executivo</h1>
-          <p className="text-muted-foreground text-lg">Métricas chave para decisões estratégicas.</p>
+          <Title className="!text-3xl mb-2">Dashboard Executivo</Title>
+          <Body className="!text-lg">Métricas chave para decisões estratégicas.</Body>
         </div>
       </div>
 
@@ -123,15 +123,15 @@ const DashboardMetrics: React.FC = () => {
                     {highlight.icon}
                   </div>
                   <div className="flex-1">
-                    <p className="text-sm font-medium text-muted-foreground mb-1">
+                    <Caption as="p" className="mb-1">
                       {highlight.label}
-                    </p>
-                    <p className="text-xl font-bold mb-1">
+                    </Caption>
+                    <Subtitle as="p" className="!text-xl font-bold mb-1 !leading-none">
                       {highlight.value}
-                    </p>
-                    <p className="text-xs text-muted-foreground">
+                    </Subtitle>
+                    <Caption as="p" className="!text-xs !font-normal">
                       {highlight.description}
-                    </p>
+                    </Caption>
                   </div>
                 </div>
               </CardContent>

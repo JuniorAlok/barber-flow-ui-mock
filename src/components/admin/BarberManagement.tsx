@@ -1,5 +1,6 @@
+
 import React, { useState } from 'react';
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { Card, CardContent, CardHeader } from '@/components/ui/card';
 import { Switch } from '@/components/ui/switch';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
@@ -7,6 +8,7 @@ import { Plus, Edit, Star, Phone, Mail, Users } from 'lucide-react';
 import { useMockData } from '@/contexts/MockDataContext';
 import { useUpdateEntity } from '@/hooks/useUpdateEntity';
 import BarberModal from './modals/BarberModal';
+import { SectionTitle, Caption, Subtitle, Highlight } from '@/components/ui/typography';
 
 const BarberManagement: React.FC = () => {
   const { barbers, setBarbers } = useMockData();
@@ -44,8 +46,8 @@ const BarberManagement: React.FC = () => {
                 <Users className="h-5 w-5" />
               </div>
               <div>
-                <CardTitle className="text-responsive-lg">Gerenciar Barbeiros</CardTitle>
-                <p className="text-responsive-xs text-muted-foreground">Configure sua equipe de profissionais</p>
+                <SectionTitle as="div" className="!mb-0">Gerenciar Barbeiros</SectionTitle>
+                <Caption as="p" className="!text-xs !font-normal">Configure sua equipe de profissionais</Caption>
               </div>
             </div>
             <Button onClick={handleNewBarber}>
@@ -75,27 +77,27 @@ const BarberManagement: React.FC = () => {
                     </div>
                     <div className="flex-1 min-w-0">
                       <div className="flex flex-col sm:flex-row sm:items-center space-y-2 sm:space-y-0 sm:space-x-3 mb-2">
-                        <h3 className="text-responsive-base font-semibold text-foreground">{barber.name}</h3>
+                        <Subtitle as="h3" className="!text-base !font-semibold !mb-0 text-foreground">{barber.name}</Subtitle>
                         <Badge 
                           variant={barber.isActive ? "default" : "secondary"}
                         >
                           {barber.isActive ? 'Ativo' : 'Inativo'}
                         </Badge>
                       </div>
-                      <p className="text-responsive-xs text-muted-foreground mb-3">{barber.specialization}</p>
+                      <Caption as="p" className="!text-xs !font-normal mb-3">{barber.specialization}</Caption>
                       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-2 sm:gap-4 text-responsive-xs">
                         <div className="flex items-center space-x-2">
                           <Phone className="w-4 h-4 text-muted-foreground flex-shrink-0" />
-                          <span className="text-muted-foreground truncate">{barber.phone}</span>
+                          <Caption className="truncate !text-xs !font-normal">{barber.phone}</Caption>
                         </div>
                         <div className="flex items-center space-x-2">
                           <Mail className="w-4 h-4 text-muted-foreground flex-shrink-0" />
-                          <span className="text-muted-foreground truncate">{barber.email}</span>
+                          <Caption className="truncate !text-xs !font-normal">{barber.email}</Caption>
                         </div>
                         <div className="flex items-center space-x-2">
                           <Star className="w-4 h-4 text-yellow-400 flex-shrink-0" />
-                          <span className="font-medium text-foreground">{barber.rating}</span>
-                          <span className="text-muted-foreground">| {barber.experience}</span>
+                          <Caption className="font-medium text-foreground !text-xs">{barber.rating}</Caption>
+                          <Caption className="!text-xs !font-normal">| {barber.experience}</Caption>
                         </div>
                       </div>
                     </div>
@@ -112,8 +114,8 @@ const BarberManagement: React.FC = () => {
                     <div className="flex items-center justify-between sm:justify-start">
                       <div className="text-right mr-4">
                         <div className="flex items-center space-x-2 text-responsive-xs">
-                          <span className="text-muted-foreground">Comissão:</span>
-                          <span className="font-medium text-primary">{barber.commission}%</span>
+                          <Caption className="!text-xs !font-normal">Comissão:</Caption>
+                          <Highlight className="!text-base">{barber.commission}%</Highlight>
                         </div>
                       </div>
                       <div className="flex items-center space-x-2">
@@ -122,9 +124,9 @@ const BarberManagement: React.FC = () => {
                           onCheckedChange={(checked) => toggleStatus(barber.id, checked)}
                           disabled={isUpdating}
                         />
-                        <span className="text-responsive-xs text-muted-foreground">
+                        <Caption className="!text-xs !font-normal">
                           {barber.isActive ? 'Ativo' : 'Inativo'}
-                        </span>
+                        </Caption>
                       </div>
                     </div>
                   </div>

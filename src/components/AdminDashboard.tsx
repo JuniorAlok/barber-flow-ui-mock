@@ -9,6 +9,7 @@ import BookingManagement from '@/components/admin/BookingManagement';
 import ServiceManagement from '@/components/admin/ServiceManagement';
 import BarberManagement from '@/components/admin/BarberManagement';
 import ConfigurationManagement from '@/components/admin/ConfigurationManagement';
+import { SectionTitle, Caption } from '@/components/ui/typography';
 
 const TABS = [
   {
@@ -70,8 +71,8 @@ const AdminDashboard: React.FC = () => {
               <div className="flex h-16 items-center page-padding">
                 <SidebarTrigger className="md:hidden" />
                 <div className="ml-4 md:ml-0">
-                  <h1 className="text-responsive-base font-semibold">{activeTabData.title}</h1>
-                  <p className="text-responsive-xs text-muted-foreground">{activeTabData.description}</p>
+                  <SectionTitle as="h1" className="!text-base !font-semibold !mb-0">{activeTabData.title}</SectionTitle>
+                  <Caption as="p" className="!text-xs !font-normal">{activeTabData.description}</Caption>
                 </div>
               </div>
             </header>

@@ -1,12 +1,12 @@
-
 import React, { useState } from 'react';
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { Card, CardContent, CardHeader } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Calendar } from '@/components/ui/calendar';
 import { Badge } from '@/components/ui/badge';
 import { useMockData } from '@/contexts/MockDataContext';
 import { formatDate } from '@/utils/formatting';
 import { Calendar as CalendarIcon, Clock, User, Scissors, ChevronLeft, ChevronRight } from 'lucide-react';
+import { SectionTitle, Caption } from '@/components/ui/typography';
 
 interface BookingCalendarProps {
   onNewBooking: () => void;
@@ -57,7 +57,7 @@ const BookingCalendar: React.FC<BookingCalendarProps> = ({ onNewBooking, onEditB
           <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
             <div className="flex items-center space-x-3">
               <CalendarIcon className="h-5 w-5 text-primary" />
-              <CardTitle className="text-responsive-lg">Calendário de Agendamentos</CardTitle>
+              <SectionTitle as="div" className="!mb-0">Calendário de Agendamentos</SectionTitle>
             </div>
             <div className="flex items-center space-x-2">
               <Button 
@@ -104,9 +104,9 @@ const BookingCalendar: React.FC<BookingCalendarProps> = ({ onNewBooking, onEditB
       <Card className="management-card animate-fade-in">
         <CardHeader>
           <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
-            <CardTitle className="text-responsive-lg">
+            <SectionTitle as="div" className="!mb-0">
               {selectedDate ? formatDate(selectedDate.toISOString()) : 'Selecione uma data'}
-            </CardTitle>
+            </SectionTitle>
             <Button onClick={onNewBooking} className="btn-luxury focus-ring">
               Novo Agendamento
             </Button>
@@ -116,7 +116,7 @@ const BookingCalendar: React.FC<BookingCalendarProps> = ({ onNewBooking, onEditB
           {selectedDateBookings.length === 0 ? (
             <div className="text-center py-8">
               <CalendarIcon className="h-12 w-12 text-muted-foreground mx-auto mb-4" />
-              <p className="text-responsive-sm text-muted-foreground">Nenhum agendamento para esta data</p>
+              <Caption as="p" className="!text-sm">Nenhum agendamento para esta data</Caption>
             </div>
           ) : (
             <div className="space-y-3">
@@ -136,7 +136,7 @@ const BookingCalendar: React.FC<BookingCalendarProps> = ({ onNewBooking, onEditB
                   <div className="flex flex-col sm:flex-row sm:items-start sm:justify-between gap-3 mb-2">
                     <div className="flex items-center space-x-2">
                       <Clock className="h-4 w-4 text-primary flex-shrink-0" />
-                      <span className="font-medium text-responsive-sm">{booking.time}</span>
+                      <Caption className="font-medium !text-sm text-foreground">{booking.time}</Caption>
                     </div>
                     <Badge className={getStatusColor(booking.status)}>
                       {booking.status}
@@ -146,15 +146,15 @@ const BookingCalendar: React.FC<BookingCalendarProps> = ({ onNewBooking, onEditB
                   <div className="space-y-1 text-responsive-xs">
                     <div className="flex items-center space-x-2">
                       <User className="h-3 w-3 text-muted-foreground flex-shrink-0" />
-                      <span className="truncate">{booking.clientName}</span>
+                      <Caption className="truncate !text-xs">{booking.clientName}</Caption>
                     </div>
                     <div className="flex items-center space-x-2">
                       <Scissors className="h-3 w-3 text-muted-foreground flex-shrink-0" />
-                      <span className="truncate">{getServiceName(booking.serviceId)}</span>
+                      <Caption className="truncate !text-xs">{getServiceName(booking.serviceId)}</Caption>
                     </div>
                     <div className="flex items-center space-x-2">
                       <User className="h-3 w-3 text-muted-foreground flex-shrink-0" />
-                      <span className="truncate">{getBarberName(booking.barberId)}</span>
+                      <Caption className="truncate !text-xs">{getBarberName(booking.barberId)}</Caption>
                     </div>
                   </div>
                 </div>

@@ -1,5 +1,6 @@
+
 import React, { useState } from 'react';
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { Card, CardContent, CardHeader } from '@/components/ui/card';
 import { Switch } from '@/components/ui/switch';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
@@ -8,6 +9,7 @@ import { useMockData } from '@/contexts/MockDataContext';
 import { useUpdateEntity } from '@/hooks/useUpdateEntity';
 import { formatCurrency } from '@/utils/formatting';
 import ServiceModal from './modals/ServiceModal';
+import { SectionTitle, Caption, Subtitle, Highlight } from '@/components/ui/typography';
 
 const ServiceManagement: React.FC = () => {
   const { services, setServices } = useMockData();
@@ -45,8 +47,8 @@ const ServiceManagement: React.FC = () => {
                 <DollarSign className="h-5 w-5" />
               </div>
               <div>
-                <CardTitle className="text-responsive-lg">Gerenciar Serviços</CardTitle>
-                <p className="text-responsive-xs text-muted-foreground">Configure os serviços oferecidos</p>
+                <SectionTitle as="div" className="!mb-0">Gerenciar Serviços</SectionTitle>
+                <Caption as="p" className="!text-xs !font-normal">Configure os serviços oferecidos</Caption>
               </div>
             </div>
             <Button onClick={handleNewService}>
@@ -65,24 +67,24 @@ const ServiceManagement: React.FC = () => {
                 <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
                   <div className="flex-1">
                     <div className="flex flex-col sm:flex-row sm:items-center space-y-2 sm:space-y-0 sm:space-x-3 mb-2">
-                      <h3 className="text-responsive-base font-semibold">{service.title}</h3>
+                      <Subtitle as="h3" className="!text-base !font-semibold !mb-0">{service.title}</Subtitle>
                       <Badge 
                         variant={service.isActive ? "default" : "secondary"}
                       >
                         {service.isActive ? 'Ativo' : 'Inativo'}
                       </Badge>
                     </div>
-                    <p className="text-responsive-xs text-muted-foreground mb-3">{service.description}</p>
+                    <Caption as="p" className="!text-xs !font-normal mb-3">{service.description}</Caption>
                     <div className="flex flex-col sm:flex-row sm:items-center sm:space-x-6 space-y-2 sm:space-y-0">
                       <div className="flex items-center space-x-2 text-responsive-xs">
                         <Clock className="w-4 h-4 text-muted-foreground" />
-                        <span className="text-muted-foreground">Duração:</span>
-                        <span className="font-medium">{service.duration} min</span>
+                        <Caption>Duração:</Caption>
+                        <Caption className="text-foreground">{service.duration} min</Caption>
                       </div>
                       <div className="flex items-center space-x-2 text-responsive-xs">
                         <DollarSign className="w-4 h-4 text-accent" />
-                        <span className="text-muted-foreground">Preço:</span>
-                        <span className="font-medium text-accent">{formatCurrency(service.price)}</span>
+                        <Caption>Preço:</Caption>
+                        <Highlight className="!font-medium">{formatCurrency(service.price)}</Highlight>
                       </div>
                     </div>
                   </div>
@@ -101,9 +103,9 @@ const ServiceManagement: React.FC = () => {
                         onCheckedChange={(checked) => toggleStatus(service.id, checked)}
                         disabled={isUpdating}
                       />
-                      <span className="text-responsive-xs text-muted-foreground">
+                      <Caption className="!text-xs !font-normal">
                         {service.isActive ? 'Ativo' : 'Inativo'}
-                      </span>
+                      </Caption>
                     </div>
                   </div>
                 </div>
