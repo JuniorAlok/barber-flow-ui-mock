@@ -1,11 +1,13 @@
+
 /**
  * Dashboard Layout Component (Refatorado)
  * Separa Sidebar e Header em arquivos próprios, usando AdminSidebar e AdminHeader
  */
-import React from 'react';
+import React, { useState } from 'react';
 import { cn } from '@/lib/utils';
 import { AdminSidebar } from '@/components/admin/AdminSidebar';
 import AdminHeader from '@/components/admin/AdminHeader';
+import { SidebarProvider, SidebarTrigger } from '@/components/ui/sidebar';
 
 interface DashboardLayoutProps {
   children: React.ReactNode;
@@ -16,31 +18,33 @@ export const DashboardLayout: React.FC<DashboardLayoutProps> = ({
   children,
   className
 }) => {
+  const [activeTab, setActiveTab] = useState('dashboard');
+
   return (
-    <div className="min-h-screen bg-background">
-      {/* Sidebar */}
-      <aside className="fixed left-0 top-0 z-30 h-screen w-64 border-r">
-        <AdminSidebar activeTab="dashboard" onTabChange={() => {}} />
-      </aside>
+    <SidebarProvider>
+      <div className="flex min-h-screen w-full bg-background">
+        <AdminSidebar activeTab={activeTab} onTabChange={setActiveTab} />
+        
+        <div className="flex flex-1 flex-col">
+          {/* Header */}
+          <header className="border-b sticky top-0 z-20 bg-background/90 backdrop-blur-sm">
+            <div className="container-responsive flex h-16 items-center">
+                <SidebarTrigger className="md:hidden mr-4" />
+                <AdminHeader />
+            </div>
+          </header>
 
-      {/* Main Content Area */}
-      <div className="ml-64 min-h-screen">
-        {/* Header */}
-        <header className="border-b sticky top-0 z-20 bg-background/90 backdrop-blur-sm">
-          <AdminHeader />
-        </header>
-
-        {/* Main Content */}
-        <main className={cn(
-          "container-responsive py-6",
-          "grid grid-cols-12 gap-6",
-          className,
-          "min-h-[calc(100vh-64px)]"
-        )}>
-          {children}
-        </main>
+          {/* Main Content */}
+          <main className={cn(
+            "container-responsive flex-1 py-6",
+            "grid grid-cols-12 gap-6",
+            className
+          )}>
+            {children}
+          </main>
+        </div>
       </div>
-    </div>
+    </SidebarProvider>
   );
 };
 
