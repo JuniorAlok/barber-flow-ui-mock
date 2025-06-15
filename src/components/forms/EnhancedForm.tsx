@@ -1,3 +1,4 @@
+
 /**
  * Enhanced Form Components
  * Modern form components with validation and animations
@@ -5,40 +6,15 @@
 import React, { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { z } from 'zod';
-import {
-  Form,
-  FormControl,
-  FormField,
-  FormItem,
-  FormLabel,
-  FormMessage,
-} from '@/components/ui/form';
-import { Input } from '@/components/ui/input';
-import { Button } from '@/components/ui/button';
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from '@/components/ui/select';
-import { Checkbox } from '@/components/ui/checkbox';
-import { RadioGroup, RadioGroupItem } from '@/components/ui/radio-group';
-import { Label } from '@/components/ui/label';
-import { CheckCircle, AlertCircle, Loader2 } from 'lucide-react';
+import { Form } from '@/components/ui/form';
 import { cn } from '@/lib/utils';
-
-// Form schema example
-const formSchema = z.object({
-  name: z.string().min(2, 'Nome deve ter pelo menos 2 caracteres'),
-  email: z.string().email('Email inválido'),
-  service: z.string().min(1, 'Selecione um serviço'),
-  newsletter: z.boolean(),
-  priority: z.enum(['low', 'medium', 'high']),
-});
-
-type FormData = z.infer<typeof formSchema>;
+import { formSchema, FormData } from './enhancedFormSchema';
+import { NameField } from './fields/NameField';
+import { EmailField } from './fields/EmailField';
+import { ServiceSelectField } from './fields/ServiceSelectField';
+import { PriorityRadioField } from './fields/PriorityRadioField';
+import { NewsletterCheckboxField } from './fields/NewsletterCheckboxField';
+import { SubmitButton } from './fields/SubmitButton';
 
 interface EnhancedFormProps {
   onSubmit: (data: FormData) => Promise<void>;
@@ -93,158 +69,12 @@ export const EnhancedForm: React.FC<EnhancedFormProps> = ({
 
       <Form {...form}>
         <form onSubmit={form.handleSubmit(handleSubmit)} className="space-y-6">
-          {/* Text Input */}
-          <FormField
-            control={form.control}
-            name="name"
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel>Nome Completo</FormLabel>
-                <FormControl>
-                  <Input
-                    placeholder="Digite seu nome"
-                    {...field}
-                    className="rounded-xl bg-zinc-800 border-zinc-700 text-white placeholder:text-zinc-400 focus:ring-2 focus:ring-yellow-500 focus:border-yellow-500"
-                  />
-                </FormControl>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
-
-          {/* Email Input */}
-          <FormField
-            control={form.control}
-            name="email"
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel>Email</FormLabel>
-                <FormControl>
-                  <Input
-                    type="email"
-                    placeholder="seu@email.com"
-                    {...field}
-                    className="rounded-xl bg-zinc-800 border-zinc-700 text-white placeholder:text-zinc-400 focus:ring-2 focus:ring-yellow-500 focus:border-yellow-500"
-                  />
-                </FormControl>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
-
-          {/* Select */}
-          <FormField
-            control={form.control}
-            name="service"
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel>Serviço</FormLabel>
-                <Select onValueChange={field.onChange} defaultValue={field.value}>
-                  <FormControl>
-                    <SelectTrigger className="rounded-xl bg-zinc-800 border-zinc-700 text-white focus:ring-2 focus:ring-yellow-500 focus:border-yellow-500">
-                      <SelectValue placeholder="Selecione um serviço" />
-                    </SelectTrigger>
-                  </FormControl>
-                  <SelectContent className="bg-zinc-900 border-zinc-700 text-white">
-                    <SelectItem value="haircut" className="text-white hover:!bg-zinc-700">Corte de Cabelo</SelectItem>
-                    <SelectItem value="beard" className="text-white hover:!bg-zinc-700">Barba</SelectItem>
-                    <SelectItem value="combo" className="text-white hover:!bg-zinc-700">Combo Completo</SelectItem>
-                  </SelectContent>
-                </Select>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
-
-          {/* Radio Group */}
-          <FormField
-            control={form.control}
-            name="priority"
-            render={({ field }) => (
-              <FormItem className="space-y-3">
-                <FormLabel>Prioridade</FormLabel>
-                <FormControl>
-                  <RadioGroup
-                    onValueChange={field.onChange}
-                    defaultValue={field.value}
-                    className="flex flex-col space-y-1"
-                  >
-                    <div className="flex items-center space-x-2">
-                      <RadioGroupItem value="low" id="low" />
-                      <Label htmlFor="low">Baixa</Label>
-                    </div>
-                    <div className="flex items-center space-x-2">
-                      <RadioGroupItem value="medium" id="medium" />
-                      <Label htmlFor="medium">Média</Label>
-                    </div>
-                    <div className="flex items-center space-x-2">
-                      <RadioGroupItem value="high" id="high" />
-                      <Label htmlFor="high">Alta</Label>
-                    </div>
-                  </RadioGroup>
-                </FormControl>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
-
-          {/* Checkbox */}
-          <FormField
-            control={form.control}
-            name="newsletter"
-            render={({ field }) => (
-              <FormItem className="flex flex-row items-start space-x-3 space-y-0">
-                <FormControl>
-                  <Checkbox
-                    checked={field.value}
-                    onCheckedChange={field.onChange}
-                    className="data-[state=checked]:bg-yellow-500 data-[state=checked]:text-black border-zinc-600"
-                  />
-                </FormControl>
-                <div className="space-y-1 leading-none">
-                  <FormLabel>
-                    Quero receber novidades por email
-                  </FormLabel>
-                </div>
-              </FormItem>
-            )}
-          />
-
-          {/* Submit Button */}
-          <div className="flex items-center gap-4">
-            <Button
-              type="submit"
-              disabled={isSubmitting}
-              className="bg-gradient-to-r from-yellow-500 to-orange-500 hover:from-yellow-600 hover:to-orange-600 text-black font-medium transition-all duration-300 min-w-[140px]"
-            >
-              {isSubmitting ? (
-                <>
-                  <Loader2 className="w-4 h-4 mr-2 animate-spin" />
-                  Enviando...
-                </>
-              ) : (
-                'Enviar Formulário'
-              )}
-            </Button>
-
-            {submitStatus === 'success' && (
-              <div
-                className="flex items-center gap-2 text-green-600 animate-scale-in"
-              >
-                <CheckCircle className="w-4 h-4" />
-                <span className="text-sm font-medium">Enviado com sucesso!</span>
-              </div>
-            )}
-            
-            {submitStatus === 'error' && (
-              <div
-                className="flex items-center gap-2 text-red-600 animate-scale-in"
-              >
-                <AlertCircle className="w-4 h-4" />
-                <span className="text-sm font-medium">Erro ao enviar</span>
-              </div>
-            )}
-          </div>
+          <NameField control={form.control} />
+          <EmailField control={form.control} />
+          <ServiceSelectField control={form.control} />
+          <PriorityRadioField control={form.control} />
+          <NewsletterCheckboxField control={form.control} />
+          <SubmitButton isSubmitting={isSubmitting} submitStatus={submitStatus} />
         </form>
       </Form>
     </div>
