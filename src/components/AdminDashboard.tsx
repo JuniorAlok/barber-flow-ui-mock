@@ -1,3 +1,4 @@
+
 import React, { useState } from 'react';
 import { SidebarProvider, SidebarTrigger } from '@/components/ui/sidebar';
 import { AdminSidebar } from '@/components/admin/AdminSidebar';
@@ -70,7 +71,7 @@ const AdminDashboard: React.FC = () => {
                 <SidebarTrigger className="md:hidden" />
                 <div className="ml-4 md:ml-0">
                   <h1 className="text-responsive-base font-semibold">{getPageTitle()}</h1>
-                  <p className="text-responsive-xs text-muted-foreground">{getPageDescription()}</h1>
+                  <p className="text-responsive-xs text-muted-foreground">{getPageDescription()}</p>
                 </div>
               </div>
             </header>
