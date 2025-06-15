@@ -4,7 +4,6 @@
  * Full-width, full-height hero with gradient background and responsive text
  */
 import React from 'react';
-import { motion } from 'framer-motion';
 import { Button } from '@/components/ui/button';
 import { ArrowRight, Star } from 'lucide-react';
 
@@ -34,31 +33,25 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
 
       {/* Content */}
       <div className="relative z-10 container-responsive text-center">
-        <motion.div
-          className="max-w-4xl mx-auto space-y-8"
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8 }}
+        <div
+          className="max-w-4xl mx-auto space-y-8 animate-fade-in"
+          style={{ animationDuration: '800ms' }}
         >
           {/* Badge */}
-          <motion.div
-            className="inline-flex items-center gap-2 glass-effect px-6 py-3 rounded-full"
-            initial={{ opacity: 0, scale: 0.9 }}
-            animate={{ opacity: 1, scale: 1 }}
-            transition={{ delay: 0.2 }}
+          <div
+            className="inline-flex items-center gap-2 glass-effect px-6 py-3 rounded-full animate-scale-in"
+            style={{ animationDelay: '200ms' }}
           >
             <Star className="w-5 h-5 text-accent" />
             <span className="text-sm font-medium text-accent">
               Elite Barbershop Experience
             </span>
-          </motion.div>
+          </div>
 
           {/* Title */}
-          <motion.h1
-            className="text-responsive-xl md:text-6xl lg:text-7xl font-bold leading-tight"
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.3 }}
+          <h1
+            className="text-responsive-xl md:text-6xl lg:text-7xl font-bold leading-tight animate-fade-in"
+            style={{ animationDelay: '300ms' }}
           >
             <span className="block text-luxury mb-4">
               {title.split(' ')[0]}
@@ -69,23 +62,20 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
             <span className="block text-foreground">
               {title.split(' ').slice(2).join(' ')}
             </span>
-          </motion.h1>
+          </h1>
 
           {/* Subtitle */}
-          <motion.p
-            className="text-responsive-base md:text-xl lg:text-2xl text-muted-foreground max-w-3xl mx-auto leading-relaxed"
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.4 }}
+          <p
+            className="text-responsive-base md:text-xl lg:text-2xl text-muted-foreground max-w-3xl mx-auto leading-relaxed animate-fade-in"
+            style={{ animationDelay: '400ms' }}
           >
             {subtitle}
-          </motion.p>
+          </p>
 
           {/* CTA Button */}
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.5 }}
+          <div
+            className="animate-fade-in"
+            style={{ animationDelay: '500ms' }}
           >
             <Button
               size="lg"
@@ -95,14 +85,12 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
               {ctaText}
               <ArrowRight className="ml-2 h-5 w-5" />
             </Button>
-          </motion.div>
+          </div>
 
           {/* Features */}
-          <motion.div
-            className="flex flex-wrap justify-center gap-8 text-muted-foreground"
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ delay: 0.6 }}
+          <div
+            className="flex flex-wrap justify-center gap-8 text-muted-foreground animate-fade-in"
+            style={{ animationDelay: '600ms' }}
           >
             <div className="flex items-center gap-2">
               <div className="w-2 h-2 bg-accent rounded-full" />
@@ -116,8 +104,8 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
               <div className="w-2 h-2 bg-accent rounded-full" />
               <span className="text-sm font-medium">Gestão Financeira</span>
             </div>
-          </motion.div>
-        </motion.div>
+          </div>
+        </div>
       </div>
 
       {/* Bottom Fade */}
