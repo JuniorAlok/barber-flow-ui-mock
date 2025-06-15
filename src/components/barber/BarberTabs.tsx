@@ -1,11 +1,19 @@
 
-import React from 'react';
+import React, { Suspense, lazy } from 'react';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { Calendar, ClipboardList, BarChart3, UserCog } from 'lucide-react';
-import BarberServiceOrders from './BarberServiceOrders';
-import BarberBookingManagement from './BarberBookingManagement';
-import BarberMetrics from './BarberMetrics';
-import BarberProfileSettings from './BarberProfileSettings';
+import { Loading } from '@/components/ui/loading';
+
+const BarberServiceOrders = lazy(() => import('./BarberServiceOrders'));
+const BarberBookingManagement = lazy(() => import('./BarberBookingManagement'));
+const BarberMetrics = lazy(() => import('./BarberMetrics'));
+const BarberProfileSettings = lazy(() => import('./BarberProfileSettings'));
+
+const LoadingFallback = () => (
+  <div className="flex justify-center items-center min-h-[400px]">
+    <Loading text="Carregando..." />
+  </div>
+);
 
 const BarberTabs: React.FC = () => {
   return (
@@ -47,19 +55,27 @@ const BarberTabs: React.FC = () => {
         </TabsList>
 
         <TabsContent value="orders" className="mt-4 md:mt-6 animate-fade-in">
-          <BarberServiceOrders />
+          <Suspense fallback={<LoadingFallback />}>
+            <BarberServiceOrders />
+          </Suspense>
         </TabsContent>
 
         <TabsContent value="bookings" className="mt-4 md:mt-6 animate-fade-in">
-          <BarberBookingManagement />
+          <Suspense fallback={<LoadingFallback />}>
+            <BarberBookingManagement />
+          </Suspense>
         </TabsContent>
 
         <TabsContent value="metrics" className="mt-4 md:mt-6 animate-fade-in">
-          <BarberMetrics />
+          <Suspense fallback={<LoadingFallback />}>
+            <BarberMetrics />
+          </Suspense>
         </TabsContent>
 
         <TabsContent value="profile" className="mt-4 md:mt-6 animate-fade-in">
-          <BarberProfileSettings />
+          <Suspense fallback={<LoadingFallback />}>
+            <BarberProfileSettings />
+          </Suspense>
         </TabsContent>
       </Tabs>
     </div>

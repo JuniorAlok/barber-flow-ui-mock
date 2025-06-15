@@ -1,17 +1,25 @@
 
-import React, { useState } from 'react';
+import React, { useState, Suspense, lazy } from 'react';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { Calendar, Users, Scissors, DollarSign, BarChart3, UserCheck, Settings } from 'lucide-react';
 import { useIsMobile } from '@/hooks/use-mobile';
-import DashboardMetrics from '@/components/DashboardMetrics';
-import FinanceModule from '@/components/FinanceModule';
-import ClientManagement from '@/components/ClientManagement';
-import BookingManagement from '@/components/admin/BookingManagement';
-import ServiceManagement from '@/components/admin/ServiceManagement';
-import BarberManagement from '@/components/admin/BarberManagement';
-import ConfigurationManagement from '@/components/admin/ConfigurationManagement';
 import BottomNavigation from '@/components/ui/bottom-navigation';
 import { PageTransition } from '@/components/ui/motion-components';
+import { Loading } from '@/components/ui/loading';
+
+const DashboardMetrics = lazy(() => import('@/components/DashboardMetrics'));
+const FinanceModule = lazy(() => import('@/components/FinanceModule'));
+const ClientManagement = lazy(() => import('@/components/ClientManagement'));
+const BookingManagement = lazy(() => import('@/components/admin/BookingManagement'));
+const ServiceManagement = lazy(() => import('@/components/admin/ServiceManagement'));
+const BarberManagement = lazy(() => import('@/components/admin/BarberManagement'));
+const ConfigurationManagement = lazy(() => import('@/components/admin/ConfigurationManagement'));
+
+const LoadingFallback = () => (
+    <div className="flex justify-center items-center h-64">
+      <Loading text="Carregando..." />
+    </div>
+);
 
 const AdminTabs: React.FC = () => {
   const [activeTab, setActiveTab] = useState('dashboard');
@@ -60,43 +68,57 @@ const AdminTabs: React.FC = () => {
         <div className={isMobile ? "pb-20" : ""}>
           <TabsContent value="dashboard">
             <PageTransition>
-              <DashboardMetrics />
+              <Suspense fallback={<LoadingFallback />}>
+                <DashboardMetrics />
+              </Suspense>
             </PageTransition>
           </TabsContent>
 
           <TabsContent value="bookings">
             <PageTransition>
-              <BookingManagement />
+              <Suspense fallback={<LoadingFallback />}>
+                <BookingManagement />
+              </Suspense>
             </PageTransition>
           </TabsContent>
 
           <TabsContent value="finances">
             <PageTransition>
-              <FinanceModule />
+              <Suspense fallback={<LoadingFallback />}>
+                <FinanceModule />
+              </Suspense>
             </PageTransition>
           </TabsContent>
 
           <TabsContent value="clients">
             <PageTransition>
-              <ClientManagement />
+              <Suspense fallback={<LoadingFallback />}>
+                <ClientManagement />
+              </Suspense>
             </PageTransition>
           </TabsContent>
 
           <TabsContent value="services">
             <PageTransition>
-              <ServiceManagement />
+              <Suspense fallback={<LoadingFallback />}>
+                <ServiceManagement />
+              </Suspense>
             </PageTransition>
           </TabsContent>
 
           <TabsContent value="barbers">
             <PageTransition>
-              <BarberManagement />
+              <Suspense fallback={<LoadingFallback />}>
+                <BarberManagement />
+              </Suspense>
             </PageTransition>
           </TabsContent>
 
           <TabsContent value="configurations">
             <PageTransition>
-              <ConfigurationManagement />
+              <Suspense fallback={<LoadingFallback />}>
+                <ConfigurationManagement />
+              </Suspense>
             </PageTransition>
           </TabsContent>
         </div>

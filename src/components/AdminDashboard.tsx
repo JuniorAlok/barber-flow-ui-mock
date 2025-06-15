@@ -1,15 +1,17 @@
 
-import React, { useState } from 'react';
+import React, { useState, Suspense, lazy } from 'react';
 import { SidebarProvider, SidebarTrigger } from '@/components/ui/sidebar';
 import { AdminSidebar } from '@/components/admin/AdminSidebar';
-import DashboardMetrics from '@/components/DashboardMetrics';
-import FinanceModule from '@/components/FinanceModule';
-import ClientManagement from '@/components/ClientManagement';
-import BookingManagement from '@/components/admin/BookingManagement';
-import ServiceManagement from '@/components/admin/ServiceManagement';
-import BarberManagement from '@/components/admin/BarberManagement';
-import ConfigurationManagement from '@/components/admin/ConfigurationManagement';
 import { SectionTitle, Caption } from '@/components/ui/typography';
+import { Loading } from '@/components/ui/loading';
+
+const DashboardMetrics = lazy(() => import('@/components/DashboardMetrics'));
+const FinanceModule = lazy(() => import('@/components/FinanceModule'));
+const ClientManagement = lazy(() => import('@/components/ClientManagement'));
+const BookingManagement = lazy(() => import('@/components/admin/BookingManagement'));
+const ServiceManagement = lazy(() => import('@/components/admin/ServiceManagement'));
+const BarberManagement = lazy(() => import('@/components/admin/BarberManagement'));
+const ConfigurationManagement = lazy(() => import('@/components/admin/ConfigurationManagement'));
 
 const TABS = [
   {
@@ -77,9 +79,13 @@ const AdminDashboard: React.FC = () => {
               </div>
             </header>
             <div className="page-padding">
-              <div>
+              <Suspense fallback={
+                <div className="flex justify-center items-center py-16">
+                  <Loading text="Carregando módulo..." />
+                </div>
+              }>
                 {activeTabData.component}
-              </div>
+              </Suspense>
             </div>
           </main>
         </div>
