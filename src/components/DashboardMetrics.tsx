@@ -1,4 +1,3 @@
-
 import React, { useMemo } from 'react';
 import { Card, CardContent, CardHeader } from '@/components/ui/card';
 import { DollarSign, TrendingUp, Users, Calendar, Target, Percent } from 'lucide-react';
@@ -26,7 +25,7 @@ const DashboardMetrics: React.FC = () => {
   const dashboardMetrics = useMemo(() => {
       const revenue = filteredBookings.reduce((sum, b) => sum + b.totalAmount, 0);
       const totalBookings = filteredBookings.length;
-      const uniqueClientIds = new Set(filteredBookings.map(b => b.clientId));
+      const uniqueClientIds = new Set(filteredBookings.map(b => b.userId));
       const totalClients = uniqueClientIds.size;
       const averageTicket = totalBookings > 0 ? revenue / totalBookings : 0;
       
