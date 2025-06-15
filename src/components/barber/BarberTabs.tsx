@@ -1,5 +1,5 @@
 
-import React, { Suspense, lazy } from 'react';
+import React, { Suspense, lazy, useState } from 'react';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { Calendar, ClipboardList, BarChart3, UserCog } from 'lucide-react';
 import { Loading } from '@/components/ui/loading';
@@ -16,9 +16,11 @@ const LoadingFallback = () => (
 );
 
 const BarberTabs: React.FC = () => {
+  const [activeTab, setActiveTab] = useState('orders');
+
   return (
     <div className="container-responsive">
-      <Tabs defaultValue="orders" className="space-y-4 md:space-y-6">
+      <Tabs value={activeTab} onValueChange={setActiveTab} className="space-y-4 md:space-y-6">
         <TabsList className="grid w-full grid-cols-4 management-card h-12 md:h-auto p-1 md:p-1">
           <TabsTrigger 
             value="orders" 
@@ -55,27 +57,35 @@ const BarberTabs: React.FC = () => {
         </TabsList>
 
         <TabsContent value="orders" className="mt-4 md:mt-6 animate-fade-in">
-          <Suspense fallback={<LoadingFallback />}>
-            <BarberServiceOrders />
-          </Suspense>
+          {activeTab === 'orders' && (
+            <Suspense fallback={<LoadingFallback />}>
+              <BarberServiceOrders />
+            </Suspense>
+          )}
         </TabsContent>
 
         <TabsContent value="bookings" className="mt-4 md:mt-6 animate-fade-in">
-          <Suspense fallback={<LoadingFallback />}>
-            <BarberBookingManagement />
-          </Suspense>
+          {activeTab === 'bookings' && (
+            <Suspense fallback={<LoadingFallback />}>
+              <BarberBookingManagement />
+            </Suspense>
+          )}
         </TabsContent>
 
         <TabsContent value="metrics" className="mt-4 md:mt-6 animate-fade-in">
-          <Suspense fallback={<LoadingFallback />}>
-            <BarberMetrics />
-          </Suspense>
+          {activeTab === 'metrics' && (
+            <Suspense fallback={<LoadingFallback />}>
+              <BarberMetrics />
+            </Suspense>
+          )}
         </TabsContent>
 
         <TabsContent value="profile" className="mt-4 md:mt-6 animate-fade-in">
-          <Suspense fallback={<LoadingFallback />}>
-            <BarberProfileSettings />
-          </Suspense>
+          {activeTab === 'profile' && (
+            <Suspense fallback={<LoadingFallback />}>
+              <BarberProfileSettings />
+            </Suspense>
+          )}
         </TabsContent>
       </Tabs>
     </div>

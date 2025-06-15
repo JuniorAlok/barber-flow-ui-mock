@@ -18,43 +18,43 @@ const TABS = [
     id: 'dashboard',
     title: 'Dashboard Administrativo',
     description: 'Visão geral das métricas e atividades da barbearia',
-    component: <DashboardMetrics />,
+    Component: DashboardMetrics,
   },
   {
     id: 'bookings',
     title: 'Gerenciar Agendamentos',
     description: 'Visualize e gerencie todos os agendamentos',
-    component: <BookingManagement />,
+    Component: BookingManagement,
   },
   {
     id: 'finances',
     title: 'Controle Financeiro',
     description: 'Controle de receitas, despesas e relatórios financeiros',
-    component: <FinanceModule />,
+    Component: FinanceModule,
   },
   {
     id: 'clients',
     title: 'Gerenciar Clientes',
     description: 'Cadastro e gerenciamento de clientes',
-    component: <ClientManagement />,
+    Component: ClientManagement,
   },
   {
     id: 'services',
     title: 'Gerenciar Serviços',
     description: 'Configuração de serviços e preços',
-    component: <ServiceManagement />,
+    Component: ServiceManagement,
   },
   {
     id: 'barbers',
     title: 'Gerenciar Barbeiros',
     description: 'Gerenciamento da equipe de barbeiros',
-    component: <BarberManagement />,
+    Component: BarberManagement,
   },
   {
     id: 'configurations',
     title: 'Configurações',
     description: 'Configurações gerais do sistema',
-    component: <ConfigurationManagement />,
+    Component: ConfigurationManagement,
   },
 ];
 
@@ -62,6 +62,7 @@ const AdminDashboard: React.FC = () => {
   const [activeTab, setActiveTab] = useState('dashboard');
 
   const activeTabData = TABS.find((tab) => tab.id === activeTab) || TABS[0];
+  const ActiveComponent = activeTabData.Component;
 
   return (
     <div className="min-h-screen bg-background">
@@ -84,7 +85,7 @@ const AdminDashboard: React.FC = () => {
                   <Loading text="Carregando módulo..." />
                 </div>
               }>
-                {activeTabData.component}
+                <ActiveComponent />
               </Suspense>
             </div>
           </main>

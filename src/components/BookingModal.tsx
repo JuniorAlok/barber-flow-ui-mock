@@ -1,5 +1,5 @@
 
-import React, { useState } from 'react';
+import React, { useState, memo } from 'react';
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from '@/components/ui/dialog';
 import { Button } from '@/components/ui/button';
 import { ChevronLeft, ChevronRight } from 'lucide-react';
@@ -217,4 +217,4 @@ const BookingModal: React.FC<BookingModalProps> = ({ isOpen, onClose }) => {
   );
 };
 
-export default BookingModal;
+export default memo(BookingModal);

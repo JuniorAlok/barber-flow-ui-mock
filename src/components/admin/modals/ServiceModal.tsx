@@ -1,5 +1,5 @@
 
-import React from 'react';
+import React, { memo } from 'react';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from '@/components/ui/dialog';
@@ -164,4 +164,4 @@ const ServiceModal: React.FC<ServiceModalProps> = ({ isOpen, onClose, service })
   );
 };
 
-export default ServiceModal;
+export default memo(ServiceModal);

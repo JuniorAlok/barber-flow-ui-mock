@@ -1,5 +1,5 @@
 
-import React, { createContext, useContext, useState, ReactNode, useEffect } from 'react';
+import React, { createContext, useContext, useState, ReactNode, useEffect, useMemo } from 'react';
 import { 
   users, services, barbers, bookings, clients, transactions, dashboardMetrics, homeContent,
   User, Service, Barber, Booking, Client, Transaction, DashboardMetrics, HomeContent, ServiceOrder 
@@ -40,6 +40,37 @@ export const MockDataProvider: React.FC<{ children: ReactNode }> = ({ children }
   const [mockDashboardMetrics, setDashboardMetrics] = useState<DashboardMetrics>(dashboardMetrics);
   const [mockHomeContent, setHomeContent] = useState<HomeContent>(homeContent);
 
+  const value = useMemo(() => ({
+    users: mockUsers,
+    services: mockServices,
+    barbers: mockBarbers,
+    bookings: mockBookings,
+    clients: mockClients,
+    transactions: mockTransactions,
+    serviceOrders: mockServiceOrders,
+    dashboardMetrics: mockDashboardMetrics,
+    homeContent: mockHomeContent,
+    setUsers,
+    setServices,
+    setBarbers,
+    setBookings,
+    setClients,
+    setTransactions,
+    setServiceOrders,
+    setDashboardMetrics,
+    setHomeContent,
+  }), [
+    mockUsers,
+    mockServices,
+    mockBarbers,
+    mockBookings,
+    mockClients,
+    mockTransactions,
+    mockServiceOrders,
+    mockDashboardMetrics,
+    mockHomeContent,
+  ]);
+
   // Listen for barber registration events from AuthContext
   useEffect(() => {
     const handleBarberRegistration = (event: CustomEvent) => {
@@ -55,26 +86,7 @@ export const MockDataProvider: React.FC<{ children: ReactNode }> = ({ children }
   }, []);
 
   return (
-    <MockDataContext.Provider value={{
-      users: mockUsers,
-      services: mockServices,
-      barbers: mockBarbers,
-      bookings: mockBookings,
-      clients: mockClients,
-      transactions: mockTransactions,
-      serviceOrders: mockServiceOrders,
-      dashboardMetrics: mockDashboardMetrics,
-      homeContent: mockHomeContent,
-      setUsers,
-      setServices,
-      setBarbers,
-      setBookings,
-      setClients,
-      setTransactions,
-      setServiceOrders,
-      setDashboardMetrics,
-      setHomeContent,
-    }}>
+    <MockDataContext.Provider value={value}>
       {children}
     </MockDataContext.Provider>
   );

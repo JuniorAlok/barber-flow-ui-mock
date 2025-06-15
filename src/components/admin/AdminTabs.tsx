@@ -67,59 +67,73 @@ const AdminTabs: React.FC = () => {
 
         <div className={isMobile ? "pb-20" : ""}>
           <TabsContent value="dashboard">
-            <PageTransition>
-              <Suspense fallback={<LoadingFallback />}>
-                <DashboardMetrics />
-              </Suspense>
-            </PageTransition>
+            {activeTab === 'dashboard' && (
+              <PageTransition>
+                <Suspense fallback={<LoadingFallback />}>
+                  <DashboardMetrics />
+                </Suspense>
+              </PageTransition>
+            )}
           </TabsContent>
 
           <TabsContent value="bookings">
-            <PageTransition>
-              <Suspense fallback={<LoadingFallback />}>
-                <BookingManagement />
-              </Suspense>
-            </PageTransition>
+            {activeTab === 'bookings' && (
+              <PageTransition>
+                <Suspense fallback={<LoadingFallback />}>
+                  <BookingManagement />
+                </Suspense>
+              </PageTransition>
+            )}
           </TabsContent>
 
           <TabsContent value="finances">
-            <PageTransition>
-              <Suspense fallback={<LoadingFallback />}>
-                <FinanceModule />
-              </Suspense>
-            </PageTransition>
+            {activeTab === 'finances' && (
+              <PageTransition>
+                <Suspense fallback={<LoadingFallback />}>
+                  <FinanceModule />
+                </Suspense>
+              </PageTransition>
+            )}
           </TabsContent>
 
           <TabsContent value="clients">
-            <PageTransition>
-              <Suspense fallback={<LoadingFallback />}>
-                <ClientManagement />
-              </Suspense>
-            </PageTransition>
+            {activeTab === 'clients' && (
+              <PageTransition>
+                <Suspense fallback={<LoadingFallback />}>
+                  <ClientManagement />
+                </Suspense>
+              </PageTransition>
+            )}
           </TabsContent>
 
           <TabsContent value="services">
-            <PageTransition>
-              <Suspense fallback={<LoadingFallback />}>
-                <ServiceManagement />
-              </Suspense>
-            </PageTransition>
+            {activeTab === 'services' && (
+              <PageTransition>
+                <Suspense fallback={<LoadingFallback />}>
+                  <ServiceManagement />
+                </Suspense>
+              </PageTransition>
+            )}
           </TabsContent>
 
           <TabsContent value="barbers">
-            <PageTransition>
-              <Suspense fallback={<LoadingFallback />}>
-                <BarberManagement />
-              </Suspense>
-            </PageTransition>
+            {activeTab === 'barbers' && (
+              <PageTransition>
+                <Suspense fallback={<LoadingFallback />}>
+                  <BarberManagement />
+                </Suspense>
+              </PageTransition>
+            )}
           </TabsContent>
 
           <TabsContent value="configurations">
-            <PageTransition>
-              <Suspense fallback={<LoadingFallback />}>
-                <ConfigurationManagement />
-              </Suspense>
-            </PageTransition>
+            {activeTab === 'configurations' && (
+              <PageTransition>
+                <Suspense fallback={<LoadingFallback />}>
+                  <ConfigurationManagement />
+                </Suspense>
+              </PageTransition>
+            )}
           </TabsContent>
         </div>
       </Tabs>

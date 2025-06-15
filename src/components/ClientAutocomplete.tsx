@@ -1,5 +1,5 @@
 
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, memo } from 'react';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Card } from '@/components/ui/card';
@@ -70,4 +70,4 @@ const ClientAutocomplete: React.FC<ClientAutocompleteProps> = ({
   );
 };
 
-export default ClientAutocomplete;
+export default memo(ClientAutocomplete);

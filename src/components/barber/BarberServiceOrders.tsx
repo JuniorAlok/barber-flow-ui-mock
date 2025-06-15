@@ -1,5 +1,5 @@
 
-import React, { useEffect, useCallback } from 'react';
+import React, { useEffect, useCallback, memo } from 'react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Clipboard } from 'lucide-react';
 import { useServiceTimers } from '@/hooks/useServiceTimers';
@@ -89,4 +89,4 @@ const BarberServiceOrders: React.FC = () => {
   );
 };
 
-export default BarberServiceOrders;
+export default memo(BarberServiceOrders);

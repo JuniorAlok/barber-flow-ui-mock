@@ -1,4 +1,5 @@
-import React, { useState } from 'react';
+
+import React, { useState, memo } from 'react';
 import { Card, CardContent, CardHeader } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Calendar } from '@/components/ui/calendar';
@@ -169,4 +170,4 @@ const BookingCalendar: React.FC<BookingCalendarProps> = ({ onNewBooking, onEditB
   );
 };
 
-export default BookingCalendar;
+export default memo(BookingCalendar);

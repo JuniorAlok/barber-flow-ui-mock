@@ -1,6 +1,4 @@
-
 import React from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
 import { cn } from '@/lib/utils';
 
 interface FadeInCardProps {
@@ -14,14 +12,12 @@ export const FadeInCard: React.FC<FadeInCardProps> = ({
   className,
   delay = 0 
 }) => (
-  <motion.div
-    initial={{ opacity: 0, y: 20 }}
-    animate={{ opacity: 1, y: 0 }}
-    transition={{ duration: 0.4, ease: "easeOut", delay }}
-    className={cn("rounded-2xl shadow-lg bg-neutral-900 p-6", className)}
+  <div
+    className={cn("rounded-2xl shadow-lg bg-neutral-900 p-6 animate-fade-in", className)}
+    style={{ animationDelay: `${delay}ms` }}
   >
     {children}
-  </motion.div>
+  </div>
 );
 
 interface PageTransitionProps {
@@ -33,15 +29,9 @@ export const PageTransition: React.FC<PageTransitionProps> = ({
   children, 
   className 
 }) => (
-  <motion.div
-    initial={{ opacity: 0 }}
-    animate={{ opacity: 1 }}
-    exit={{ opacity: 0 }}
-    transition={{ duration: 0.25 }}
-    className={className}
-  >
+  <div className={cn("animate-fade-in", className)}>
     {children}
-  </motion.div>
+  </div>
 );
 
 interface SlideInFromRightProps {
@@ -55,14 +45,12 @@ export const SlideInFromRight: React.FC<SlideInFromRightProps> = ({
   className,
   delay = 0 
 }) => (
-  <motion.div
-    initial={{ opacity: 0, x: 50 }}
-    animate={{ opacity: 1, x: 0 }}
-    transition={{ duration: 0.3, ease: "easeOut", delay }}
-    className={className}
+  <div
+    className={cn("animate-slide-right", className)}
+    style={{ animationDelay: `${delay}ms` }}
   >
     {children}
-  </motion.div>
+  </div>
 );
 
 interface ScaleOnHoverProps {
@@ -76,13 +64,12 @@ export const ScaleOnHover: React.FC<ScaleOnHoverProps> = ({
   className,
   scale = 1.02 
 }) => (
-  <motion.div
-    whileHover={{ scale }}
-    transition={{ duration: 0.2 }}
-    className={className}
+  <div
+    className={cn("transition-transform duration-200 hover:scale-[var(--scale)]", className)}
+    style={{ '--scale': scale } as React.CSSProperties}
   >
     {children}
-  </motion.div>
+  </div>
 );
 
 interface StaggeredListProps {
@@ -96,32 +83,20 @@ export const StaggeredList: React.FC<StaggeredListProps> = ({
   className,
   staggerDelay = 0.1 
 }) => (
-  <motion.div
-    initial="hidden"
-    animate="visible"
-    variants={{
-      hidden: { opacity: 0 },
-      visible: {
-        opacity: 1,
-        transition: {
-          staggerChildren: staggerDelay
-        }
-      }
-    }}
-    className={className}
-  >
+  <div className={className}>
     {children.map((child, index) => (
-      <motion.div
+      <div
         key={index}
-        variants={{
-          hidden: { opacity: 0, y: 20 },
-          visible: { opacity: 1, y: 0 }
-        }}
+        className="animate-fade-in-up"
+        style={{ animationDelay: `${index * staggerDelay * 1000}ms` }}
       >
         {child}
-      </motion.div>
+      </div>
     ))}
-  </motion.div>
+  </div>
 );
 
-export const AnimatedPresence = AnimatePresence;
+// Simple AnimatedPresence replacement
+export const AnimatedPresence: React.FC<{children: React.ReactNode}> = ({ children }) => {
+  return <>{children}</>;
+};

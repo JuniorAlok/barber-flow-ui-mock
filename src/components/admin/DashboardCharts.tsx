@@ -1,5 +1,5 @@
 
-import React from 'react';
+import React, { memo } from 'react';
 import { Card, CardContent, CardHeader } from '@/components/ui/card';
 import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, AreaChart, Area, PieChart, Pie, Cell } from 'recharts';
 import { useMockData } from '@/contexts/MockDataContext';
@@ -168,4 +168,4 @@ const DashboardCharts: React.FC<DashboardChartsProps> = ({ bookings }) => {
   );
 };
 
-export default DashboardCharts;
+export default memo(DashboardCharts);

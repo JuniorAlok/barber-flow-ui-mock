@@ -1,3 +1,4 @@
+
 import React, { useMemo } from 'react';
 import { Card, CardContent, CardHeader } from '@/components/ui/card';
 import { DollarSign, TrendingUp, Users, Calendar, Target, Percent } from 'lucide-react';
@@ -59,7 +60,7 @@ const DashboardMetrics: React.FC = () => {
   }, [filteredBookings, services, barbers]);
 
 
-  const metricStats: StatisticCardProps[] = [
+  const metricStats: StatisticCardProps[] = useMemo(() => [
     {
       title: 'Receita no Período',
       value: formatCurrency(dashboardMetrics.monthlyRevenue),
@@ -122,9 +123,9 @@ const DashboardMetrics: React.FC = () => {
       },
       variant: 'warning',
     },
-  ];
+  ], [dashboardMetrics]);
 
-  const highlights = [
+  const highlights = useMemo(() => [
     {
       label: 'Serviço Destaque',
       value: dashboardMetrics.topService,
@@ -137,7 +138,7 @@ const DashboardMetrics: React.FC = () => {
       icon: '⭐',
       description: 'Maior faturamento no período',
     },
-  ];
+  ], [dashboardMetrics]);
 
   return (
     <div className="space-y-8 animate-fade-in">
