@@ -13,13 +13,15 @@ import { HomeContentForm } from '@/utils/validation';
 interface HomepageFormProps {
   form: UseFormReturn<HomeContentForm>;
   onSubmit: (data: HomeContentForm) => void;
+  activeTab: string;
+  onTabChange: (tab: string) => void;
 }
 
-const HomepageForm: React.FC<HomepageFormProps> = ({ form, onSubmit }) => {
+const HomepageForm: React.FC<HomepageFormProps> = ({ form, onSubmit, activeTab, onTabChange }) => {
   return (
     <Form {...form}>
       <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
-        <Tabs defaultValue="hero" className="w-full">
+        <Tabs value={activeTab} onValueChange={onTabChange} className="w-full">
           <TabsList className="grid w-full grid-cols-5">
             <TabsTrigger value="hero">Hero</TabsTrigger>
             <TabsTrigger value="about">Sobre</TabsTrigger>

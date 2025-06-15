@@ -8,9 +8,11 @@ import { useMockData } from '@/contexts/MockDataContext';
 
 interface ServicesSectionProps {
   services: Service[];
+  title?: string;
+  subtitle?: string;
 }
 
-const ServicesSection: React.FC<ServicesSectionProps> = ({ services }) => {
+const ServicesSection: React.FC<ServicesSectionProps> = ({ services, title, subtitle }) => {
   const { homeContent } = useMockData();
   
   return (
@@ -23,10 +25,10 @@ const ServicesSection: React.FC<ServicesSectionProps> = ({ services }) => {
             <span className="text-xs font-medium text-primary uppercase tracking-wide">Nossos Serviços</span>
           </div>
           <h3 className="text-xl md:text-4xl lg:text-5xl font-bold text-luxury mb-2 md:mb-6">
-            {homeContent.servicesTitle || 'Experiências Premium'}
+            {title || homeContent.servicesTitle || 'Experiências Premium'}
           </h3>
           <p className="text-xs md:text-xl text-gray-300 max-w-3xl mx-auto leading-relaxed px-4">
-            {homeContent.servicesSubtitle || 'Cada serviço é uma obra de arte, executada com precisão e paixão pelos nossos mestres barbeiros'}
+            {subtitle || homeContent.servicesSubtitle || 'Cada serviço é uma obra de arte, executada com precisão e paixão pelos nossos mestres barbeiros'}
           </p>
         </div>
 

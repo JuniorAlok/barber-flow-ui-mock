@@ -7,9 +7,11 @@ import { useMockData } from '@/contexts/MockDataContext';
 
 interface TeamSectionProps {
   barbers: Barber[];
+  title?: string;
+  subtitle?: string;
 }
 
-const TeamSection: React.FC<TeamSectionProps> = ({ barbers }) => {
+const TeamSection: React.FC<TeamSectionProps> = ({ barbers, title, subtitle }) => {
   const { homeContent } = useMockData();
   
   return (
@@ -22,10 +24,10 @@ const TeamSection: React.FC<TeamSectionProps> = ({ barbers }) => {
             <span className="text-xs font-medium text-primary uppercase tracking-wide">Nossa Equipe</span>
           </div>
           <h3 className="text-xl md:text-4xl lg:text-5xl font-bold text-luxury mb-2 md:mb-6">
-            {homeContent.teamTitle || 'Mestres da Arte'}
+            {title || homeContent.teamTitle || 'Mestres da Arte'}
           </h3>
           <p className="text-xs md:text-xl text-gray-300 max-w-3xl mx-auto leading-relaxed px-4">
-            {homeContent.teamSubtitle || 'Conheça os profissionais que elevaram a barbearia a um novo patamar de excelência'}
+            {subtitle || homeContent.teamSubtitle || 'Conheça os profissionais que elevaram a barbearia a um novo patamar de excelência'}
           </p>
         </div>
 
