@@ -164,7 +164,7 @@
 
   /* Cards modernos */
   .luxury-card {
-    @apply bg-gradient-to-br from-card/80 to-card/40 backdrop-blur-xl border border-border/50 rounded-2xl shadow-2xl hover:shadow-3xl transition-all duration-300;
+    @apply bg-gradient-to-br from-card/80 to-card/40 backdrop-blur-xl border border-border/50 rounded-2xl shadow-2xl hover:shadow-2xl transition-all duration-300;
   }
 
   .metric-card {
