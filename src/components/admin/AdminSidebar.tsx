@@ -1,3 +1,4 @@
+
 import React from 'react';
 import {
   Sidebar,
@@ -13,6 +14,7 @@ import {
 } from '@/components/ui/sidebar';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { Button } from '@/components/ui/button';
+import { Badge } from '@/components/ui/badge';
 import { 
   BarChart3, 
   Calendar, 
@@ -25,42 +27,50 @@ import {
   Shield
 } from 'lucide-react';
 import { useAuth } from '@/contexts/AuthContext';
+import { cn } from '@/lib/utils';
 
 const menuItems = [
   {
     title: "Dashboard",
     url: "dashboard",
     icon: BarChart3,
+    badge: null,
   },
   {
     title: "Agendamentos",
     url: "bookings",
     icon: Calendar,
+    badge: "12",
   },
   {
     title: "Finanças",
     url: "finances",
     icon: DollarSign,
+    badge: null,
   },
   {
     title: "Clientes",
     url: "clients",
     icon: UserCheck,
+    badge: null,
   },
   {
     title: "Serviços",
     url: "services",
     icon: Scissors,
+    badge: null,
   },
   {
     title: "Barbeiros",
     url: "barbers",
     icon: Users,
+    badge: null,
   },
   {
     title: "Configurações",
     url: "configurations",
     icon: Settings,
+    badge: null,
   },
 ];
 
@@ -73,33 +83,52 @@ export function AdminSidebar({ activeTab, onTabChange }: AdminSidebarProps) {
   const { user, logout } = useAuth();
 
   return (
-    <Sidebar>
-      <SidebarHeader className="p-6">
+    <Sidebar className="border-r border-border/50">
+      <SidebarHeader className="p-6 border-b border-border/30">
         <div className="flex items-center gap-3">
-          <div className="w-10 h-10 border rounded-lg flex items-center justify-center">
-            <Shield className="w-5 h-5" />
+          <div className="w-12 h-12 bg-gradient-to-br from-yellow-500 to-orange-500 rounded-xl flex items-center justify-center shadow-lg">
+            <Shield className="w-6 h-6 text-black" />
           </div>
           <div>
-            <h2 className="font-bold">ELITE STUDIO</h2>
-            <p className="text-xs text-muted-foreground">Admin Panel</p>
+            <h2 className="font-bold text-lg text-foreground">ELITE STUDIO</h2>
+            <p className="text-xs text-muted-foreground font-medium">Admin Panel</p>
           </div>
         </div>
       </SidebarHeader>
 
-      <SidebarContent>
+      <SidebarContent className="px-4 py-6">
         <SidebarGroup>
-          <SidebarGroupLabel>Navegação</SidebarGroupLabel>
+          <SidebarGroupLabel className="text-xs font-semibold text-muted-foreground uppercase tracking-wider mb-3">
+            Navegação Principal
+          </SidebarGroupLabel>
           <SidebarGroupContent>
-            <SidebarMenu>
+            <SidebarMenu className="space-y-1">
               {menuItems.map((item) => (
                 <SidebarMenuItem key={item.title}>
                   <SidebarMenuButton 
                     onClick={() => onTabChange(item.url)}
                     isActive={activeTab === item.url}
-                    className="w-full"
+                    className={cn(
+                      "w-full rounded-xl transition-all duration-200 group",
+                      "hover:bg-accent hover:text-accent-foreground",
+                      "focus:bg-accent focus:text-accent-foreground",
+                      activeTab === item.url && "bg-primary text-primary-foreground shadow-sm"
+                    )}
                   >
-                    <item.icon className="w-4 h-4" />
-                    <span>{item.title}</span>
+                    <div className="flex items-center justify-between w-full">
+                      <div className="flex items-center gap-3">
+                        <item.icon className="w-5 h-5" />
+                        <span className="font-medium">{item.title}</span>
+                      </div>
+                      {item.badge && (
+                        <Badge 
+                          variant="secondary" 
+                          className="bg-red-500 text-white text-xs px-1.5 py-0.5 min-w-[20px] h-5"
+                        >
+                          {item.badge}
+                        </Badge>
+                      )}
+                    </div>
                   </SidebarMenuButton>
                 </SidebarMenuItem>
               ))}
@@ -108,17 +137,17 @@ export function AdminSidebar({ activeTab, onTabChange }: AdminSidebarProps) {
         </SidebarGroup>
       </SidebarContent>
 
-      <SidebarFooter className="p-4">
+      <SidebarFooter className="p-4 border-t border-border/30">
         <div className="space-y-3">
-          <div className="flex items-center gap-3 border p-3 rounded-lg">
-            <Avatar className="w-8 h-8">
+          <div className="flex items-center gap-3 glass-effect p-3 rounded-xl">
+            <Avatar className="w-10 h-10">
               <AvatarImage src={user?.avatarUrl} />
-              <AvatarFallback>
+              <AvatarFallback className="bg-primary text-primary-foreground font-semibold">
                 {user?.name?.charAt(0) || 'A'}
               </AvatarFallback>
             </Avatar>
             <div className="flex-1 min-w-0">
-              <p className="text-sm font-medium truncate">{user?.name || 'Admin'}</p>
+              <p className="text-sm font-medium text-foreground truncate">{user?.name || 'Admin'}</p>
               <p className="text-xs text-muted-foreground truncate">{user?.email}</p>
             </div>
           </div>
@@ -126,9 +155,9 @@ export function AdminSidebar({ activeTab, onTabChange }: AdminSidebarProps) {
           <Button 
             variant="outline" 
             onClick={logout}
-            className="w-full"
+            className="w-full rounded-xl border-border/50 hover:bg-destructive hover:text-destructive-foreground hover:border-destructive transition-all duration-200"
           >
-            <LogOut className="w-4 h-4 mr-2" />
+            <LogOut className="w-4 h-4 mr-2"  />
             Sair
           </Button>
         </div>

@@ -1,7 +1,7 @@
 
 /**
- * Dashboard Layout Component (Refatorado)
- * Separa Sidebar e Header em arquivos próprios, usando AdminSidebar e AdminHeader
+ * Dashboard Layout Component (Modernizado)
+ * Layout principal com design system atualizado
  */
 import React, { useState } from 'react';
 import { cn } from '@/lib/utils';
@@ -26,21 +26,23 @@ export const DashboardLayout: React.FC<DashboardLayoutProps> = ({
         <AdminSidebar activeTab={activeTab} onTabChange={setActiveTab} />
         
         <div className="flex flex-1 flex-col">
-          {/* Header */}
-          <header className="border-b sticky top-0 z-20 bg-background/90 backdrop-blur-sm">
+          {/* Header moderno com glass effect */}
+          <header className="sticky top-0 z-20 glass-effect-strong border-b border-border/30">
             <div className="container-responsive flex h-16 items-center">
-                <SidebarTrigger className="md:hidden mr-4" />
-                <AdminHeader />
+              <SidebarTrigger className="md:hidden mr-4 rounded-lg" />
+              <AdminHeader />
             </div>
           </header>
 
-          {/* Main Content */}
+          {/* Main Content com melhor estrutura */}
           <main className={cn(
-            "container-responsive flex-1 py-6",
-            "grid grid-cols-12 gap-6",
+            "flex-1 container-responsive py-8",
+            "animate-fade-in",
             className
           )}>
-            {children}
+            <div className="space-y-8">
+              {children}
+            </div>
           </main>
         </div>
       </div>
