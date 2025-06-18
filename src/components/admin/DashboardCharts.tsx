@@ -57,7 +57,7 @@ const DashboardCharts: React.FC<DashboardChartsProps> = ({ bookings }) => {
         <div className="bg-background border rounded-lg p-4 shadow-lg">
           <Caption as="p" className="font-medium text-foreground mb-2">{label}</Caption>
           {payload.map((entry: any, index: number) => (
-            <Caption as="p" key={index} style={{ color: entry.color }}>
+            <Caption as="p" key={index} className="text-foreground">
               {entry.name === 'revenue' || entry.name === 'commission' 
                 ? `${entry.name === 'revenue' ? 'Receita' : 'Comissão'}: ${formatCurrency(entry.value)}`
                 : `${entry.name === 'bookings' ? 'Agendamentos' : entry.name}: ${entry.value}`
