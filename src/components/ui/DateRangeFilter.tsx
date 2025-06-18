@@ -1,86 +1,125 @@
 
 import React from 'react';
+import { Card, CardContent } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
-import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover';
 import { Calendar } from '@/components/ui/calendar';
-import { Calendar as CalendarIcon } from 'lucide-react';
-import { DateRange } from 'react-day-picker';
+import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover';
+import { CalendarDays, ChevronDown } from 'lucide-react';
 import { format } from 'date-fns';
 import { ptBR } from 'date-fns/locale';
 import { cn } from '@/lib/utils';
-import { Period } from '@/hooks/useDateFilter';
+import { DateRange } from 'react-day-picker';
+
+export type DatePeriod = 'today' | 'yesterday' | 'this_week' | 'last_week' | 'this_month' | 'last_month' | 'this_year' | 'custom';
 
 interface DateRangeFilterProps {
-  period: Period;
-  onPeriodChange: (period: Period) => void;
+  period: DatePeriod;
+  onPeriodChange: (period: DatePeriod) => void;
   dateRange: DateRange | undefined;
   onDateRangeChange: (range: DateRange | undefined) => void;
   className?: string;
 }
 
-const periodOptions: { label: string; value: Period }[] = [
-  { label: 'Hoje', value: 'today' },
-  { label: 'Esta Semana', value: 'this_week' },
-  { label: 'Este Mês', value: 'this_month' },
-  { label: 'Mês Passado', value: 'last_month' },
-];
+const periodLabels: Record<DatePeriod, string> = {
+  today: 'Hoje',
+  yesterday: 'Ontem', 
+  this_week: 'Esta Semana',
+  last_week: 'Semana Passada',
+  this_month: 'Este Mês',
+  last_month: 'Mês Passado',
+  this_year: 'Este Ano',
+  custom: 'Personalizado'
+};
 
 const DateRangeFilter: React.FC<DateRangeFilterProps> = ({
   period,
   onPeriodChange,
   dateRange,
   onDateRangeChange,
-  className,
+  className
 }) => {
+  const periodOptions: DatePeriod[] = [
+    'today',
+    'yesterday', 
+    'this_week',
+    'last_week',
+    'this_month',
+    'last_month',
+    'this_year',
+    'custom'
+  ];
+
+  const getDateRangeText = () => {
+    if (period !== 'custom') {
+      return periodLabels[period];
+    }
+    
+    if (dateRange?.from && dateRange?.to) {
+      return `${format(dateRange.from, 'dd/MM/yy', { locale: ptBR })} - ${format(dateRange.to, 'dd/MM/yy', { locale: ptBR })}`;
+    }
+    
+    if (dateRange?.from) {
+      return format(dateRange.from, 'dd/MM/yyyy', { locale: ptBR });
+    }
+    
+    return 'Selecionar período';
+  };
+
   return (
-    <div className={cn('flex flex-wrap items-center gap-2', className)}>
-      {periodOptions.map((option) => (
-        <Button
-          key={option.value}
-          variant={period === option.value ? 'default' : 'outline'}
-          size="sm"
-          onClick={() => onPeriodChange(option.value)}
-          className={cn('focus-ring', period === option.value && 'btn-luxury')}
-        >
-          {option.label}
-        </Button>
-      ))}
+    <div className={cn('flex flex-wrap items-center gap-3', className)}>
+      {/* Period Quick Buttons */}
+      <div className="flex flex-wrap gap-2">
+        {periodOptions.slice(0, -1).map((periodOption) => (
+          <Button
+            key={periodOption}
+            variant={period === periodOption ? 'default' : 'outline'}
+            size="sm"
+            onClick={() => onPeriodChange(periodOption)}
+            className={cn(
+              'rounded-xl transition-all duration-200',
+              period === periodOption && 'shadow-md'
+            )}
+          >
+            {periodLabels[periodOption]}
+          </Button>
+        ))}
+      </div>
+
+      {/* Custom Date Range Picker */}
       <Popover>
         <PopoverTrigger asChild>
           <Button
             variant={period === 'custom' ? 'default' : 'outline'}
             size="sm"
-            onClick={() => onPeriodChange('custom')}
             className={cn(
-              'w-[260px] justify-start text-left font-normal focus-ring',
-              !dateRange && 'text-muted-foreground',
-              period === 'custom' && 'btn-luxury'
+              'rounded-xl transition-all duration-200 min-w-[200px] justify-between',
+              period === 'custom' && 'shadow-md'
             )}
           >
-            <CalendarIcon className="mr-2 h-4 w-4" />
-            {dateRange?.from ? (
-              dateRange.to ? (
-                <>
-                  {format(dateRange.from, 'dd/MM/yy', { locale: ptBR })} -{' '}
-                  {format(dateRange.to, 'dd/MM/yy', { locale: ptBR })}
-                </>
-              ) : (
-                format(dateRange.from, 'dd/MM/yy', { locale: ptBR })
-              )
-            ) : (
-              <span>Personalizado</span>
-            )}
+            <div className="flex items-center gap-2">
+              <CalendarDays className="w-4 h-4" />
+              <span className="truncate">{getDateRangeText()}</span>
+            </div>
+            <ChevronDown className="w-4 h-4 opacity-50" />
           </Button>
         </PopoverTrigger>
-        <PopoverContent className="w-auto p-0" align="start">
+        <PopoverContent 
+          className="w-auto p-0 bg-popover border-border/50" 
+          align="start"
+        >
           <Calendar
             initialFocus
             mode="range"
             defaultMonth={dateRange?.from}
             selected={dateRange}
-            onSelect={onDateRangeChange}
+            onSelect={(range) => {
+              onDateRangeChange(range);
+              if (range?.from || range?.to) {
+                onPeriodChange('custom');
+              }
+            }}
             numberOfMonths={2}
-            locale={ptBR}
+            className="rounded-xl border-0"
           />
         </PopoverContent>
       </Popover>

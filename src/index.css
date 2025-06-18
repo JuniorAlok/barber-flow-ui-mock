@@ -35,6 +35,18 @@
 
     --radius: 0.5rem;
 
+    /* Luxury color palette */
+    --luxury-gold: 45 100% 50%;
+    --luxury-gold-dark: 45 100% 35%;
+    --luxury-silver: 0 0% 75%;
+    --luxury-bronze: 30 50% 60%;
+    
+    /* Status colors modernos */
+    --status-success: 142 76% 36%;
+    --status-warning: 48 96% 53%;
+    --status-error: 0 84% 60%;
+    --status-info: 217 91% 60%;
+
     /* Sidebar variables */
     --sidebar-background: 222.2 84% 4.9%;
     --sidebar-foreground: 210 40% 98%;
@@ -60,58 +72,223 @@
     font-feature-settings: "rlig" 1, "calt" 1;
   }
   
-  /* Scroll personalizado */
+  /* Scroll personalizado melhorado */
   ::-webkit-scrollbar {
-    width: 6px;
+    width: 8px;
+    height: 8px;
   }
   
   ::-webkit-scrollbar-track {
     background: hsl(var(--muted));
+    border-radius: 4px;
   }
   
   ::-webkit-scrollbar-thumb {
     background: hsl(var(--muted-foreground));
-    border-radius: 3px;
+    border-radius: 4px;
+    border: 2px solid hsl(var(--muted));
   }
   
   ::-webkit-scrollbar-thumb:hover {
     background: hsl(var(--primary));
   }
+  
+  ::-webkit-scrollbar-corner {
+    background: hsl(var(--muted));
+  }
 }
 
 @layer components {
-  /* Status badges modernos */
+  /* Status badges modernos aprimorados */
+  .status-badge-base {
+    @apply inline-flex items-center px-3 py-1.5 rounded-full text-xs font-semibold transition-all duration-200 border shadow-sm;
+  }
+  
   .status-pending {
-    @apply status-badge-base bg-yellow-100 text-yellow-800 border-yellow-200;
+    @apply status-badge-base bg-yellow-50 text-yellow-800 border-yellow-200 hover:bg-yellow-100 dark:bg-yellow-950/30 dark:text-yellow-400 dark:border-yellow-800;
   }
   
   .status-confirmed {
-    @apply status-badge-base bg-blue-100 text-blue-800 border-blue-200;
+    @apply status-badge-base bg-blue-50 text-blue-800 border-blue-200 hover:bg-blue-100 dark:bg-blue-950/30 dark:text-blue-400 dark:border-blue-800;
   }
   
   .status-done {
-    @apply status-badge-base bg-green-100 text-green-800 border-green-200;
+    @apply status-badge-base bg-green-50 text-green-800 border-green-200 hover:bg-green-100 dark:bg-green-950/30 dark:text-green-400 dark:border-green-800;
   }
   
   .status-cancelled {
-    @apply status-badge-base bg-red-100 text-red-800 border-red-200;
+    @apply status-badge-base bg-red-50 text-red-800 border-red-200 hover:bg-red-100 dark:bg-red-950/30 dark:text-red-400 dark:border-red-800;
+  }
+
+  .status-success {
+    @apply status-badge-base bg-green-50 text-green-800 border-green-200 hover:bg-green-100 dark:bg-green-950/30 dark:text-green-400 dark:border-green-800;
+  }
+
+  .status-warning {
+    @apply status-badge-base bg-yellow-50 text-yellow-800 border-yellow-200 hover:bg-yellow-100 dark:bg-yellow-950/30 dark:text-yellow-400 dark:border-yellow-800;
+  }
+
+  .status-error {
+    @apply status-badge-base bg-red-50 text-red-800 border-red-200 hover:bg-red-100 dark:bg-red-950/30 dark:text-red-400 dark:border-red-800;
+  }
+
+  .status-info {
+    @apply status-badge-base bg-blue-50 text-blue-800 border-blue-200 hover:bg-blue-100 dark:bg-blue-950/30 dark:text-blue-400 dark:border-blue-800;
   }
   
   /* Estados de hover aprimorados */
   .hover-lift {
-    @apply transition-all duration-200 hover:-translate-y-1 hover:shadow-lg;
+    @apply transition-all duration-300 hover:-translate-y-1 hover:shadow-xl;
   }
   
   .hover-scale {
-    @apply transition-transform duration-200 hover:scale-105;
+    @apply transition-transform duration-200 hover:scale-[1.02] active:scale-[0.98];
+  }
+
+  .hover-glow {
+    @apply hover:shadow-2xl hover:shadow-primary/20;
   }
   
-  /* Botões modernos */
+  /* Botões modernos luxury */
   .btn-primary {
-    @apply bg-primary text-primary-foreground hover:bg-primary/90 font-medium rounded-lg px-4 py-2 transition-all duration-200 focus-ring;
+    @apply bg-primary text-primary-foreground hover:bg-primary/90 font-semibold rounded-xl px-6 py-3 transition-all duration-200 focus-ring shadow-lg hover:shadow-xl;
   }
   
   .btn-secondary {
-    @apply bg-secondary text-secondary-foreground hover:bg-secondary/80 font-medium rounded-lg px-4 py-2 transition-all duration-200 focus-ring;
+    @apply bg-secondary text-secondary-foreground hover:bg-secondary/80 font-semibold rounded-xl px-6 py-3 transition-all duration-200 focus-ring shadow-md hover:shadow-lg;
+  }
+
+  .btn-luxury {
+    @apply bg-gradient-to-r from-yellow-400 via-yellow-500 to-yellow-600 hover:from-yellow-500 hover:via-yellow-600 hover:to-yellow-700 text-black font-bold shadow-xl hover:shadow-2xl transition-all duration-300 rounded-xl px-6 py-3 transform hover:scale-105 active:scale-95;
+  }
+
+  /* Cards modernos */
+  .luxury-card {
+    @apply bg-gradient-to-br from-card/80 to-card/40 backdrop-blur-xl border border-border/50 rounded-2xl shadow-2xl hover:shadow-3xl transition-all duration-300;
+  }
+
+  .metric-card {
+    @apply luxury-card p-6 hover:border-primary/30 transform hover:-translate-y-1;
+  }
+
+  /* Text styles luxury */
+  .text-luxury {
+    @apply bg-gradient-to-r from-yellow-400 via-yellow-500 to-yellow-600 bg-clip-text text-transparent font-bold;
+  }
+
+  .text-elegant {
+    @apply text-foreground font-medium tracking-wide;
+  }
+
+  /* Inputs modernos */
+  .input-luxury {
+    @apply bg-background/50 backdrop-blur-sm border-2 border-border/50 rounded-xl px-4 py-3 text-foreground placeholder:text-muted-foreground focus:border-primary focus:ring-4 focus:ring-primary/20 transition-all duration-200;
+  }
+
+  /* Management interface components */
+  .management-item {
+    @apply luxury-card p-4 hover:bg-accent/5 cursor-pointer;
+  }
+
+  .management-header {
+    @apply flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 mb-6;
+  }
+
+  .management-actions {
+    @apply flex flex-wrap items-center gap-2;
+  }
+}
+
+@layer utilities {
+  .container-responsive {
+    @apply max-w-7xl mx-auto px-4 sm:px-6 lg:px-8;
+  }
+
+  .page-padding {
+    @apply px-4 sm:px-6 lg:px-8 py-8;
+  }
+
+  .focus-ring {
+    @apply focus:outline-none focus:ring-4 focus:ring-primary/20 focus:border-primary transition-all duration-200;
+  }
+
+  .glass-effect {
+    @apply bg-background/60 backdrop-blur-md border border-border/40 shadow-lg;
+  }
+
+  .glass-effect-strong {
+    @apply bg-background/80 backdrop-blur-xl border border-border/60 shadow-xl;
+  }
+
+  .management-card {
+    @apply luxury-card shadow-lg hover:shadow-xl transition-all duration-300;
+  }
+
+  /* Animações aprimoradas */
+  .animate-slide-up {
+    animation: slideUp 0.5s ease-out forwards;
+  }
+
+  .animate-fade-in-up {
+    animation: fadeInUp 0.6s ease-out forwards;
+  }
+
+  .animate-scale-in {
+    animation: scaleIn 0.3s ease-out forwards;
+  }
+
+  .animate-glow {
+    animation: glow 2s ease-in-out infinite alternate;
+  }
+
+  @keyframes slideUp {
+    from {
+      opacity: 0;
+      transform: translateY(30px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  @keyframes fadeInUp {
+    from {
+      opacity: 0;
+      transform: translateY(20px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  @keyframes scaleIn {
+    from {
+      opacity: 0;
+      transform: scale(0.9);
+    }
+    to {
+      opacity: 1;
+      transform: scale(1);
+    }
+  }
+
+  @keyframes glow {
+    from {
+      box-shadow: 0 0 20px rgba(255, 215, 0, 0.3);
+    }
+    to {
+      box-shadow: 0 0 30px rgba(255, 215, 0, 0.6);
+    }
+  }
+
+  /* Typography utilities */
+  .heading-luxury {
+    @apply text-3xl md:text-4xl lg:text-5xl font-bold text-luxury leading-tight;
+  }
+
+  .subheading-luxury {
+    @apply text-lg md:text-xl text-muted-foreground font-medium;
   }
 }
