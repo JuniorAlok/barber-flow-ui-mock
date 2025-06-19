@@ -2,7 +2,9 @@
 import React from 'react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
-import { DollarSign, Clock, Users, Target, TrendingUp } from 'lucide-react';
+import ModernCard from '@/components/ui/modern-card';
+import MetricCard from '@/components/ui/metric-card';
+import { DollarSign, Clock, Users, Target, TrendingUp, Calendar } from 'lucide-react';
 import { useAuth } from '@/contexts/AuthContext';
 import { useMockData } from '@/contexts/MockDataContext';
 import { format, startOfMonth, endOfMonth, isWithinInterval } from 'date-fns';
@@ -15,7 +17,7 @@ const BarberMetrics: React.FC = () => {
   const monthStart = startOfMonth(currentMonth);
   const monthEnd = endOfMonth(currentMonth);
 
-  // Calcular métricas do barbeiro
+  // Calculate barber metrics
   const barberTransactions = transactions.filter(t => t.barberId === user?.id);
   const barberOrders = serviceOrders.filter(o => o.barberId === user?.id);
   const barberBookings = bookings.filter(b => b.barberId === user?.id);
@@ -53,170 +55,167 @@ const BarberMetrics: React.FC = () => {
       title: 'Receita Mensal',
       value: `R$ ${monthlyRevenue.toLocaleString()}`,
       icon: DollarSign,
-      color: 'text-primary',
-      bgGradient: 'from-primary/20 to-primary/5',
-      description: 'Este mês'
+      status: 'positive' as const,
+      trend: {
+        value: 12.5,
+        label: 'vs mês anterior',
+        direction: 'up' as const
+      }
     },
     {
       title: 'Receita Total',
       value: `R$ ${totalRevenue.toLocaleString()}`,
       icon: TrendingUp,
-      color: 'text-green-400',
-      bgGradient: 'from-green-500/20 to-green-500/5',
+      status: 'positive' as const,
       description: 'Todos os tempos'
     },
     {
       title: 'Serviços Concluídos',
       value: monthlyOrders.length.toString(),
       icon: Target,
-      color: 'text-blue-400',
-      bgGradient: 'from-blue-500/20 to-blue-500/5',
-      description: 'Este mês'
+      status: 'neutral' as const,
+      trend: {
+        value: 8.3,
+        label: 'este mês',
+        direction: 'up' as const
+      }
     },
     {
       title: 'Tempo Médio',
       value: `${averageServiceTime}min`,
       icon: Clock,
-      color: 'text-purple-400',
-      bgGradient: 'from-purple-500/20 to-purple-500/5',
+      status: 'neutral' as const,
       description: 'Por serviço'
     }
   ];
 
   return (
-    <div className="space-y-6 animate-fade-in">
+    <div className="space-y-8 animate-fade-in">
       {/* Header */}
-      <Card className="management-card border-0 gradient-border">
-        <CardContent className="p-8">
-          <div className="text-center">
-            <h2 className="text-2xl font-bold text-foreground mb-2">Suas Métricas</h2>
-            <p className="text-muted-foreground">
-              Acompanhe seu desempenho em {format(currentMonth, 'MMMM yyyy')}
-            </p>
-          </div>
-        </CardContent>
-      </Card>
+      <ModernCard 
+        title="Suas Métricas de Performance"
+        subtitle={`Acompanhe seu desempenho em ${format(currentMonth, 'MMMM yyyy')}`}
+        icon={<Calendar className="w-6 h-6 text-primary" />}
+        variant="luxury"
+        className="text-center"
+      >
+        <div className="flex items-center justify-center space-x-4 mt-4">
+          <Badge variant="outline" className="status-success">
+            Performance Excelente
+          </Badge>
+          <Badge variant="outline" className="status-info">
+            {monthlyOrders.length} serviços este mês
+          </Badge>
+        </div>
+      </ModernCard>
 
-      {/* Métricas Principais */}
+      {/* Main Metrics Grid */}
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
         {metrics.map((metric, index) => (
-          <Card 
-            key={metric.title} 
-            className="metric-card animate-scale-in border-0"
+          <MetricCard
+            key={metric.title}
+            {...metric}
+            className="animate-scale-in hover-lift"
             style={{ animationDelay: `${index * 100}ms` }}
-          >
-            <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-3">
-              <CardTitle className="text-sm font-medium text-muted-foreground">
-                {metric.title}
-              </CardTitle>
-              <div className={`p-2 rounded-lg bg-gradient-to-br ${metric.bgGradient}`}>
-                <metric.icon className={`h-5 w-5 ${metric.color}`} />
-              </div>
-            </CardHeader>
-            <CardContent>
-              <div className="text-2xl font-bold mb-1 text-foreground">
-                {metric.value}
-              </div>
-              <p className="text-xs text-muted-foreground">
-                {metric.description}
-              </p>
-            </CardContent>
-          </Card>
+          />
         ))}
       </div>
 
-      {/* Estatísticas de Pagamento */}
-      <Card className="management-card border-0">
-        <CardHeader>
-          <CardTitle className="flex items-center space-x-2">
-            <Users className="h-5 w-5 text-orange-400" />
-            <span>Formas de Pagamento Preferidas</span>
-          </CardTitle>
-        </CardHeader>
-        <CardContent>
+      {/* Payment Methods Analytics */}
+      <ModernCard
+        title="Análise de Formas de Pagamento"
+        subtitle="Preferências dos seus clientes"
+        icon={<Users className="w-5 w-5 text-orange-400" />}
+        variant="glass"
+        className="hover-lift"
+      >
+        {Object.keys(paymentMethodStats).length > 0 ? (
           <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
             {Object.entries(paymentMethodStats).map(([method, count]) => {
-              const labels = {
-                pix: 'PIX',
-                credit: 'Cartão',
-                cash: 'Dinheiro'
+              const methodData = {
+                pix: { label: 'PIX', color: 'status-success' },
+                credit: { label: 'Cartão', color: 'status-info' },
+                cash: { label: 'Dinheiro', color: 'status-warning' }
               };
               
-              const colors = {
-                pix: 'bg-green-500/20 text-green-400 border-green-500/30',
-                credit: 'bg-blue-500/20 text-blue-400 border-blue-500/30',
-                cash: 'bg-yellow-500/20 text-yellow-400 border-yellow-500/30'
-              };
+              const data = methodData[method as keyof typeof methodData];
+              const percentage = Math.round((count / completedOrders.length) * 100);
 
               return (
-                <div key={method} className="management-item p-4 text-center">
-                  <Badge 
-                    variant="outline" 
-                    className={`mb-2 ${colors[method as keyof typeof colors]}`}
-                  >
-                    {labels[method as keyof typeof labels]}
+                <div key={method} className="text-center p-4 rounded-xl bg-gradient-to-br from-card/50 to-card/30 border border-border/20">
+                  <Badge className={`mb-3 ${data?.color || 'status-info'}`}>
+                    {data?.label || method}
                   </Badge>
-                  <div className="text-2xl font-bold text-foreground">{count}</div>
-                  <div className="text-sm text-muted-foreground">serviços</div>
+                  <div className="text-3xl font-bold text-luxury mb-1">{count}</div>
+                  <div className="text-sm text-muted-foreground">
+                    {percentage}% dos serviços
+                  </div>
                 </div>
               );
             })}
           </div>
-          
-          {Object.keys(paymentMethodStats).length === 0 && (
-            <div className="text-center py-8">
-              <DollarSign className="h-12 w-12 text-muted-foreground mx-auto mb-4" />
-              <p className="text-muted-foreground">Nenhum serviço concluído ainda</p>
-            </div>
-          )}
-        </CardContent>
-      </Card>
+        ) : (
+          <div className="text-center py-8">
+            <DollarSign className="h-12 w-12 text-muted-foreground mx-auto mb-4" />
+            <p className="text-muted-foreground">Nenhum serviço concluído ainda</p>
+            <p className="text-sm text-muted-foreground mt-2">
+              Complete alguns serviços para ver as estatísticas
+            </p>
+          </div>
+        )}
+      </ModernCard>
 
-      {/* Resumo da Atividade */}
-      <Card className="management-card border-0">
-        <CardHeader>
-          <CardTitle className="flex items-center space-x-2">
-            <Clock className="h-5 w-5 text-cyan-400" />
-            <span>Resumo da Atividade</span>
-          </CardTitle>
-        </CardHeader>
-        <CardContent>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-            <div className="space-y-3">
-              <div className="flex justify-between">
-                <span className="text-muted-foreground">Total de serviços:</span>
-                <span className="font-medium text-foreground">{completedOrders.length}</span>
-              </div>
-              <div className="flex justify-between">
-                <span className="text-muted-foreground">Horas trabalhadas:</span>
-                <span className="font-medium text-foreground">{Math.round(totalWorkingHours / 60)}h {totalWorkingHours % 60}min</span>
-              </div>
-              <div className="flex justify-between">
-                <span className="text-muted-foreground">Agendamentos totais:</span>
-                <span className="font-medium text-foreground">{barberBookings.length}</span>
-              </div>
+      {/* Activity Summary */}
+      <ModernCard
+        title="Resumo da Atividade"
+        subtitle="Visão geral do seu desempenho"
+        icon={<Clock className="w-5 h-5 text-cyan-400" />}
+        variant="gradient"
+        className="hover-lift"
+      >
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+          <div className="space-y-4">
+            <div className="flex justify-between items-center p-3 rounded-lg bg-card/30">
+              <span className="text-muted-foreground font-medium">Total de serviços:</span>
+              <span className="text-xl font-bold text-foreground">{completedOrders.length}</span>
             </div>
-            
-            <div className="space-y-3">
-              <div className="flex justify-between">
-                <span className="text-muted-foreground">Ticket médio:</span>
-                <span className="font-medium text-primary">
-                  R$ {completedOrders.length > 0 ? Math.round(totalRevenue / completedOrders.length) : 0}
-                </span>
-              </div>
-              <div className="flex justify-between">
-                <span className="text-muted-foreground">Taxa de conclusão:</span>
-                <span className="font-medium text-green-400">
-                  {barberBookings.length > 0 
-                    ? Math.round((completedOrders.length / barberBookings.length) * 100) 
-                    : 0
-                  }%
-                </span>
-              </div>
+            <div className="flex justify-between items-center p-3 rounded-lg bg-card/30">
+              <span className="text-muted-foreground font-medium">Horas trabalhadas:</span>
+              <span className="text-xl font-bold text-foreground">
+                {Math.round(totalWorkingHours / 60)}h {totalWorkingHours % 60}min
+              </span>
+            </div>
+            <div className="flex justify-between items-center p-3 rounded-lg bg-card/30">
+              <span className="text-muted-foreground font-medium">Agendamentos totais:</span>
+              <span className="text-xl font-bold text-foreground">{barberBookings.length}</span>
             </div>
           </div>
-        </CardContent>
-      </Card>
+          
+          <div className="space-y-4">
+            <div className="flex justify-between items-center p-3 rounded-lg bg-primary/10 border border-primary/20">
+              <span className="text-muted-foreground font-medium">Ticket médio:</span>
+              <span className="text-xl font-bold text-primary">
+                R$ {completedOrders.length > 0 ? Math.round(totalRevenue / completedOrders.length) : 0}
+              </span>
+            </div>
+            <div className="flex justify-between items-center p-3 rounded-lg bg-green-500/10 border border-green-500/20">
+              <span className="text-muted-foreground font-medium">Taxa de conclusão:</span>
+              <span className="text-xl font-bold text-green-400">
+                {barberBookings.length > 0 
+                  ? Math.round((completedOrders.length / barberBookings.length) * 100) 
+                  : 0
+                }%
+              </span>
+            </div>
+            <div className="flex justify-between items-center p-3 rounded-lg bg-blue-500/10 border border-blue-500/20">
+              <span className="text-muted-foreground font-medium">Eficiência média:</span>
+              <span className="text-xl font-bold text-blue-400">
+                {averageServiceTime > 0 ? Math.round(100 - (averageServiceTime - 30)) : 100}%
+              </span>
+            </div>
+          </div>
+        </div>
+      </ModernCard>
     </div>
   );
 };
