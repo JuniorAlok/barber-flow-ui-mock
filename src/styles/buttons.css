@@ -1,0 +1,28 @@
+
+@layer components {
+  /* Estados de hover aprimorados */
+  .hover-lift {
+    @apply transition-all duration-300 hover:-translate-y-1 hover:shadow-xl;
+  }
+  
+  .hover-scale {
+    @apply transition-transform duration-200 hover:scale-[1.02] active:scale-[0.98];
+  }
+
+  .hover-glow {
+    @apply hover:shadow-2xl hover:shadow-primary/20;
+  }
+  
+  /* Botões modernos luxury */
+  .btn-primary {
+    @apply bg-primary text-primary-foreground hover:bg-primary/90 font-semibold rounded-xl px-6 py-3 transition-all duration-200 focus-ring shadow-lg hover:shadow-xl;
+  }
+  
+  .btn-secondary {
+    @apply bg-secondary text-secondary-foreground hover:bg-secondary/80 font-semibold rounded-xl px-6 py-3 transition-all duration-200 focus-ring shadow-md hover:shadow-lg;
+  }
+
+  .btn-luxury {
+    @apply bg-gradient-to-r from-yellow-400 via-yellow-500 to-yellow-600 hover:from-yellow-500 hover:via-yellow-600 hover:to-yellow-700 text-black font-bold shadow-xl hover:shadow-2xl transition-all duration-300 rounded-xl px-6 py-3 transform hover:scale-105 active:scale-95;
+  }
+}

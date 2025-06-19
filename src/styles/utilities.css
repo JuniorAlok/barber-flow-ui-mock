@@ -1,0 +1,39 @@
+
+@layer utilities {
+  .container-responsive {
+    @apply max-w-7xl mx-auto px-4 sm:px-6 lg:px-8;
+  }
+
+  .page-padding {
+    @apply px-4 sm:px-6 lg:px-8 py-8;
+  }
+
+  .focus-ring {
+    @apply focus:outline-none focus:ring-4 focus:ring-primary/20 focus:border-primary transition-all duration-200;
+  }
+
+  .glass-effect {
+    @apply bg-background/60 backdrop-blur-md border border-border/40 shadow-lg;
+  }
+
+  .glass-effect-strong {
+    @apply bg-background/80 backdrop-blur-xl border border-border/60 shadow-xl;
+  }
+
+  .management-card {
+    @apply luxury-card shadow-lg hover:shadow-xl transition-all duration-300;
+  }
+
+  /* Gradients */
+  .gradient-primary {
+    @apply bg-gradient-to-r from-primary to-primary/80;
+  }
+
+  .gradient-luxury {
+    @apply bg-gradient-to-r from-yellow-400 via-yellow-500 to-yellow-600;
+  }
+
+  .gradient-glass {
+    @apply bg-gradient-to-br from-background/90 to-background/70;
+  }
+}
