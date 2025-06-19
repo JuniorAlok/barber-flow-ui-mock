@@ -45,7 +45,7 @@ const BarberServiceOrders: React.FC = () => {
   };
 
   const getOrderStats = () => {
-    const waiting = barberOrders.filter(order => order.status === 'confirmed').length;
+    const waiting = barberOrders.filter(order => order.status === 'waiting').length;
     const active = barberOrders.filter(order => order.status === 'in_progress').length;
     const completed = barberOrders.filter(order => order.status === 'completed').length;
     
