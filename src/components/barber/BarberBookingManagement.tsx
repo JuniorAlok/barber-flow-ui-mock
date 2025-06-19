@@ -1,19 +1,21 @@
 
 import React, { useState } from 'react';
 import { Button } from '@/components/ui/button';
-import { Calendar, List } from 'lucide-react';
+import { Calendar, List, Plus } from 'lucide-react';
 import BarberBookingList from './BarberBookingList';
 import BookingCalendar from '../admin/BookingCalendar';
+import BookingModal from '../BookingModal';
 import { useAuth } from '@/contexts/AuthContext';
 import { useMockData } from '@/contexts/MockDataContext';
 
 const BarberBookingManagement: React.FC = () => {
   const [viewMode, setViewMode] = useState<'list' | 'calendar'>('list');
+  const [isBookingModalOpen, setIsBookingModalOpen] = useState(false);
   const { user } = useAuth();
   const { bookings } = useMockData();
 
   const handleNewBooking = () => {
-    console.log('Nova reserva - funcionalidade a ser implementada');
+    setIsBookingModalOpen(true);
   };
 
   const handleEditBooking = (booking: any) => {
@@ -45,6 +47,14 @@ const BarberBookingManagement: React.FC = () => {
             Calendário
           </Button>
         </div>
+        
+        <Button
+          onClick={handleNewBooking}
+          className="btn-luxury hover-lift"
+        >
+          <Plus className="w-4 h-4 mr-2" />
+          Novo Agendamento
+        </Button>
       </div>
 
       {viewMode === 'list' ? (
@@ -56,6 +66,11 @@ const BarberBookingManagement: React.FC = () => {
           onEditBooking={handleEditBooking}
         />
       )}
+
+      <BookingModal
+        isOpen={isBookingModalOpen}
+        onClose={() => setIsBookingModalOpen(false)}
+      />
     </div>
   );
 };

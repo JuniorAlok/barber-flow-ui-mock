@@ -11,6 +11,8 @@ import DateRangeFilter from '@/components/ui/DateRangeFilter';
 import { isWithinInterval } from 'date-fns';
 import { Card, CardHeader } from '@/components/ui/card';
 import { SectionTitle } from '@/components/ui/typography';
+import { Button } from '@/components/ui/button';
+import { Plus } from 'lucide-react';
 
 type ViewMode = 'list' | 'calendar';
 
@@ -48,6 +50,13 @@ const BookingManagement: React.FC = () => {
           onNewBooking={handleNewBooking}
           showNewButton={false}
         />
+        <Button
+          onClick={handleNewBooking}
+          className="btn-luxury hover-lift"
+        >
+          <Plus className="w-4 h-4 mr-2" />
+          Novo Agendamento
+        </Button>
       </div>
       <BookingCalendar 
         bookings={filteredBookings}

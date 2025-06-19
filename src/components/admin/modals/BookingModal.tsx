@@ -1,4 +1,3 @@
-
 import React, { useState } from 'react';
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from '@/components/ui/dialog';
 import { Button } from '@/components/ui/button';
@@ -171,7 +170,7 @@ const BookingModal: React.FC<BookingModalProps> = ({ isOpen, onClose, booking })
             >
               Cancelar
             </Button>
-            <Button type="submit" className="bg-gradient-to-r from-yellow-500 to-orange-500 hover:from-yellow-600 hover:to-orange-600 text-black font-medium transition-all duration-300">
+            <Button type="submit" variant="luxury">
               {isEdit ? 'Atualizar' : 'Criar'}
             </Button>
           </div>

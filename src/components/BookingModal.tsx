@@ -201,13 +201,13 @@ const BookingModal: React.FC<BookingModalProps> = ({ isOpen, onClose }) => {
             <Button
               onClick={nextStep}
               disabled={!canProceed()}
-              className="bg-gradient-to-r from-yellow-500 to-orange-500 hover:from-yellow-600 hover:to-orange-600 text-black font-medium transition-all duration-300"
+              variant="luxury"
             >
               Próximo
               <ChevronRight className="w-4 h-4 ml-2" />
             </Button>
           ) : (
-            <Button onClick={handleFinish} className="bg-gradient-to-r from-yellow-500 to-orange-500 hover:from-yellow-600 hover:to-orange-600 text-black font-medium transition-all duration-300">
+            <Button onClick={handleFinish} variant="luxury">
               Finalizar Agendamento
             </Button>
           )}
