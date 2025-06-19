@@ -164,11 +164,19 @@
 
   /* Cards modernos */
   .luxury-card {
-    @apply bg-gradient-to-br from-card/80 to-card/40 backdrop-blur-xl border border-border/50 rounded-2xl shadow-2xl hover:shadow-2xl transition-all duration-300;
+    @apply bg-gradient-to-br from-card/90 to-card/70 backdrop-blur-xl border border-border/30 rounded-2xl shadow-xl hover:shadow-2xl transition-all duration-300;
   }
 
   .metric-card {
     @apply luxury-card p-6 hover:border-primary/30 transform hover:-translate-y-1;
+  }
+
+  .modern-card {
+    @apply bg-gradient-to-br from-card/95 to-card/85 backdrop-blur-md border border-border/40 rounded-2xl shadow-lg hover:shadow-xl transition-all duration-300 hover:-translate-y-0.5;
+  }
+
+  .glass-card {
+    @apply bg-background/60 backdrop-blur-xl border border-border/30 rounded-2xl shadow-2xl hover:shadow-3xl transition-all duration-300;
   }
 
   /* Text styles luxury */
@@ -180,14 +188,22 @@
     @apply text-foreground font-medium tracking-wide;
   }
 
+  .text-gradient {
+    @apply bg-gradient-to-r from-primary via-primary/90 to-secondary bg-clip-text text-transparent font-bold;
+  }
+
   /* Inputs modernos */
   .input-luxury {
-    @apply bg-background/50 backdrop-blur-sm border-2 border-border/50 rounded-xl px-4 py-3 text-foreground placeholder:text-muted-foreground focus:border-primary focus:ring-4 focus:ring-primary/20 transition-all duration-200;
+    @apply bg-background/80 backdrop-blur-sm border-2 border-border/50 rounded-xl px-4 py-3 text-foreground placeholder:text-muted-foreground focus:border-primary focus:ring-4 focus:ring-primary/20 transition-all duration-200 hover:border-border/70;
+  }
+
+  .input-glass {
+    @apply bg-background/60 backdrop-blur-md border border-border/40 rounded-xl px-4 py-3 text-foreground placeholder:text-muted-foreground focus:border-primary/60 focus:ring-2 focus:ring-primary/20 transition-all duration-200;
   }
 
   /* Management interface components */
   .management-item {
-    @apply luxury-card p-4 hover:bg-accent/5 cursor-pointer;
+    @apply modern-card p-4 hover:bg-accent/5 cursor-pointer;
   }
 
   .management-header {
@@ -196,6 +212,24 @@
 
   .management-actions {
     @apply flex flex-wrap items-center gap-2;
+  }
+
+  /* Interactive elements */
+  .interactive-card {
+    @apply transition-all duration-300 hover:scale-[1.01] hover:shadow-lg cursor-pointer;
+  }
+
+  .floating-card {
+    @apply transform hover:-translate-y-2 transition-all duration-500 shadow-lg hover:shadow-2xl;
+  }
+
+  /* Loading states */
+  .loading-skeleton {
+    @apply animate-pulse bg-gradient-to-r from-muted/50 via-muted to-muted/50 bg-size-200 bg-pos-0 rounded;
+  }
+
+  .shimmer {
+    @apply relative overflow-hidden before:absolute before:inset-0 before:-translate-x-full before:bg-gradient-to-r before:from-transparent before:via-white/20 before:to-transparent before:animate-shimmer;
   }
 }
 
@@ -241,6 +275,22 @@
     animation: glow 2s ease-in-out infinite alternate;
   }
 
+  .animate-shimmer {
+    animation: shimmer 2s infinite;
+  }
+
+  .animate-float {
+    animation: float 6s ease-in-out infinite;
+  }
+
+  .bg-size-200 {
+    background-size: 200% 200%;
+  }
+
+  .bg-pos-0 {
+    background-position: 0% 0%;
+  }
+
   @keyframes slideUp {
     from {
       opacity: 0;
@@ -283,6 +333,21 @@
     }
   }
 
+  @keyframes shimmer {
+    100% {
+      transform: translateX(100%);
+    }
+  }
+
+  @keyframes float {
+    0%, 100% {
+      transform: translateY(0px);
+    }
+    50% {
+      transform: translateY(-10px);
+    }
+  }
+
   /* Typography utilities */
   .heading-luxury {
     @apply text-3xl md:text-4xl lg:text-5xl font-bold text-luxury leading-tight;
@@ -290,5 +355,22 @@
 
   .subheading-luxury {
     @apply text-lg md:text-xl text-muted-foreground font-medium;
+  }
+
+  .text-modern {
+    @apply text-foreground/90 font-medium tracking-wide;
+  }
+
+  /* Gradients */
+  .gradient-primary {
+    @apply bg-gradient-to-r from-primary to-primary/80;
+  }
+
+  .gradient-luxury {
+    @apply bg-gradient-to-r from-yellow-400 via-yellow-500 to-yellow-600;
+  }
+
+  .gradient-glass {
+    @apply bg-gradient-to-br from-background/90 to-background/70;
   }
 }
