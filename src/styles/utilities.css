@@ -13,15 +13,32 @@
   }
 
   .glass-effect {
-    @apply bg-background/60 backdrop-blur-md border border-border/40 shadow-lg;
+    @apply bg-background/60 backdrop-blur-md border border-border/40 shadow-lg shadow-yellow-500/15;
   }
 
   .glass-effect-strong {
-    @apply bg-background/80 backdrop-blur-xl border border-border/60 shadow-xl;
+    @apply bg-background/80 backdrop-blur-xl border border-border/60 shadow-xl shadow-yellow-500/20;
   }
 
   .management-card {
-    @apply luxury-card shadow-lg hover:shadow-xl transition-all duration-300;
+    @apply luxury-card shadow-lg shadow-yellow-500/15 hover:shadow-xl hover:shadow-yellow-400/25 transition-all duration-300;
+  }
+
+  /* Yellow shadow utilities */
+  .shadow-yellow-soft {
+    @apply shadow-lg shadow-yellow-500/10;
+  }
+
+  .shadow-yellow-medium {
+    @apply shadow-lg shadow-yellow-500/20;
+  }
+
+  .shadow-yellow-strong {
+    @apply shadow-xl shadow-yellow-500/30;
+  }
+
+  .shadow-yellow-glow {
+    @apply shadow-2xl shadow-yellow-400/40;
   }
 
   /* Gradients */
@@ -35,5 +52,10 @@
 
   .gradient-glass {
     @apply bg-gradient-to-br from-background/90 to-background/70;
+  }
+
+  /* Enhanced luxury card with yellow shadows */
+  .luxury-card {
+    @apply bg-gradient-to-br from-card via-card/95 to-card/80 border-2 border-border/30 shadow-xl shadow-yellow-500/15 hover:shadow-2xl hover:shadow-yellow-400/25 transition-all duration-300 rounded-2xl;
   }
 }

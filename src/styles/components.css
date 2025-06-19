@@ -1,45 +1,45 @@
 
 @layer components {
-  /* Status badges modernos aprimorados */
+  /* Status badges modernos aprimorados com sombras amarelas */
   .status-badge-base {
-    @apply inline-flex items-center px-3 py-1.5 rounded-full text-xs font-semibold transition-all duration-200 border shadow-sm;
+    @apply inline-flex items-center px-3 py-1.5 rounded-full text-xs font-semibold transition-all duration-200 border shadow-md shadow-yellow-500/15;
   }
   
   .status-pending {
-    @apply status-badge-base bg-yellow-50 text-yellow-800 border-yellow-200 hover:bg-yellow-100 dark:bg-yellow-950/30 dark:text-yellow-400 dark:border-yellow-800;
+    @apply status-badge-base bg-yellow-50 text-yellow-800 border-yellow-200 hover:bg-yellow-100 dark:bg-yellow-950/30 dark:text-yellow-400 dark:border-yellow-800 shadow-yellow-400/20;
   }
   
   .status-confirmed {
-    @apply status-badge-base bg-blue-50 text-blue-800 border-blue-200 hover:bg-blue-100 dark:bg-blue-950/30 dark:text-blue-400 dark:border-blue-800;
+    @apply status-badge-base bg-blue-50 text-blue-800 border-blue-200 hover:bg-blue-100 dark:bg-blue-950/30 dark:text-blue-400 dark:border-blue-800 shadow-yellow-500/15;
   }
   
   .status-done {
-    @apply status-badge-base bg-green-50 text-green-800 border-green-200 hover:bg-green-100 dark:bg-green-950/30 dark:text-green-400 dark:border-green-800;
+    @apply status-badge-base bg-green-50 text-green-800 border-green-200 hover:bg-green-100 dark:bg-green-950/30 dark:text-green-400 dark:border-green-800 shadow-yellow-500/15;
   }
   
   .status-cancelled {
-    @apply status-badge-base bg-red-50 text-red-800 border-red-200 hover:bg-red-100 dark:bg-red-950/30 dark:text-red-400 dark:border-red-800;
+    @apply status-badge-base bg-red-50 text-red-800 border-red-200 hover:bg-red-100 dark:bg-red-950/30 dark:text-red-400 dark:border-red-800 shadow-yellow-500/15;
   }
 
   .status-success {
-    @apply status-badge-base bg-green-50 text-green-800 border-green-200 hover:bg-green-100 dark:bg-green-950/30 dark:text-green-400 dark:border-green-800;
+    @apply status-badge-base bg-green-50 text-green-800 border-green-200 hover:bg-green-100 dark:bg-green-950/30 dark:text-green-400 dark:border-green-800 shadow-yellow-500/15;
   }
 
   .status-warning {
-    @apply status-badge-base bg-yellow-50 text-yellow-800 border-yellow-200 hover:bg-yellow-100 dark:bg-yellow-950/30 dark:text-yellow-400 dark:border-yellow-800;
+    @apply status-badge-base bg-yellow-50 text-yellow-800 border-yellow-200 hover:bg-yellow-100 dark:bg-yellow-950/30 dark:text-yellow-400 dark:border-yellow-800 shadow-yellow-400/25;
   }
 
   .status-error {
-    @apply status-badge-base bg-red-50 text-red-800 border-red-200 hover:bg-red-100 dark:bg-red-950/30 dark:text-red-400 dark:border-red-800;
+    @apply status-badge-base bg-red-50 text-red-800 border-red-200 hover:bg-red-100 dark:bg-red-950/30 dark:text-red-400 dark:border-red-800 shadow-yellow-500/15;
   }
 
   .status-info {
-    @apply status-badge-base bg-blue-50 text-blue-800 border-blue-200 hover:bg-blue-100 dark:bg-blue-950/30 dark:text-blue-400 dark:border-blue-800;
+    @apply status-badge-base bg-blue-50 text-blue-800 border-blue-200 hover:bg-blue-100 dark:bg-blue-950/30 dark:text-blue-400 dark:border-blue-800 shadow-yellow-500/15;
   }
 
-  /* Management interface components */
+  /* Management interface components com sombras amarelas */
   .management-item {
-    @apply modern-card p-4 hover:bg-accent/5 cursor-pointer;
+    @apply modern-card p-4 hover:bg-accent/5 cursor-pointer shadow-lg shadow-yellow-500/10 hover:shadow-xl hover:shadow-yellow-400/20 transition-all duration-300;
   }
 
   .management-header {
@@ -50,18 +50,18 @@
     @apply flex flex-wrap items-center gap-2;
   }
 
-  /* Interactive elements */
+  /* Interactive elements com sombras amarelas */
   .interactive-card {
-    @apply transition-all duration-300 hover:scale-[1.01] hover:shadow-lg cursor-pointer;
+    @apply transition-all duration-300 hover:scale-[1.01] hover:shadow-xl hover:shadow-yellow-400/20 cursor-pointer shadow-lg shadow-yellow-500/15;
   }
 
   .floating-card {
-    @apply transform hover:-translate-y-2 transition-all duration-500 shadow-lg hover:shadow-2xl;
+    @apply transform hover:-translate-y-2 transition-all duration-500 shadow-xl shadow-yellow-500/20 hover:shadow-2xl hover:shadow-yellow-400/30;
   }
 
   /* Loading states */
   .loading-skeleton {
-    @apply animate-pulse bg-gradient-to-r from-muted/50 via-muted to-muted/50 bg-size-200 bg-pos-0 rounded;
+    @apply animate-pulse bg-gradient-to-r from-muted/50 via-muted to-muted/50 bg-size-200 bg-pos-0 rounded shadow-md shadow-yellow-500/10;
   }
 
   .shimmer {
